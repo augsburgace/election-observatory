@@ -62,7 +62,8 @@ jobs:
           cache: false
       - name: Install locked application dependencies
         run: |
-          python -m pip install --disable-pip-version-check '.[dev]'
+          python -m pip install --disable-pip-version-check --requirement requirements.lock
+          python -m pip install --disable-pip-version-check --no-deps --editable .
           pnpm --dir frontend install --frozen-lockfile
       - name: Verify application contracts
         run: |
