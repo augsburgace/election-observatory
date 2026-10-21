@@ -34,7 +34,8 @@ def cloud_build(tmp_path, monkeypatch):
     output = tmp_path / "publication"
     commands = []
     state = SimpleNamespace(fail=None, revision=589, seed_error=False, collection=True,
-        bad_states=False, published_revision=None, checkpoints=0, prepared=0)
+        bad_states=False, published_revision=None, checkpoints=0, prepared=0,
+        boundary_calls=0, boundary_error=False, boundary_new_revision=False)
 
     def run(command, **kwargs):
         commands.append((command, kwargs))
@@ -92,10 +93,22 @@ def cloud_build(tmp_path, monkeypatch):
             proof["private_notebook_rows"] = 1
         return proof
 
+    def boundary_review(database):
+        state.boundary_calls += 1
+        if state.boundary_error:
+            print(PRIVATE_DIAGNOSTIC)
+            raise ValueError(PRIVATE_DIAGNOSTIC)
+        if state.boundary_new_revision:
+            with database.session() as session:
+                session.add(Revision(id=590, reason="Archived original Census county-change references"))
+                session.commit()
+        return {"revision": database.latest_revision()}
+
     monkeypatch.setattr(update_cloud.subprocess, "run", run)
     monkeypatch.setattr(update_cloud, "publish_public_data", publish)
     monkeypatch.setattr(update_cloud, "prepare_site", prepare)
     monkeypatch.setattr(update_cloud, "create_seed", checkpoint)
+    monkeypatch.setattr(update_cloud, "archive_boundary_review", boundary_review)
     return SimpleNamespace(settings=settings, output=output, state=state, commands=commands,
         build=lambda **kwargs: update_cloud.build_cloud_publication(settings, output,
             base="/battleground-senate-observatory/", previous_revision=588, **kwargs))
@@ -181,6 +194,24 @@ def test_same_revision_can_refresh_application_without_inventing_evidence(cloud_
     assert result["dataset_revision"] == 588
     assert result["checkpoint"]["revision"] == 588
     assert not any("collect" in command for command, _ in cloud_build.commands)
+    assert cloud_build.state.boundary_calls == 0
+
+
+def test_archived_boundary_review_precedes_frozen_publication_and_checkpoint(cloud_build):
+    cloud_build.state.boundary_new_revision = True
+    ready = cloud_build.build()
+    assert cloud_build.state.boundary_calls == 1
+    assert ready["dataset_revision"] == ready["checkpoint"]["revision"] == 590
+
+
+def test_unavailable_census_reference_withholds_review_without_stopping_other_research(cloud_build, capsys):
+    cloud_build.state.boundary_error = True
+    ready = cloud_build.build()
+    captured = capsys.readouterr()
+    assert PRIVATE_DIAGNOSTIC not in captured.out + captured.err
+    assert '"stage":"boundary-review","status":"unavailable"' in captured.out
+    assert ready["status"] == "verified" and ready["dataset_revision"] == 589
+    assert PRIVATE_DIAGNOSTIC in (cloud_build.settings.data_dir / "cloud-collection.private.log").read_text()
 
 
 def test_stale_parent_checkpoint_is_rejected_before_collection(cloud_build):

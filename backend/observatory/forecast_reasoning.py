@@ -202,7 +202,8 @@ def context_signal(database, state, revision, cutoff, cycle):
         if instant(snapshot.retrieved_at) > end or "browser-table" not in snapshot.content_type:
             continue
         path = Path(snapshot.path)
-        if path.stat().st_size > 2_000_000 or hashlib.sha256(path.read_bytes()).hexdigest() != snapshot.sha256:
+        if (not path.is_file() or path.stat().st_size > 2_000_000
+                or hashlib.sha256(path.read_bytes()).hexdigest() != snapshot.sha256):
             continue
         payload = json.loads(path.read_text())
         text = " ".join(payload.get("context", []))

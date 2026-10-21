@@ -98,11 +98,22 @@ def _review(database, revision: int | None = None) -> dict | None:
     if revision is not None and value.get("revision", 0) > revision:
         return None
     import hashlib
-    for source in value.get("sources", []):
-        archived = database.settings.archive_dir / source["sha256"][:2] / source["sha256"]
+    sources = value.get("sources")
+    if not isinstance(sources, list) or not sources:
+        return None
+    for source in sources:
+        sha = source.get("sha256") if isinstance(source, dict) else None
+        if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
+            return None
+        archived = database.settings.archive_dir / sha[:2] / sha
         if not archived.is_file():
-            archived = Path(source["archive_path"])
-        if not archived.is_file() or hashlib.sha256(archived.read_bytes()).hexdigest() != source["sha256"]:
+            # Sanitized public checkpoints intentionally omit private paths.
+            # A URL/hash without the original bytes cannot verify continuity.
+            original = source.get("archive_path")
+            if not isinstance(original, str) or not original:
+                return None
+            archived = Path(original)
+        if not archived.is_file() or hashlib.sha256(archived.read_bytes()).hexdigest() != sha:
             return None
         source["archive_path"] = str(archived)
     return value
@@ -180,6 +191,9 @@ def compare_results(database, *, state: str, year: int = 2024, baseline: int = 2
         "Comparison differences use matched reported units, the same office/contest semantics, and supported counting rounds. They are not current early-vote forecasts.",
         "County continuity means no Census-listed substantial change in the reviewed interval; minor adjustments are not certified identical. No votes are redistributed.",
         "Different source producers can reconcile differently with statewide certified totals. Original source warnings and each side's denominator remain visible."]))
+    missing_review = geography_level == "county" and year != baseline and review is None
+    if missing_review:
+        warnings.append("County differences are withheld because the archived Census boundary-review evidence is unavailable or fails its checksum in this installation. Current and baseline election results remain available separately; original source links alone do not verify boundary continuity.")
     return {"revision": bound, "query": {"state": state.upper(), "year": year, "baseline": baseline,
         "office": office.upper(), "geography_level": geography_level, "contest_id": contest_id,
         "geography_ids": geography_ids, "limit": limit, "offset": offset},
@@ -191,4 +205,6 @@ def compare_results(database, *, state: str, year: int = 2024, baseline: int = 2
             "matched_vote_change": matched_current - matched_baseline if eligible_rows else None},
         "eligible": eligible_rows > 0, "margin_definition": "Republican minus Democratic percentage points",
         "change_definition": "Current R-minus-D margin minus baseline R-minus-D margin; positive means toward Republican",
-        "boundary_sources": review["sources"] if review else [], "warnings": warnings}
+        "boundary_sources": review["sources"] if review else [
+            {"url": url, "status": "official_reference_only", "verification": "archive_unavailable"}
+            for url in CENSUS_CHANGES] if missing_review else [], "warnings": warnings}

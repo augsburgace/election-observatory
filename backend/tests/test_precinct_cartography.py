@@ -241,6 +241,52 @@ def test_boundary_review_must_be_available_at_the_pinned_revision(database, tmp_
     assert _review(database, 5) is None
 
 
+def test_public_boundary_review_without_private_paths_requires_original_archived_bytes(database):
+    from observatory.historical_comparisons import CENSUS_CHANGES, _review
+    reference = b"Original official Census county-change reference fixture"
+    sha = hashlib.sha256(reference).hexdigest()
+    path = database.settings.data_dir / "geometry" / "county-boundary-review.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps({"revision": 5, "sources": [{"url": CENSUS_CHANGES[0], "sha256": sha}]}))
+    # The public URL/hash is preserved, but cannot itself establish a review.
+    assert _review(database, 5) is None
+    archived = database.settings.archive_dir / sha[:2] / sha
+    archived.parent.mkdir(parents=True)
+    archived.write_bytes(reference)
+    assert _review(database, 4) is None
+    assert _review(database, 5)["sources"][0]["archive_path"] == str(archived)
+    archived.write_bytes(b"Changed bytes must not inherit the review")
+    assert _review(database, 5) is None
+
+
+def test_missing_public_boundary_archive_preserves_results_but_withholds_county_differences(database, tmp_path):
+    from observatory.historical_comparisons import CENSUS_CHANGES
+    source = {"id": "fixture", "title": "Fixture", "state": "TX", "tier": 3}
+    rows = []
+    for year, dem, rep in [(2020, 100, 80), (2024, 90, 110)]:
+        for party, votes in [("DEM", dem), ("REP", rep)]:
+            rows.append({"state": "TX", "year": year, "office": "PRESIDENT", "contest_id": f"contest:{year}",
+                "contest_name": "President · STATEWIDE", "district": "STATEWIDE", "stage": "GEN", "special": False,
+                "date": f"{year}-11-05", "magnitude": 1, "kind": "candidate", "candidate": party, "party": party,
+                "option_id": f"option:{year}:{party}", "geography_id": "county:48001", "geography_level": "county",
+                "geography_name": "Anderson", "votes": votes, "mode": "TOTAL", "round": "reported",
+                "source_modes": ["TOTAL"], "parties": [party], "partial_suppression": False, "writein": False})
+    _publish(database, source, doc(archive_shape(tmp_path, [("A", 100, 80, 20)])), rows, {})
+    path = database.settings.data_dir / "geometry" / "county-boundary-review.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps({"revision": 1, "sources": [{"url": CENSUS_CHANGES[0], "sha256": "a" * 64}]}))
+    comparison = compare_results(database, state="TX", year=2024, baseline=2020, geography_level="county")
+    assert comparison["coverage"]["matched"] == 1
+    assert comparison["coverage"]["eligible"] == 0
+    row = comparison["rows"][0]
+    assert row["current_votes"] == 200 and row["baseline_votes"] == 180
+    assert row["change_pp"] is None and row["vote_change"] is None
+    assert row["reason"] == "boundary_review_not_archived"
+    assert any("source links alone do not verify" in warning for warning in comparison["warnings"])
+    assert {item["url"] for item in comparison["boundary_sources"]} == set(CENSUS_CHANGES)
+    assert all(item["verification"] == "archive_unavailable" for item in comparison["boundary_sources"])
+
+
 def test_structural_contest_correction_is_append_only_and_revision_scoped(database, tmp_path):
     from observatory.atlas.models import AtlasResultValidation
     from observatory.atlas.result_validation import invalidated_result_contests

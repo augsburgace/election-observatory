@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import sqlite3
 import sys
@@ -93,6 +94,7 @@ def create_seed(database: Database, output: Path) -> dict:
         proof = _sanitize_database(copied)
         entries = [{"file": "observatory.sqlite3", "sha256": digest(copied), "bytes": copied.stat().st_size}]
         with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=3) as archive:
+            archived_hashes = set()
             archive.write(copied, "observatory.sqlite3")
             geometry = database.settings.data_dir / "geometry"
             if geometry.exists():
@@ -116,7 +118,7 @@ def create_seed(database: Database, output: Path) -> dict:
                         archive.write(source, relative)
                         entries.append({"file": relative, "sha256": digest(source), "bytes": source.stat().st_size})
             # RCP captures contain factual public tables only. Whitelist the
-            # exact capture schema; all other original archives stay local.
+            # exact capture schema; unrelated original archives stay local.
             with sqlite3.connect(copied) as connection:
                 documents = connection.execute("SELECT DISTINCT sha256 FROM snapshots WHERE content_type='application/vnd.observatory.browser-table+json'").fetchall()
             for (sha,) in documents:
@@ -129,11 +131,44 @@ def create_seed(database: Database, output: Path) -> dict:
                     continue
                 if hashlib.sha256(raw).hexdigest() != sha:
                     raise ValueError("Public capture checksum mismatch")
+                if sha in archived_hashes:
+                    continue
                 name = f"archive/{sha[:2]}/{sha}"
                 archive.writestr(name, raw)
                 entries.append({"file": name, "sha256": sha, "bytes": len(raw)})
+                archived_hashes.add(sha)
+            # County differences require the actual reviewed Census references,
+            # not merely their URLs. These two fixed public HTML pages contain
+            # boundary-change documentation rather than voter records.
+            from observatory.historical_comparisons import CENSUS_CHANGES
+            with sqlite3.connect(copied) as connection:
+                documents = connection.execute(
+                    "SELECT DISTINCT sha256,content_type FROM snapshots WHERE source_id=? AND url IN (?,?)",
+                    ("census_county_changes", *CENSUS_CHANGES)).fetchall()
+            for sha, content_type in documents:
+                if str(content_type).split(";", 1)[0].strip().lower() != "text/html":
+                    continue
+                source = database.settings.archive_dir / sha[:2] / sha
+                if (source.is_symlink() or not source.is_file()
+                        or not 0 < source.stat().st_size <= MAX_CONTEXT_BYTES):
+                    continue
+                raw = source.read_bytes()
+                if hashlib.sha256(raw).hexdigest() != sha:
+                    raise ValueError("Public Census review checksum mismatch")
+                try:
+                    text = raw.decode("utf-8-sig").lstrip()
+                except UnicodeDecodeError:
+                    continue
+                if text.startswith(("{", "[")) or not re.search(r"<(?:!doctype\s+html\b|html\b)", text, re.I):
+                    continue
+                if sha in archived_hashes:
+                    continue
+                name = f"archive/{sha[:2]}/{sha}"
+                archive.writestr(name, raw)
+                entries.append({"file": name, "sha256": sha, "bytes": len(raw)})
+                archived_hashes.add(sha)
             manifest = {"schema": SCHEMA, "created_at": utc_now(), **proof, "entries": entries,
-                "scope": "Normalized aggregate observations/results, boundary geometry, and factual browser polling tables only",
+                "scope": "Normalized aggregate observations/results, boundary geometry, factual browser polling tables, and the two fixed original Census county-change HTML references only",
                 "excluded": ["private notebook and saved investigations", "job history", "original voter-file archives", "full source archives", "credentials", "private correction reasons", "server caches", "backups"]}
             archive.writestr("manifest.json", json.dumps(manifest, separators=(",", ":")))
     return {**proof, "path": str(output), "sha256": digest(output), "bytes": output.stat().st_size, "entries": len(entries)}

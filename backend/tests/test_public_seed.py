@@ -7,9 +7,78 @@ import zipfile
 
 import pytest
 from observatory.db import Database, ObservationRecord, ResearchObject, Revision, Snapshot, SourceState
+from observatory.historical_comparisons import CENSUS_CHANGES
 from observatory.settings import Settings
 
 from scripts.public_seed import SCHEMA, create_seed, restore_seed
+
+
+def add_archived_snapshot(database, *, source_id, url, raw, content_type="text/html"):
+    sha = hashlib.sha256(raw).hexdigest()
+    path = database.settings.archive_dir / sha[:2] / sha
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(raw)
+    with database.session() as session:
+        revision = Revision(reason="Synthetic source fixture")
+        session.add(revision)
+        session.flush()
+        session.add(Snapshot(source_id=source_id, url=url, sha256=sha, path=str(path),
+            content_type=content_type, retrieved_at="2026-10-21T12:00:00Z",
+            byte_count=len(raw), revision=revision.id))
+        session.commit()
+    return path, sha
+
+
+def test_public_seed_preserves_only_fixed_original_census_html_and_can_restore_it(tmp_path):
+    database = Database(Settings(tmp_path / "private"))
+    allowed = []
+    for index, url in enumerate(CENSUS_CHANGES):
+        raw = f'<!DOCTYPE html><html><body>Substantial Changes {index}</body></html>'.encode()
+        _, sha = add_archived_snapshot(database, source_id="census_county_changes", url=url,
+            raw=raw, content_type="text/html; charset=UTF-8")
+        allowed.append((sha, raw))
+    excluded = [
+        {"source_id": "voter-file", "url": "https://example.org/voters.csv", "raw": b"PRIVATE_VOTER_SENTINEL", "content_type": "text/csv"},
+        {"source_id": "unrelated", "url": CENSUS_CHANGES[0], "raw": b"<html>Wrong source identity</html>"},
+        {"source_id": "census_county_changes", "url": CENSUS_CHANGES[0] + "?other=1", "raw": b"<html>Unapproved URL</html>"},
+        {"source_id": "census_county_changes", "url": CENSUS_CHANGES[0], "raw": b'{"page":"<html>JSON</html>"}'},
+        {"source_id": "census_county_changes", "url": CENSUS_CHANGES[0], "raw": b"<html>Wrong media type</html>", "content_type": "application/json"},
+    ]
+    for record in excluded:
+        add_archived_snapshot(database, **record)
+    output = tmp_path / "public.zip"
+    create_seed(database, output)
+    with zipfile.ZipFile(output) as archive:
+        originals = [name for name in archive.namelist() if name.startswith("archive/")]
+        assert set(originals) == {f"archive/{sha[:2]}/{sha}" for sha, _ in allowed}
+        for sha, raw in allowed:
+            assert archive.read(f"archive/{sha[:2]}/{sha}") == raw
+        assert "two fixed original Census" in json.loads(archive.read("manifest.json"))["scope"]
+    restored = tmp_path / "restored"
+    restore_seed(output, restored)
+    for sha, raw in allowed:
+        assert (restored / "archive" / sha[:2] / sha).read_bytes() == raw
+
+
+def test_census_review_archive_hash_mismatch_stops_public_export(tmp_path):
+    database = Database(Settings(tmp_path / "private"))
+    path, _ = add_archived_snapshot(database, source_id="census_county_changes",
+        url=CENSUS_CHANGES[0], raw=b"<html>Original reference</html>")
+    path.write_bytes(b"<html>Changed bytes</html>")
+    with pytest.raises(ValueError, match="Census review checksum mismatch"):
+        create_seed(database, tmp_path / "public.zip")
+
+
+def test_oversized_census_reference_is_not_included(tmp_path):
+    from scripts.public_seed import MAX_CONTEXT_BYTES
+
+    database = Database(Settings(tmp_path / "private"))
+    add_archived_snapshot(database, source_id="census_county_changes", url=CENSUS_CHANGES[0],
+        raw=b"<html>" + b"x" * MAX_CONTEXT_BYTES + b"</html>")
+    output = tmp_path / "public.zip"
+    create_seed(database, output)
+    with zipfile.ZipFile(output) as archive:
+        assert not any(name.startswith("archive/") for name in archive.namelist())
 
 
 def test_public_checkpoint_excludes_private_rows_raw_archives_and_deleted_cells(tmp_path):

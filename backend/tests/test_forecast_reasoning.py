@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 from observatory import forecast_reasoning as reasoning
-from observatory.db import Database
+from observatory.db import Database, Revision, Snapshot
 from observatory.settings import Settings
 from test_ev_history import obs, seed
 
@@ -89,6 +89,24 @@ def test_stale_market_quote_does_not_look_current(tmp_path):
     db = Database(Settings(tmp_path))
     revision = seed(db, [market(quote="2026-10-15T12:00:00Z")])
     assert reasoning.market_signal(db, "NC", revision, "2026-10-21", 2026)["status"] == "unavailable"
+
+
+def test_missing_rcp_archive_withholds_context_instead_of_breaking_publication(tmp_path):
+    db = Database(Settings(tmp_path))
+    with db.session() as session:
+        revision = Revision(reason="Synthetic browser context fixture")
+        session.add(revision)
+        session.flush()
+        bound = revision.id
+        session.add(Snapshot(source_id="rcp-oh-senate-2026", url="https://fixture.invalid/ohio",
+            sha256="a" * 64, path=str(tmp_path / "withheld-capture.json"),
+            content_type="application/vnd.observatory.browser-table+json",
+            retrieved_at="2026-10-20T12:00:00Z", byte_count=100, revision=bound))
+        session.commit()
+    result = reasoning.context_signal(db, "OH", bound, "2026-10-21", 2026)
+    assert result["status"] == "unavailable"
+    assert result["items"] == [] and result["source_refs"] == []
+    assert "No dated additional analyst assessment" in result["summary"]
 
 
 @pytest.mark.parametrize("all_closed", [False, True])

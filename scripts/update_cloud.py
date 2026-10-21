@@ -18,7 +18,7 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
-from contextlib import contextmanager
+from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from pathlib import Path
 from typing import Iterator
 from urllib.parse import quote
@@ -26,7 +26,9 @@ from urllib.parse import quote
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from observatory.db import Database  # noqa: E402
 from observatory.domain import utc_now  # noqa: E402
+from observatory.historical_comparisons import archive_boundary_review  # noqa: E402
 from observatory.public_publish import publish_public_data, readonly_database  # noqa: E402
 from observatory.registry import all_states  # noqa: E402
 from observatory.settings import Settings  # noqa: E402
@@ -135,6 +137,22 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
                         stdout=log, stderr=subprocess.STDOUT)
             except (OSError, subprocess.SubprocessError):
                 raise ValueError("Public source collection failed; the prior hosted release is retained. Original diagnostics remain only in ephemeral worker storage.") from None
+            # Restore the two fixed official Census references before the
+            # read-only publication freeze. A failed reference fetch withholds
+            # county differences, while retaining both original result sets.
+            boundary_database = Database(settings)
+            try:
+                try:
+                    with diagnostics.open("a") as log, redirect_stdout(log), redirect_stderr(log):
+                        boundary_review = archive_boundary_review(boundary_database)
+                except Exception:
+                    boundary_review = None
+                _event({"stage": "boundary-review", "status": "verified" if boundary_review else "unavailable",
+                    "revision": boundary_review["revision"] if boundary_review else None,
+                    "detail": "Archived original Census evidence verified" if boundary_review else
+                        "County differences remain withheld where original Census continuity evidence cannot be verified"})
+            finally:
+                boundary_database.engine.dispose()
         with frozen_evidence(settings.database_path) as revision:
             if revision < max(previous_seed_revision, previous_revision):
                 raise ValueError("Collection moved evidence backwards; the prior hosted release must be retained")
