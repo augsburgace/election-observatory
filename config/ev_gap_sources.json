@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-21",
+  "sources": [
+    {
+      "id": "uf-archived-tracker-2024-national",
+      "state": "US",
+      "scope": "national",
+      "cycle": 2024,
+      "name": "University of Florida original-producer 2024 public tracker captures",
+      "connector": "uf_history",
+      "tier": 3,
+      "priority": 10,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "url": "https://web.archive.org/cdx/search/cdx?url=https%3A%2F%2Felection.lab.ufl.edu%2Fdata-downloads%2Fearlyvote%2F2024%2FUS.csv&output=json&fl=timestamp%2Coriginal%2Cmimetype%2Cdigest%2Cstatuscode&filter=statuscode%3A200&collapse=digest",
+      "original_url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2024/US.csv",
+      "discovery_url": "https://election.lab.ufl.edu/wp-content/themes/electionlab2023/2024-early-voting.js",
+      "notes": "Public original-producer CSV captures, payload hashes checked against public CDX inventory. Source last-update and archive availability remain distinct; earliest positive report per state/date. No authenticated or subscription dataset access. Statewide only, no fabricated county detail."
+    }
+  ]
+}

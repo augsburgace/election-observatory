@@ -1,0 +1,1109 @@
+{
+  "provider": "Voting and Election Science Team, University of Florida and Wichita State University",
+  "doi": "10.7910/DVN/K7760H",
+  "metadata_url": "https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/K7760H",
+  "verified_at": "2026-10-21",
+  "terms_of_use": "Creative Commons Attribution license (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)",
+  "sources": [
+    {
+      "id": "vest_2020_AK",
+      "state": "AK",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 AK paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070062",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070062,
+      "byte_count": 10652561,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "ec59a3ed499aa2e2a26a2ab38a2af9e9"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_AL",
+      "state": "AL",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 AL paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4751074",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4751074,
+      "byte_count": 18816472,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "fd557c46a74d31554ed271ea8475c4fe"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_AR",
+      "state": "AR",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 AR paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4931787",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4931787,
+      "byte_count": 12878843,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "4372b9c7baaf3d2d37d8b58b5b8738fa"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_AZ",
+      "state": "AZ",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 AZ paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4864722",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4864722,
+      "byte_count": 7693676,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "8647a286d04cb5dfbe5dd7c0e3078c29"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_CA",
+      "state": "CA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 CA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5206371",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5206371,
+      "byte_count": 58169123,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "d59edec0d3103de469b119265cba943f"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_CO",
+      "state": "CO",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 CO paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4863166",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4863166,
+      "byte_count": 17168550,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "adcfd84e5b6efab0bf1c4df911c75b90"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_CT",
+      "state": "CT",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 CT paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4986646",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4986646,
+      "byte_count": 2612573,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "1c7722b7475992d88136f3cb952dbe7c"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_DE",
+      "state": "DE",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 DE paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4773531",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4773531,
+      "byte_count": 1622730,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "a072b5ea5a58f90856bedb48f14e3fdb"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_FL",
+      "state": "FL",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 FL paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/12070362",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 12070362,
+      "byte_count": 22342358,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "1e85b9eecb4a1ff9cb8300504c3a927b"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_GA",
+      "state": "GA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 GA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070054",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070054,
+      "byte_count": 19142749,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "2ffb65ffe97d811a80093878be0ecc60"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_HI",
+      "state": "HI",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 HI paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4750434",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4750434,
+      "byte_count": 2388513,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "2208eed953ecdebc79a6db97cbd1529c"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_IA",
+      "state": "IA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 IA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/14304797",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 14304797,
+      "byte_count": 5208188,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "500252facae6107b93128406ebf5177b"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_ID",
+      "state": "ID",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 ID paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4789401",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4789401,
+      "byte_count": 7851636,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "0ca9f3bb8a0ecd160bfb6ab3bbf8cac7"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_IL",
+      "state": "IL",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 IL paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/14304793",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 14304793,
+      "byte_count": 15542636,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "403c5b9625a3a0416e7d395a9bda50f8"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_IN",
+      "state": "IN",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 IN paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5143396",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5143396,
+      "byte_count": 10993048,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "07a3092673cf2c44b7934a9b1e437a87"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_KS",
+      "state": "KS",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 KS paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/6696064",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 6696064,
+      "byte_count": 9456865,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "f85426ba40c4e41e34c14bce3dcd6d8d"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_KY",
+      "state": "KY",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 KY paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/6550200",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 6550200,
+      "byte_count": 6640052,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "671ce5134964bcf4ec5a0da7fb1a61a9"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_LA",
+      "state": "LA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 LA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5739918",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5739918,
+      "byte_count": 16623683,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "3211fb644c0ee86481282ccf042b4cab"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MA",
+      "state": "MA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5007849",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5007849,
+      "byte_count": 7550037,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "5d4b4edde83c8b5b28d9508841aec149"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MD",
+      "state": "MD",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MD paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/12070366",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 12070366,
+      "byte_count": 21648154,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "87d4f88d6c8241ee5af7a520f4166dbb"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_ME",
+      "state": "ME",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 ME paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070059",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070059,
+      "byte_count": 3606432,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "519d2c1807f2ecc58cd6c93a90f4fb03"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MI",
+      "state": "MI",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MI paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/9865421",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 9865421,
+      "byte_count": 7857460,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "f0f7b116d9c5234148ae644653dc1365"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MN",
+      "state": "MN",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MN paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11595851",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11595851,
+      "byte_count": 5603399,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "fee8f5de153c893f0114629687befb76"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MO",
+      "state": "MO",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MO paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5007850",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5007850,
+      "byte_count": 13456562,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "a34aa4e9a57e03fe79bcfb3e5156436f"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MS",
+      "state": "MS",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MS paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5706487",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5706487,
+      "byte_count": 13754344,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "75b4d3c2fe443ee3ec5115fa383e1e7e"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_MT",
+      "state": "MT",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 MT paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4773527",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4773527,
+      "byte_count": 7218578,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "5df8d46f6979ca496fd96d302d68ff03"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NC",
+      "state": "NC",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NC paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11595848",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11595848,
+      "byte_count": 25034760,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "d5bcc45677059ed93cf52b9e988fb99a"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_ND",
+      "state": "ND",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 ND paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5342900",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5342900,
+      "byte_count": 2314475,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "bc1534bc63cbc67c4b4cf1874bd5f5a9"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NE",
+      "state": "NE",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NE paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5739922",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5739922,
+      "byte_count": 4167815,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "3f82c7851e4ec2e54c76c489c3691dbf"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NH",
+      "state": "NH",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NH paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070060",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070060,
+      "byte_count": 1232231,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "dd4f7eecf060b3417b3656225137e830"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NJ",
+      "state": "NJ",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NJ paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/12070367",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 12070367,
+      "byte_count": 7996311,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "359c6d8093b06bdb6133aeac18cbba13"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NM",
+      "state": "NM",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NM paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5425599",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5425599,
+      "byte_count": 13756243,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "0e1952e85fc86e29ce4aec30222bf1f1"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NV",
+      "state": "NV",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NV paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11595850",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11595850,
+      "byte_count": 6932936,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "e9dc65766fac38c46132da4230292f2e"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_NY",
+      "state": "NY",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 NY paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5259468",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5259468,
+      "byte_count": 25178770,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "ea6ec0f5b3e6a469cb9f91a0a944cd8d"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_OH",
+      "state": "OH",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 OH paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/14304791",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 14304791,
+      "byte_count": 16415278,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "57ec1f1ed9bcd6db593aaad1635a1514"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_OK",
+      "state": "OK",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 OK paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5790364",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5790364,
+      "byte_count": 13369918,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "937eaa6ccabeecf1eec2e277489c7f45"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_OR",
+      "state": "OR",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 OR paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/5194704",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 5194704,
+      "byte_count": 13580312,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "cb92362f37e7dc765ca8e434009eda69"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_PA",
+      "state": "PA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 PA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/14304796",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 14304796,
+      "byte_count": 20417412,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "3b89cd9518a1b44db8b4f6bf5f461efc"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_RI",
+      "state": "RI",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 RI paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070053",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070053,
+      "byte_count": 1374002,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "ac907b652c9178518ee574d76efe1b54"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_SC",
+      "state": "SC",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 SC paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070057",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070057,
+      "byte_count": 11219722,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "01e8d67d1d17a75711a5b7fc4cb7422f"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_SD",
+      "state": "SD",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 SD paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/6082788",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 6082788,
+      "byte_count": 4344634,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "0c9eb591cce295792310a22482ffdc4a"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_TN",
+      "state": "TN",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 TN paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070058",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070058,
+      "byte_count": 24734110,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "1032fde0d21380935ea38a49f23a1c60"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_TX",
+      "state": "TX",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 TX paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/12070365",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 12070365,
+      "byte_count": 41108941,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "18060992ab990c7d147dfb0ad89258d2"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_UT",
+      "state": "UT",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 UT paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11595849",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11595849,
+      "byte_count": 10650036,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "6d3c2fe1ca63bfb837774d29fc68e021"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_VA",
+      "state": "VA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 VA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070061",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070061,
+      "byte_count": 22509314,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "2a14b90429d9df22afa1d23688b3d05d"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_VT",
+      "state": "VT",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 VT paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/14304794",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 14304794,
+      "byte_count": 732684,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "dd030dab84b95d47c4837c7a71c39029"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_WA",
+      "state": "WA",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 WA paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/11070055",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 11070055,
+      "byte_count": 30316329,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "603b72df402d15fc2f08c482ab35ca2b"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_WI",
+      "state": "WI",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 WI paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/14304795",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 14304795,
+      "byte_count": 24080515,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "15c3806a17455fc280c190fb85b747e7"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_WV",
+      "state": "WV",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 WV paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/6418344",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 6418344,
+      "byte_count": 16619117,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "500620f12313c8187e9a5dd87c1c4cb7"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    },
+    {
+      "id": "vest_2020_WY",
+      "state": "WY",
+      "year": 2020,
+      "provider": "vest",
+      "title": "VEST 2020 WY paired precinct boundaries and results",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/4789404",
+      "source_url": "https://doi.org/10.7910/DVN/K7760H",
+      "source_tier": 3,
+      "file_id": 4789404,
+      "byte_count": 4154100,
+      "publisher_checksum": {
+        "type": "MD5",
+        "value": "70ee4bb2f6b7509b9b8174dbddd912f2"
+      },
+      "restricted": false,
+      "version": "49.0",
+      "documentation_url": "https://dataverse.harvard.edu/api/access/datafile/14304792",
+      "years": [
+        2020
+      ]
+    }
+  ]
+}

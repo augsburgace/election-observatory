@@ -1,0 +1,170 @@
+name: Public cloud updates
+
+on:
+  schedule:
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      collect:
+        description: Check due public sources before building
+        type: boolean
+        default: true
+      bootstrap:
+        description: Allow the first deployment when this Pages site is absent
+        type: boolean
+        default: false
+
+permissions: {}
+concurrency:
+  group: observatory-public-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Never consume private-repository minutes or run write privileges on a fork/ref.
+    if: github.repository == 'augsburgace/election-observatory' && github.event.repository.private == false && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+      actions: write
+    environment:
+      name: github-pages
+      url: https://augsburgace.github.io/election-observatory/
+    env:
+      TZ: America/New_York
+      PYTHONUNBUFFERED: '1'
+      WORK_DIRECTORY: ${{ runner.temp }}/observatory-cloud
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Reclaim disposable runner SDKs and check free space
+        shell: bash
+        run: |
+          test "$GITHUB_ACTIONS" = true
+          test "$RUNNER_OS" = Linux
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h "$RUNNER_TEMP"
+          python3 -c 'import os,shutil; assert shutil.disk_usage(os.environ["RUNNER_TEMP"]).free >= 25_000_000_000, "Insufficient free runner disk; hosted release retained"'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: '11.1.0'
+          run_install: false
+          cache: false
+      - name: Install locked application dependencies
+        run: |
+          python -m pip install --disable-pip-version-check '.[dev]'
+          pnpm --dir frontend install --frozen-lockfile
+      - name: Verify application contracts
+        run: |
+          python -m pytest -q
+          python -m ruff check scripts backend/tests
+          pnpm --dir frontend typecheck
+          pnpm --dir frontend test
+      - name: Restore verified public evidence and exact rollback site
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BOOTSTRAP: ${{ inputs.bootstrap || false }}
+        run: |
+          arguments=()
+          if [[ "$BOOTSTRAP" == true ]]; then arguments+=(--bootstrap); fi
+          python scripts/cloud_workflow.py prepare --directory "$WORK_DIRECTORY" "${arguments[@]}"
+      - name: Collect and verify the full fifty-state publication
+        id: build
+        env:
+          COLLECT: ${{ github.event_name != 'workflow_dispatch' || inputs.collect }}
+        run: |
+          arguments=()
+          if [[ "$COLLECT" != true ]]; then arguments+=(--skip-collect); fi
+          python scripts/cloud_workflow.py build --directory "$WORK_DIRECTORY" "${arguments[@]}"
+      - name: Preserve matching validated checkpoint before deployment
+        id: checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/cloud_workflow.py persist --directory "$WORK_DIRECTORY"
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Upload one bounded temporary Pages artifact
+        id: upload
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ${{ env.WORK_DIRECTORY }}/publication/site
+          retention-days: 1
+          include-hidden-files: true
+      - name: Deploy verified website
+        id: deploy
+        continue-on-error: true
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+      - name: Verify the actual hosted research reader
+        id: hosted
+        if: steps.deploy.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/cloud_workflow.py verify --directory "$WORK_DIRECTORY"
+      - name: Remove completed temporary artifact
+        id: cleanup_main
+        if: always() && steps.upload.outputs.artifact_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact_id }}
+        run: |
+          for attempt in 1 2 3; do
+            if gh api --method DELETE "repos/augsburgace/election-observatory/actions/artifacts/$ARTIFACT_ID"; then exit 0; fi
+            sleep 3
+          done
+          echo 'Temporary artifact cleanup failed; publication requires inspection.'
+          exit 1
+      - name: Upload exact prior site for rollback
+        id: rollback_upload
+        if: always() && steps.checkpoint.outcome == 'success' && (steps.cleanup_main.outcome == 'success' || steps.upload.outputs.artifact_id == '') && (steps.deploy.outcome == 'failure' || steps.hosted.outcome == 'failure')
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          name: github-pages-rollback
+          path: ${{ env.WORK_DIRECTORY }}/rollback/site
+          retention-days: 1
+          include-hidden-files: true
+      - name: Restore exact prior website
+        id: rollback_deploy
+        if: always() && steps.rollback_upload.outcome == 'success'
+        continue-on-error: true
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: github-pages-rollback
+      - name: Verify rollback identity and research reader
+        id: rollback_verify
+        if: always() && steps.rollback_deploy.outcome == 'success'
+        run: python scripts/cloud_workflow.py verify --directory "$WORK_DIRECTORY" --rollback
+      - name: Remove rollback temporary artifact
+        if: always() && steps.rollback_upload.outputs.artifact_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.rollback_upload.outputs.artifact_id }}
+        run: |
+          for attempt in 1 2 3; do
+            if gh api --method DELETE "repos/augsburgace/election-observatory/actions/artifacts/$ARTIFACT_ID"; then exit 0; fi
+            sleep 3
+          done
+          echo 'Rollback artifact cleanup failed; inspect temporary storage.'
+          exit 1
+      - name: Record verified publication and rotate generated checkpoints
+        if: steps.hosted.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/cloud_workflow.py record --directory "$WORK_DIRECTORY"
+          python scripts/cloud_checkpoint.py prune --keep 3
+      - name: Report failed publication honestly
+        if: always() && (steps.deploy.outcome == 'failure' || steps.hosted.outcome == 'failure')
+        env:
+          ROLLBACK_RESULT: ${{ steps.rollback_verify.outcome }}
+        run: |
+          echo "New deployment failed verification. Exact prior-site rollback verification: $ROLLBACK_RESULT"
+          exit 1

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "verified_at": "2026-10-20",
+  "calendars": [
+    {
+      "id": "nc-ip-calendar-2026",
+      "state": "NC",
+      "cycle": 2026,
+      "mode": "early_in_person",
+      "voting_open_date": "2026-10-15",
+      "voting_close_date": "2026-10-31",
+      "calendar_span_days": 17,
+      "source_url": "https://www.ncsbe.gov/news/events/person-early-voting-period-november-2026-general-election",
+      "source_name": "NCSBE November 2026 general-election early-voting calendar",
+      "limitation": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2024",
+      "state": "NC",
+      "cycle": 2024,
+      "mode": "early_in_person",
+      "voting_open_date": "2024-10-17",
+      "voting_close_date": "2024-11-02",
+      "calendar_span_days": 17,
+      "source_url": "https://www.ncsbe.gov/news/events/person-early-voting-period-2024-general-election",
+      "source_name": "NCSBE 2024 general-election early-voting calendar",
+      "limitation": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2022",
+      "state": "NC",
+      "cycle": 2022,
+      "mode": "early_in_person",
+      "voting_open_date": "2022-10-20",
+      "voting_close_date": "2022-11-05",
+      "calendar_span_days": 17,
+      "source_url": "https://www.ncsbe.gov/news/events/one-stop-early-voting-period-starts-2022-statewide-general-election",
+      "source_name": "NCSBE 2022 general-election early-voting calendar",
+      "limitation": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2020",
+      "state": "NC",
+      "cycle": 2020,
+      "mode": "early_in_person",
+      "voting_open_date": "2020-10-15",
+      "voting_close_date": "2020-10-31",
+      "calendar_span_days": 17,
+      "source_url": "https://www.ncsbe.gov/news/events/start-early-voting-2020-general-election",
+      "source_name": "NCSBE 2020 general-election early-voting calendar",
+      "limitation": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2018",
+      "state": "NC",
+      "cycle": 2018,
+      "mode": "early_in_person",
+      "voting_open_date": "2018-10-17",
+      "voting_close_date": "2018-11-03",
+      "calendar_span_days": 18,
+      "source_url": "https://www.ncsbe.gov/news/press-releases/2018/10/16/person-early-voting-begins-wednesday",
+      "source_name": "NCSBE October 16, 2018 original early-voting announcement",
+      "limitation": "2018 began on Wednesday and spanned 18 calendar days. County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2016",
+      "state": "NC",
+      "cycle": 2016,
+      "mode": "early_in_person",
+      "voting_open_date": "2016-10-20",
+      "voting_close_date": "2016-11-05",
+      "calendar_span_days": 17,
+      "source_url": "https://www.ncsbe.gov/news/press-releases/2016/10/20/sbe-early-voting-begins-north-carolina",
+      "source_name": "NCSBE October20,2016 original early-voting announcement",
+      "limitation": "Statewide17-calendar-day period only. County operating days/hours and sites vary; HurricaneMatthew and restored17-day rules affect comparisons. Calendar span is not actual voting opportunities."
+    },
+    {
+      "id": "ia-ip-calendar-2026",
+      "state": "IA",
+      "cycle": 2026,
+      "mode": "early_in_person",
+      "voting_open_date": "2026-10-14",
+      "voting_close_date": "2026-11-02",
+      "calendar_span_days": 20,
+      "source_url": "https://sos.iowa.gov/news-resources/secretary-pate-encourages-iowans-make-plan-vote-2026-general-election",
+      "source_name": "Iowa Secretary of State September15,2026 original voting-plan announcement",
+      "limitation": "Ordinary in-person absentee voting window only. County office opening days/hours and satellite opportunities vary. This is not an all-method opening date; UOCAVA can precede ordinary absentee voting. Calendar span is not actual voting opportunities."
+    }
+  ]
+}

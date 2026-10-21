@@ -1,0 +1,1136 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "nc-counts-2026",
+      "state": "NC",
+      "name": "North Carolina 2026 cast-ballot aggregates",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2026_11_03/absentee_counts_county_20261103.csv",
+      "connector": "nc_counts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2026,
+      "historical": false
+    },
+    {
+      "id": "nc-counts-2024",
+      "state": "NC",
+      "name": "North Carolina 2024 cast-ballot aggregates",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2024_11_05/absentee_counts_county_20241105.csv",
+      "connector": "nc_counts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2024,
+      "historical": true
+    },
+    {
+      "id": "nc-counts-2022",
+      "state": "NC",
+      "name": "North Carolina 2022 cast-ballot aggregates",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2022_11_08/absentee_counts_county_20221108.csv",
+      "connector": "nc_counts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2022,
+      "historical": true
+    },
+    {
+      "id": "nc-counts-2020",
+      "state": "NC",
+      "name": "North Carolina 2020 cast-ballot aggregates",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2020_11_03/absentee_counts_county_20201103.csv",
+      "connector": "nc_counts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2020,
+      "historical": true
+    },
+    {
+      "id": "nc-counts-2018",
+      "state": "NC",
+      "name": "North Carolina 2018 cast-ballot aggregates",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2018_11_06/absentee_counts_county_20181106.csv",
+      "connector": "nc_counts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2018,
+      "historical": true
+    },
+    {
+      "id": "sc-early-2026",
+      "state": "SC",
+      "name": "South Carolina early-in-person voting",
+      "url": "https://scvotes.gov/elections-statistics/voter-participation/",
+      "connector": "sc_early",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2
+    },
+    {
+      "id": "sc-early-2022",
+      "state": "SC",
+      "name": "South Carolina 2022 archived daily early voting",
+      "url": "https://scvotes.gov/wp-content/uploads/2022/12/2022-Historical-Absentee-EV-Reports.zip",
+      "connector": "sc_early",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2022,
+      "historical": true
+    },
+    {
+      "id": "sc-early-2024",
+      "state": "SC",
+      "name": "South Carolina 2024 archived daily early voting",
+      "url": "https://scvotes.gov/wp-content/uploads/2025/06/2024-Historical-Absentee-EV-Reports-1.zip",
+      "connector": "sc_early",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2024,
+      "historical": true
+    },
+    {
+      "id": "fl-public-stats",
+      "state": "FL",
+      "name": "Florida public early voting and vote-by-mail statistics",
+      "url": "https://countyfilesvbm-ev.floridados.gov/VoteByMailEarlyVotingReports/PublicStats",
+      "connector": "fl_stats",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2
+    },
+    {
+      "id": "ak-official-statistics",
+      "state": "AK",
+      "name": "Alaska official absentee, early, questioned ballot statistics",
+      "url": "https://www.elections.alaska.gov/research/statistics/",
+      "connector": "ak_statistics",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2
+    },
+    {
+      "id": "ia-county-2026",
+      "state": "IA",
+      "name": "Iowa 2026 daily absentee statistics by county",
+      "url": "https://sos.iowa.gov/elections/pdf/2026/general/AbsenteeCounty2026.pdf",
+      "connector": "ia_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2026,
+      "historical": false
+    },
+    {
+      "id": "ia-county-2024",
+      "state": "IA",
+      "name": "Iowa 2024 daily absentee statistics by county",
+      "url": "https://sos.iowa.gov/elections/pdf/2024/general/AbsenteeCounty2024.pdf",
+      "connector": "ia_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2024,
+      "historical": true
+    },
+    {
+      "id": "ia-county-2022",
+      "state": "IA",
+      "name": "Iowa 2022 daily absentee statistics by county",
+      "url": "https://sos.iowa.gov/elections/pdf/2022/general/AbsenteeCounty2022.pdf",
+      "connector": "ia_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2022,
+      "historical": true
+    },
+    {
+      "id": "ga-official-discovery",
+      "state": "GA",
+      "name": "Georgia turnout hub",
+      "url": "https://sos.ga.gov/page/election-data-hub-unofficial-turnout",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Unattended export extraction not validated; HTTP access challenge observed."
+    },
+    {
+      "id": "oh-official-discovery",
+      "state": "OH",
+      "name": "Ohio absentee dashboard",
+      "url": "https://data.ohiosos.gov/portal/election-dashboards/absentee",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Public dashboard and voter-level exports exist; network access challenge prevents validated extraction."
+    },
+    {
+      "id": "mi-official-discovery",
+      "state": "MI",
+      "name": "Michigan participation dashboard",
+      "url": "https://www.michigan.gov/sos/elections/election-results-and-data/voter-participation-dashboard",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Official site returned Access Denied; public export requires validation."
+    },
+    {
+      "id": "mn-official-discovery",
+      "state": "MN",
+      "name": "Minnesota absentee data",
+      "url": "https://www.sos.mn.gov/election-administration-campaigns/data-maps/absentee-data/",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Official site returned CAPTCHA; no challenge bypass attempted."
+    },
+    {
+      "id": "ks-official-discovery",
+      "state": "KS",
+      "name": "Kansas advance-voting data",
+      "url": "https://sos.ks.gov/elections/advance-voting-data.html",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "General election Power BI government report discovered; public export not validated."
+    },
+    {
+      "id": "me-absentee-records",
+      "state": "ME",
+      "name": "Maine public absentee record counts",
+      "url": "https://www.maine.gov/sos/elections-voting/voter-data",
+      "connector": "me_records",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Record counts only; include duplicate/reissued and rejected records. Not valid ballots, unique voters or turnout."
+    },
+    {
+      "id": "tx-official-discovery",
+      "state": "TX",
+      "name": "Texas election historical index",
+      "url": "https://www.sos.texas.gov/elections/historical/index.shtml",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Current/historical portal export requires validation; original polling available separately."
+    },
+    {
+      "id": "nh-official-discovery",
+      "state": "NH",
+      "name": "New Hampshire elections",
+      "url": "https://www.sos.nh.gov/elections",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Repeatable statewide public daily absentee feed not verified."
+    },
+    {
+      "id": "ne-official-discovery",
+      "state": "NE",
+      "name": "Nebraska elections",
+      "url": "https://sos.nebraska.gov/elections-division",
+      "connector": "discovery",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 2,
+      "limitation": "Repeatable statewide public daily absentee feed not verified."
+    },
+    {
+      "id": "marist-oh-2026-10-20",
+      "state": "OH",
+      "name": "Marist OH original Senate survey (2026-10-20)",
+      "url": "https://maristpoll.marist.edu/wp-content/uploads/2026/10/Marist-Poll_OH-NOS-and-Tables_202610191215zz9hjdV2l.pdf",
+      "connector": "marist_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "published_at": "2026-10-20",
+      "release_url": "https://maristpoll.marist.edu/polls/midterm-elections-in-ohio-october-2026/"
+    },
+    {
+      "id": "marist-ia-2026-10-15",
+      "state": "IA",
+      "name": "Marist IA original Senate survey (2026-10-15)",
+      "url": "https://maristpoll.marist.edu/wp-content/uploads/2026/10/Marist-Poll_Iowa_NOS-and-Tables_202610131230%403bcy%5Ew.pdf",
+      "connector": "marist_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "published_at": "2026-10-15",
+      "release_url": "https://maristpoll.marist.edu/polls/2026-midterm-elections-in-iowa-october-2026/"
+    },
+    {
+      "id": "marist-tx-2026-10-14",
+      "state": "TX",
+      "name": "Marist TX original Senate survey (2026-10-14)",
+      "url": "https://maristpoll.marist.edu/wp-content/uploads/2026/10/Marist-Poll_TX-NOS-and-Tables_202610131056%5Eal3j7.pdf",
+      "connector": "marist_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "published_at": "2026-10-14",
+      "release_url": "https://maristpoll.marist.edu/polls/2026-midterm-elections-in-texas-october-2026/"
+    },
+    {
+      "id": "marist-me-2026-10-06",
+      "state": "ME",
+      "name": "Marist ME original Senate survey (2026-10-06)",
+      "url": "https://maristpoll.marist.edu/wp-content/uploads/2026/10/Marist-Poll_Maine-NOS-and-Tables_202610051032xtc92617B.pdf",
+      "connector": "marist_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "published_at": "2026-10-06",
+      "release_url": "https://maristpoll.marist.edu/polls/midterm-elections-in-maine-october-2026/"
+    },
+    {
+      "id": "marist-mi-2026-09-30",
+      "state": "MI",
+      "name": "Marist MI original Senate survey (2026-09-30)",
+      "url": "https://maristpoll.marist.edu/wp-content/uploads/2026/09/Marist-Poll_MI-NOS-and-Tables_202609281401%409159_7e99y.pdf",
+      "connector": "marist_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "published_at": "2026-09-30",
+      "release_url": "https://maristpoll.marist.edu/polls/midterm-elections-in-michigan-september-2026/"
+    },
+    {
+      "id": "uf-fallback-ga",
+      "state": "GA",
+      "name": "UF Election Lab GA attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-oh",
+      "state": "OH",
+      "name": "UF Election Lab OH attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-ia",
+      "state": "IA",
+      "name": "UF Election Lab IA attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-me",
+      "state": "ME",
+      "name": "UF Election Lab ME attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-mn",
+      "state": "MN",
+      "name": "UF Election Lab MN attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-ks",
+      "state": "KS",
+      "name": "UF Election Lab KS attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-ne",
+      "state": "NE",
+      "name": "UF Election Lab NE attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-tx",
+      "state": "TX",
+      "name": "UF Election Lab TX attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "uf-fallback-mi",
+      "state": "MI",
+      "name": "UF Election Lab MI attributed academic fallback",
+      "url": "https://election.lab.ufl.edu/data-downloads/earlyvote/2026/US.csv",
+      "about_url": "https://election.lab.ufl.edu/early-vote/2026-early-voting/",
+      "connector": "uf_tracker",
+      "tier": 3,
+      "enabled": true,
+      "expected_hours": 4,
+      "notes": "Academic fallback; keep original authority lineage and methodological caveats. CC BY-NC-ND4.0 personal noncommercial research."
+    },
+    {
+      "id": "reconmr-tx-2026-10-13",
+      "state": "TX",
+      "name": "ReconMR Texas original survey, published by Siena (October 13)",
+      "url": "https://sri.siena.edu/wp-content/uploads/2026/10/TXP004-Crosstabs.pdf",
+      "release_url": "https://sri.siena.edu/2026/10/13/talarico-maintains-small-lead-over-paxton/",
+      "methodology_url": "https://sri.siena.edu/wp-content/uploads/2026/10/TXP004-October-Press-Release.pdf",
+      "connector": "reconmr_pdf",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168
+    },
+    {
+      "id": "elon-nc-2026-10-20",
+      "state": "NC",
+      "name": "Elon University / YouGov North Carolina October survey",
+      "url": "https://eloncdn.blob.core.windows.net/eu3/sites/819/2026/10/Elon-University-Poll-topline-methodology-10_20_26.pdf",
+      "connector": "research_poll",
+      "parser": "elon",
+      "producer": "Elon University Poll",
+      "study_prefix": "elon-nc-2026-10-20",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "sponsor": "Elon University",
+      "release_url": "https://www.elon.edu/u/news/2026/10/20/final-elon-university-poll-before-election-day-cooper-has-double-digit-lead-over-whatley-in-nc-us-senate-race/",
+      "methodology": "Elon questionnaire and sponsorship; YouGov nonprobability online panels, sample matching and weighting"
+    },
+    {
+      "id": "ut-tx-2026-10-13",
+      "state": "TX",
+      "name": "University of Texas / Texas Politics Project original October survey",
+      "url": "https://texaspolitics.utexas.edu/files/202610_POLL_TOPLINE-76f91287.pdf",
+      "connector": "research_poll",
+      "parser": "ut",
+      "producer": "University of Texas / Texas Politics Project",
+      "study_prefix": "ut-tx-2026-10-13",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "sponsor": "Texas Politics Project",
+      "release_url": "https://texaspolitics.utexas.edu/blog/latest-ut-texas-politics-poll-finds-historic-levels-of-competition-in-texas-midterm-elections",
+      "methodology": "Online survey with weighting; Senate trial ballot folds forced-choice follow-up responses into estimates"
+    },
+    {
+      "id": "asr-ak-2026-04-23",
+      "state": "AK",
+      "name": "Alaska Survey Research original April RCV survey",
+      "url": "https://alaskasurveyresearch.com/peltola-vs-sullivan-april-2026/",
+      "connector": "research_poll",
+      "parser": "asr",
+      "producer": "Alaska Survey Research",
+      "study_prefix": "asr-ak-2026-04-23",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "published_at": "2026-04-23",
+      "publication_evidence": "UPDATED April 23, 2026",
+      "methodology": "Text-to-online and ASR Survey Panel; demographic and voting-probability weights"
+    },
+    {
+      "id": "anselm-nh-2026-03",
+      "state": "NH",
+      "name": "Saint Anselm College March registered-voter study, original PDF",
+      "url": "https://www.anselm.edu/sites/default/files/2026-03/March%202026%20NHRV%20Final_0.pdf",
+      "connector": "research_poll",
+      "parser": "anselm",
+      "producer": "Saint Anselm College Survey Center",
+      "study_prefix": "anselm-nh-2026-03",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "sponsor": "Saint Anselm College",
+      "methodology": "Online surveys of cellphone users randomly drawn from registered voter sample; weighted for demographic and 2024 voting patterns",
+      "notes": "Pre-primary hypothetical pairings; release date unestablished and availability conservatively starts at first local archive."
+    },
+    {
+      "id": "emerson-ia-2026-10-09",
+      "state": "IA",
+      "name": "Emerson College IA original release",
+      "url": "https://emersoncollegepolling.com/iowa-2026-poll-u-s-senate-race-tightens-sand-maintains-edge-for-governor/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-ia-2026-10-09",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Nexstar Media",
+      "population": "LV",
+      "questions": [
+        {
+          "scope_pattern": "A new Emerson College Polling/Nexstar Media poll finds.*?Since September",
+          "responses": [
+            {
+              "name": "Ashley Hinson",
+              "pattern": "finds (\\d+)% of Iowa voters support Republican Ashley Hinson",
+              "party": "REP"
+            },
+            {
+              "name": "Josh Turek",
+              "pattern": "(\\d+)% support Democrat Josh Turek",
+              "party": "DEM"
+            },
+            {
+              "name": "Thomas Laehn",
+              "pattern": "Libertarian Thomas Laehn has (\\d+)%",
+              "party": "LIB"
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% are undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-ia-2026-09-03",
+      "state": "IA",
+      "name": "Emerson College IA original release",
+      "url": "https://emersoncollegepolling.com/iowa-2026-poll-hinson-leads-turek/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-ia-2026-09-03",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Nexstar Media",
+      "population": "LV",
+      "questions": [
+        {
+          "scope_pattern": "The September Emerson.*?Support for Hinson",
+          "responses": [
+            {
+              "name": "Ashley Hinson",
+              "pattern": "election, (\\d+)% to",
+              "party": "REP"
+            },
+            {
+              "name": "Josh Turek",
+              "pattern": "election, \\d+% to (\\d+)%",
+              "party": "DEM"
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-ia-2026-08-06",
+      "state": "IA",
+      "name": "Emerson College IA original release",
+      "url": "https://emersoncollegepolling.com/iowa-2026-poll/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-ia-2026-08-06",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Nexstar Media",
+      "population": "LV",
+      "questions": [
+        {
+          "scope_pattern": "In the race for U.S. Senate,.*?Six percent are undecided\\.",
+          "responses": [
+            {
+              "name": "Ashley Hinson",
+              "pattern": "Senate, (\\d+)% support Republican Ashley Hinson",
+              "party": "REP"
+            },
+            {
+              "name": "Josh Turek",
+              "pattern": "(\\d+)% support Democrat Josh Turek",
+              "party": "DEM"
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-ga-2026-03-05",
+      "state": "GA",
+      "name": "Emerson College GA original release",
+      "url": "https://emersoncollegepolling.com/georgia-2026-poll-senator-ossoff-starts-re-election-near-50-and-outpaces-gop-field/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-ga-2026-03-05",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Nexstar Media",
+      "population": "Voters (overall sample)",
+      "questions": [
+        {
+          "scope_pattern": "Ossoff leads Rep\\. Buddy Carter .*?undecided\\.",
+          "responses": [
+            {
+              "name": "Jon Ossoff",
+              "pattern": "(\\d+)% to",
+              "party": "DEM"
+            },
+            {
+              "name": "Buddy Carter",
+              "pattern": "\\d+% to (\\d+)%",
+              "party": "REP"
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        },
+        {
+          "scope_pattern": "Ossoff’s lead extends .*?Mike Collins, .*?undecided\\.",
+          "responses": [
+            {
+              "name": "Jon Ossoff",
+              "pattern": "(\\d+)% to",
+              "party": "DEM"
+            },
+            {
+              "name": "Mike Collins",
+              "pattern": "\\d+% to (\\d+)%",
+              "party": "REP"
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        },
+        {
+          "scope_pattern": "Ossoff leads Derek Dooley .*?undecided\\.",
+          "responses": [
+            {
+              "name": "Jon Ossoff",
+              "pattern": "(\\d+)% to",
+              "party": "DEM"
+            },
+            {
+              "name": "Derek Dooley",
+              "pattern": "\\d+% to (\\d+)%",
+              "party": "REP"
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-mn-2026-02-11",
+      "state": "MN",
+      "name": "Emerson College MN original release",
+      "url": "https://emersoncollegepolling.com/minnesota-2026-poll-democrats-lead-gop-as-voters-cite-threats-to-democracy/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-mn-2026-02-11",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Emerson College",
+      "population": "LV",
+      "questions": [
+        {
+          "scope_pattern": "Between Democratic-Farmer-Labor Peggy Flanagan.*?undecided\\.",
+          "responses": [
+            {
+              "name": "Peggy Flanagan",
+              "pattern": "Flanagan leads (\\d+)%",
+              "party": "DEM"
+            },
+            {
+              "name": "Michele Tafoya",
+              "pattern": "leads \\d+% to (\\d+)%",
+              "party": "REP"
+            },
+            {
+              "name": "Someone else / undecided",
+              "pattern": "(\\d+)% support someone else",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        },
+        {
+          "scope_pattern": "In a matchup between Tafoya and Angie Craig,.*?undecided\\.",
+          "responses": [
+            {
+              "name": "Angie Craig",
+              "pattern": "(\\d+)% support Craig",
+              "party": "DEM"
+            },
+            {
+              "name": "Michele Tafoya",
+              "pattern": "(\\d+)% Tafoya",
+              "party": "REP"
+            },
+            {
+              "name": "Someone else / undecided",
+              "pattern": "(\\d+)% support someone else",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-me-2026-03-26",
+      "state": "ME",
+      "name": "Emerson College ME original release",
+      "url": "https://emersoncollegepolling.com/maine-2026-poll-platner-leads-gov-mills-democrats-lead-sen-collins-in-maine/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-me-2026-03-26",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Emerson College",
+      "population": "LV",
+      "questions": [
+        {
+          "scope_pattern": "Between Platner and Collins,.*?respectively\\.",
+          "responses": [
+            {
+              "name": "Graham Platner",
+              "pattern": "(\\d+)% support Platner",
+              "party": "DEM"
+            },
+            {
+              "name": "Susan Collins",
+              "pattern": "(\\d+)% Collins",
+              "party": "REP"
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        },
+        {
+          "scope_pattern": "In a matchup between Mills and Collins,.*?undecided\\.",
+          "responses": [
+            {
+              "name": "Janet Mills",
+              "pattern": "(\\d+)% support Mills",
+              "party": "DEM"
+            },
+            {
+              "name": "Susan Collins",
+              "pattern": "(\\d+)% Collins",
+              "party": "REP"
+            },
+            {
+              "name": "Someone else",
+              "pattern": "(\\d+)% someone else",
+              "party": null
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% are undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release",
+          "ballot_type": "hypothetical"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-oh-2025-08-22",
+      "state": "OH",
+      "name": "Emerson College OH original release",
+      "url": "https://emersoncollegepolling.com/ohio-2026/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-oh-2025-08-22",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Emerson College",
+      "population": "RV",
+      "questions": [
+        {
+          "scope_pattern": "A new Emerson College Polling survey of the 2026 Ohio Senate race.*?undecided\\.",
+          "responses": [
+            {
+              "name": "Jon Husted",
+              "pattern": "Brown, (\\d+)% to",
+              "party": "REP"
+            },
+            {
+              "name": "Sherrod Brown",
+              "pattern": "Brown, \\d+% to (\\d+)%",
+              "party": "DEM"
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% of voters undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "emerson-oh-2025-12-11",
+      "state": "OH",
+      "name": "Emerson College OH original release",
+      "url": "https://emersoncollegepolling.com/ohio-2026-poll-democrats-make-gains-in-races-for-governor-and-us-senate/",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Emerson College Polling",
+      "study_prefix": "emerson-oh-2025-12-11",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "publisher": "Emerson College Polling",
+      "sponsor": "Emerson College",
+      "population": "RV",
+      "questions": [
+        {
+          "scope_pattern": "In the U.S. Senate election,.*?undecided\\.",
+          "responses": [
+            {
+              "name": "Jon Husted",
+              "pattern": "election, (\\d+)% support Republican incumbent Jon Husted",
+              "party": "REP"
+            },
+            {
+              "name": "Sherrod Brown",
+              "pattern": "(\\d+)% support Democratic former Senator Sherrod Brown",
+              "party": "DEM"
+            },
+            {
+              "name": "Undecided",
+              "pattern": "(\\d+)% undecided",
+              "party": null
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release"
+        }
+      ],
+      "sample_pattern": "(?:overall sample|sample of likely voters).*?n=([\\d,]+)",
+      "moe_pattern": "(?:credibility interval|margin of error).*?\\+/-\\s*([\\d.]+)\\s*(?:percent|percentage|%)",
+      "uncertainty_type": "Reported credibility interval; not necessarily a design-based probability-sampling MOE",
+      "methodology": "See original release: voter-file-matched online/text-to-web panel methodology and source-specific weighting"
+    },
+    {
+      "id": "bgsu-oh-2026-10",
+      "state": "OH",
+      "name": "Bowling Green State University / YouGov original October findings",
+      "url": "https://www.bgsu.edu/arts-and-sciences/democracy-and-public-policy-research-network/bgsu-poll.html",
+      "connector": "research_poll",
+      "parser": "narrative",
+      "producer": "Bowling Green State University",
+      "study_prefix": "bgsu-oh-2026-10",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "sponsor": "Bowling Green State University",
+      "population": "LV",
+      "publication_url": "https://scholarworks.bgsu.edu/depo/31/",
+      "published_at": "2026-10-16",
+      "publication_evidence": "Since October 16, 2026",
+      "sample_pattern": "poll of ([\\d,]+) likely Ohio voters",
+      "moe_pattern": "margin of error of \\+/-\\s*([\\d.]+)",
+      "questions": [
+        {
+          "scope_pattern": "Democrat Sherrod Brown holds a .*?\\(.*?\\)\\.",
+          "responses": [
+            {
+              "name": "Sherrod Brown",
+              "pattern": "\\((\\d+)% to",
+              "party": "DEM"
+            },
+            {
+              "name": "Jon Husted",
+              "pattern": "\\(\\d+% to (\\d+)%",
+              "party": "REP"
+            }
+          ],
+          "description": "Senate preference summarized in the original narrative release"
+        }
+      ],
+      "methodology": "BGSU questionnaire and analysis; YouGov web panel, original university methodology",
+      "methods_scope_pattern": "web-based poll of.*?percentage points\\.",
+      "expected_fieldwork": [
+        "2026-09-29",
+        "2026-10-09"
+      ]
+    },
+    {
+      "id": "nc-daily-reports-2026",
+      "state": "NC",
+      "name": "North Carolina 2026 dated official absentee reports",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/?prefix=Press%2F2026+General%2FNC+Absentee+Stats+for+2026+General%2F",
+      "connector": "nc_reports",
+      "tier": 1,
+      "priority": 20,
+      "enabled": true,
+      "expected_hours": 2,
+      "cycle": 2026,
+      "historical": false,
+      "include_reconstructed": true,
+      "notes": "Official dated PDF snapshots. Conservative as-reported chronology uses archived object LastModified. Reconstructed report snapshots retain their later vintage and are not ballot event-date records."
+    },
+    {
+      "id": "nc-daily-reports-2022",
+      "state": "NC",
+      "name": "North Carolina 2022 dated official absentee reports",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/?prefix=Press%2F2022+General%2FNC+Absentee+Stats+for+2022+General%2F",
+      "connector": "nc_reports",
+      "tier": 1,
+      "priority": 20,
+      "enabled": true,
+      "expected_hours": 720,
+      "cycle": 2022,
+      "historical": true,
+      "include_reconstructed": true,
+      "notes": "Official dated PDF snapshots. Conservative as-reported chronology uses archived object LastModified. Reconstructed report snapshots retain their later vintage and are not ballot event-date records."
+    },
+    {
+      "id": "nc-daily-reports-2024",
+      "state": "NC",
+      "name": "North Carolina 2024 dated official absentee reports",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/?prefix=Press%2F2024+General%2FNC+Absentee+Stats+for+2024+General%2F",
+      "connector": "nc_reports",
+      "tier": 1,
+      "priority": 20,
+      "enabled": true,
+      "expected_hours": 720,
+      "cycle": 2024,
+      "historical": true,
+      "include_reconstructed": true,
+      "notes": "Official dated PDF snapshots. Conservative as-reported chronology uses archived object LastModified. Reconstructed report snapshots retain their later vintage and are not ballot event-date records."
+    },
+    {
+      "id": "nc-daily-reports-2020",
+      "state": "NC",
+      "name": "North Carolina 2020 dated official absentee reports",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/?prefix=Press%2F2020+General%2FNC+Absentee+Stats+for+2020+General+Election%2F",
+      "connector": "nc_reports",
+      "tier": 1,
+      "priority": 20,
+      "enabled": true,
+      "expected_hours": 720,
+      "cycle": 2020,
+      "historical": true,
+      "include_reconstructed": true,
+      "notes": "Official dated PDF snapshots. Conservative as-reported chronology uses archived object LastModified. Reconstructed report snapshots retain their later vintage and are not ballot event-date records."
+    },
+    {
+      "id": "nc-daily-reports-2018",
+      "state": "NC",
+      "name": "North Carolina 2018 dated official absentee reports",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/?prefix=Press%2F2018+General%2F",
+      "connector": "nc_reports",
+      "tier": 1,
+      "priority": 20,
+      "enabled": true,
+      "expected_hours": 720,
+      "cycle": 2018,
+      "historical": true,
+      "include_reconstructed": true,
+      "notes": "Official dated PDF snapshots. Conservative as-reported chronology uses archived object LastModified. Reconstructed report snapshots retain their later vintage and are not ballot event-date records."
+    },
+    {
+      "id": "nc-ip-calendar-2026",
+      "state": "NC",
+      "cycle": 2026,
+      "url": "https://www.ncsbe.gov/news/events/person-early-voting-period-november-2026-general-election",
+      "name": "NCSBE November 2026 general-election early-voting calendar",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "historical": false,
+      "notes": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2024",
+      "state": "NC",
+      "cycle": 2024,
+      "url": "https://www.ncsbe.gov/news/events/person-early-voting-period-2024-general-election",
+      "name": "NCSBE 2024 general-election early-voting calendar",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "historical": true,
+      "notes": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2022",
+      "state": "NC",
+      "cycle": 2022,
+      "url": "https://www.ncsbe.gov/news/events/one-stop-early-voting-period-starts-2022-statewide-general-election",
+      "name": "NCSBE 2022 general-election early-voting calendar",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "historical": true,
+      "notes": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2020",
+      "state": "NC",
+      "cycle": 2020,
+      "url": "https://www.ncsbe.gov/news/events/start-early-voting-2020-general-election",
+      "name": "NCSBE 2020 general-election early-voting calendar",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "historical": true,
+      "notes": "County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "nc-ip-calendar-2018",
+      "state": "NC",
+      "cycle": 2018,
+      "url": "https://www.ncsbe.gov/news/press-releases/2018/10/16/person-early-voting-begins-wednesday",
+      "name": "NCSBE October 16, 2018 original early-voting announcement",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 168,
+      "historical": true,
+      "notes": "2018 began on Wednesday and spanned 18 calendar days. County sites, operating days, and hours vary. Calendar span is not a count of actual voting opportunities. Applies only to in-person early voting."
+    },
+    {
+      "id": "hi-official-receipts-2026",
+      "state": "HI",
+      "name": "Hawaii official electronic, early and mail receipts",
+      "url": "https://elections.hawaii.gov/resources/absentee-voting-report/",
+      "connector": "hi_receipts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 24,
+      "cycle": 2026,
+      "historical": false
+    },
+    {
+      "id": "or-official-receipts-2026",
+      "state": "OR",
+      "name": "Oregon official unofficial ballot receipts and active registration",
+      "url": "https://sos.oregon.gov/elections/Documents/Ballot-Return-Dashboard-Nov-3-2026.pdf",
+      "connector": "or_receipts",
+      "tier": 1,
+      "enabled": true,
+      "expected_hours": 24,
+      "cycle": 2026,
+      "historical": false
+    }
+  ]
+}

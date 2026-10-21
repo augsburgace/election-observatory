@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createMapSpec,PARTISAN} from '../src/mapSpec.ts';
+const row=(value,change=null)=>({id:'county:1',name:'Test',type:'county',value,change,baseline_value:null,share:null,denominator:null,source_ids:[],observation_ids:[]});
+test('symbol area is proportional to magnitude and zero has zero area',()=>{const s=createMapSpec([row(100),row(25)],'volume');assert.equal(s.radius(0),0);assert.equal(s.radius(100)**2/s.radius(25)**2,4);});
+test('Republican-minus-Democratic margins run from blue to red',()=>{const s=createMapSpec([row(1,-50),row(1,50)],'margin');assert.equal(s.color(-50),PARTISAN[0]);assert.equal(s.color(50),PARTISAN.at(-1));assert.deepEqual(s.domain,[-50,50]);});
+test('missing differences and missing denominators remain unavailable',()=>{const r=row(100);assert.equal(createMapSpec([r],'change').value(r),null);assert.equal(createMapSpec([r],'participation').value(r),null);});
+test('comparable share encodings use percentages and shared scale maximum',()=>{const r={...row(30),share:.3};const s=createMapSpec([r],'share',80);assert.equal(s.value(r),30);assert.equal(s.domain[1],80);assert.equal(s.bins.length,s.colors.length+1);});
+import {signedPartisanMargin,summarizeOptions} from '../src/chartMath.ts';
+test('winner lead does not replace signed partisan margin',()=>{assert.equal(signedPartisanMargin({rep_share_pct:40,dem_share_pct:55,margin_pp:15}),-15);});
+test('suppressed or incomplete counts never become renormalized shares',()=>{const result=summarizeOptions([{contest_id:'one',partial_suppression:true,options:[{id:'a',name:'A',party:'',votes:50,share_pct:null},{id:'b',name:'B',party:'',votes:null,share_pct:null}]}]);assert.equal(result.complete,false);assert.equal(result.options[0].share_pct,null);assert.equal(result.options[1].observed,false);});
+test('different contests cannot form one candidate distribution',()=>{const result=summarizeOptions([{contest_id:'one',options:[]},{contest_id:'two',options:[]}]);assert.equal(result.mixed,true);assert.deepEqual(result.options,[]);});
+import {initialResultGrain} from '../src/researchDefaults.ts';
+test('new Alaska investigations open real statewide results while explicit county choices are preserved',()=>{assert.equal(initialResultGrain('AK','PRESIDENT'),'state');assert.equal(initialResultGrain('AK','PRESIDENT','county'),'county');assert.equal(initialResultGrain('TX','PRESIDENT'),'county');assert.equal(initialResultGrain('TX','US SENATE'),'state');});

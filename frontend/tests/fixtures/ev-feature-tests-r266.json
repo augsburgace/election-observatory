@@ -1,0 +1,3082 @@
+{
+  "_fixture_note": "Actual r266 feature-test response; unrendered strata, full evidence lists and case records omitted from this frontend fixture.",
+  "version": "senate-ev-extra-features-1.0",
+  "revision": 266,
+  "as_of": "2026-10-21",
+  "status": "additional_features_under_evaluation",
+  "warnings": [
+    "More rows do not mean more independent elections. State-election clustering balances repeated reports and related contests.",
+    "Every learned holdout uses only earlier-cycle outcomes and training-only feature scales. Current-cycle final turnout and final registration cannot enter predictors.",
+    "Historical source revisions are retrospectively collected; strict-contemporary feature publication is a separate stratum, not a reconstructed production system.",
+    "Published registration categories and historical geographic party margins do not reveal early voters\u2019 choices. No religion, demographic intersections or individual propensity is inferred.",
+    "Different feature availability creates different case sets. Compare models within a paired experiment, not headline errors across experiments.",
+    "These are multiple exploratory ablations with fixed hyperparameters, not historically preregistered experiments. Sparse or selected coverage cannot establish nationwide forecast accuracy.",
+    "Precinct election-result maps cannot substitute for missing dated precinct early-vote reports. Missing features remain unavailable."
+  ],
+  "manifest": {
+    "dataset_revision": 266,
+    "as_of": "2026-10-21",
+    "version": "senate-ev-extra-features-1.0",
+    "input_backtest_sha256": "e04c5b8c508709035220f381a94baeb594575f77de5e6d01c319da1e559ab6e9",
+    "feature_sha256": "2317bf57a61ebf193f464486d10464d70bd36aec93599fbe88e6d1fe804ac702",
+    "code_sha256": "d22761e62e4d4243b57f4d24c0399178d3a546c37e7e9c2c3c4f3d8dafdce1d0",
+    "deterministic": true,
+    "hyperparameters": {
+      "huber_delta_pp": 10,
+      "ridge_penalty": 8,
+      "coefficient_bounds_standardized": [
+        -10,
+        10
+      ],
+      "no_intercept": true,
+      "prediction_adjustment_cap_pp": 5.0,
+      "training_only_rms_scaling": true
+    },
+    "complete_case_policy": "No missing-feature zero fill. Each augmented model and geography-only comparator use identical earlier complete-case rows and identical held-out cases.",
+    "effective_weighting_unit": "State/election year. Repeated checkpoints and same-year regular/special contests share a single unit of weight.",
+    "feature_policy_frozen_before_this_run": true,
+    "historically_preregistered": false,
+    "source_refs": [
+      {
+        "id": 432308,
+        "source_id": "ia-captured-archive-2016",
+        "snapshot_id": 1171,
+        "published_at": "2016-12-01T10:39:31+00:00",
+        "observed_at": "2026-10-21T13:00:53.722861+00:00"
+      },
+      {
+        "snapshot_id": 358,
+        "source_id": "medsl_county_2000_2016",
+        "result_id": 41475,
+        "revision": 71
+      },
+      {
+        "id": 514655,
+        "source_id": "ia-captured-archive-2020",
+        "snapshot_id": 1184,
+        "published_at": "2020-11-16T15:53:59+00:00",
+        "observed_at": "2026-10-21T13:02:15.506872+00:00"
+      },
+      {
+        "id": 419560,
+        "source_id": "electproject-dated-2020-ia",
+        "snapshot_id": 1059,
+        "published_at": "2020-10-02T17:32:48Z",
+        "observed_at": "2026-10-21T12:46:16.704069+00:00"
+      },
+      {
+        "id": 483716,
+        "source_id": "ia-captured-archive-2020",
+        "snapshot_id": 1182,
+        "published_at": "2020-11-01T04:49:29+00:00",
+        "observed_at": "2026-10-21T13:02:10.380775+00:00"
+      },
+      {
+        "id": 523658,
+        "source_id": "ia-captured-archive-2022",
+        "snapshot_id": 1187,
+        "published_at": "2022-11-08T02:39:09+00:00",
+        "observed_at": "2026-10-21T13:03:01.018888+00:00"
+      },
+      {
+        "snapshot_id": 359,
+        "source_id": "county_president_2020_bridge",
+        "result_id": 60153,
+        "revision": 72
+      },
+      {
+        "id": 534385,
+        "source_id": "ia-captured-archive-2022",
+        "snapshot_id": 1188,
+        "published_at": "2024-01-13T06:28:03+00:00",
+        "observed_at": "2026-10-21T13:03:02.952182+00:00"
+      },
+      {
+        "id": 456668,
+        "source_id": "ia-captured-archive-2018",
+        "snapshot_id": 1176,
+        "published_at": "2020-09-29T21:30:59+00:00",
+        "observed_at": "2026-10-21T13:01:16.366992+00:00"
+      },
+      {
+        "id": 328450,
+        "source_id": "electproject-dated-2020-mi",
+        "snapshot_id": 935,
+        "published_at": "2020-10-30T17:53:44Z",
+        "observed_at": "2026-10-21T12:45:33.724556+00:00"
+      },
+      {
+        "id": 327710,
+        "source_id": "electproject-dated-2020-mi",
+        "snapshot_id": 932,
+        "published_at": "2020-10-27T16:48:43Z",
+        "observed_at": "2026-10-21T12:45:33.605714+00:00"
+      },
+      {
+        "id": 326498,
+        "source_id": "electproject-dated-2020-mi",
+        "snapshot_id": 927,
+        "published_at": "2020-10-20T17:10:13Z",
+        "observed_at": "2026-10-21T12:45:33.371930+00:00"
+      },
+      {
+        "id": 323890,
+        "source_id": "electproject-dated-2020-mi",
+        "snapshot_id": 915,
+        "published_at": "2020-10-02T17:32:48Z",
+        "observed_at": "2026-10-21T12:45:32.951162+00:00"
+      },
+      {
+        "id": 374185,
+        "source_id": "electproject-dated-2020-nc",
+        "snapshot_id": 987,
+        "published_at": "2020-10-19T13:17:49Z",
+        "observed_at": "2026-10-21T12:46:07.910709+00:00"
+      },
+      {
+        "id": 381542,
+        "source_id": "electproject-dated-2020-nc",
+        "snapshot_id": 992,
+        "published_at": "2020-10-24T14:09:33Z",
+        "observed_at": "2026-10-21T12:46:09.245884+00:00"
+      },
+      {
+        "id": 388834,
+        "source_id": "electproject-dated-2020-nc",
+        "snapshot_id": 997,
+        "published_at": "2020-10-29T12:20:57Z",
+        "observed_at": "2026-10-21T12:46:10.505720+00:00"
+      },
+      {
+        "id": 218420,
+        "source_id": "nc-daily-reports-2020",
+        "snapshot_id": 338,
+        "published_at": "2022-03-16T13:57:01.000Z",
+        "observed_at": "2026-10-21T03:36:25.395841+00:00"
+      },
+      {
+        "id": 216848,
+        "source_id": "nc-daily-reports-2020",
+        "snapshot_id": 332,
+        "published_at": "2022-03-16T13:56:52.000Z",
+        "observed_at": "2026-10-21T03:36:25.120122+00:00"
+      },
+      {
+        "id": 215014,
+        "source_id": "nc-daily-reports-2020",
+        "snapshot_id": 325,
+        "published_at": "2022-03-16T13:56:42.000Z",
+        "observed_at": "2026-10-21T03:36:24.814020+00:00"
+      },
+      {
+        "id": 210822,
+        "source_id": "nc-daily-reports-2020",
+        "snapshot_id": 309,
+        "published_at": "2022-03-16T13:56:18.000Z",
+        "observed_at": "2026-10-21T03:36:24.094147+00:00"
+      },
+      {
+        "id": 122112,
+        "source_id": "nc-daily-reports-2022",
+        "snapshot_id": 158,
+        "published_at": "2022-11-07T14:06:38.000Z",
+        "observed_at": "2026-10-21T03:31:31.271809+00:00"
+      },
+      {
+        "id": 129815,
+        "source_id": "nc-daily-reports-2018",
+        "snapshot_id": 189,
+        "published_at": "2022-03-16T13:57:57.000Z",
+        "observed_at": "2026-10-21T03:31:32.837933+00:00"
+      },
+      {
+        "id": 427787,
+        "source_id": "nc-official-final-participation",
+        "snapshot_id": 1163,
+        "observed_at": "2026-10-21T12:50:38.668551+00:00"
+      },
+      {
+        "id": 120764,
+        "source_id": "nc-daily-reports-2022",
+        "snapshot_id": 152,
+        "published_at": "2022-11-05T18:36:04.000Z",
+        "observed_at": "2026-10-21T03:31:31.047774+00:00"
+      },
+      {
+        "id": 128443,
+        "source_id": "nc-daily-reports-2018",
+        "snapshot_id": 183,
+        "published_at": "2022-03-16T13:58:15.000Z",
+        "observed_at": "2026-10-21T03:31:32.513299+00:00"
+      },
+      {
+        "id": 118958,
+        "source_id": "nc-daily-reports-2022",
+        "snapshot_id": 145,
+        "published_at": "2022-11-05T18:36:06.000Z",
+        "observed_at": "2026-10-21T03:31:30.655108+00:00"
+      },
+      {
+        "id": 126609,
+        "source_id": "nc-daily-reports-2018",
+        "snapshot_id": 176,
+        "published_at": "2022-03-16T13:58:05.000Z",
+        "observed_at": "2026-10-21T03:31:32.179594+00:00"
+      },
+      {
+        "id": 114830,
+        "source_id": "nc-daily-reports-2022",
+        "snapshot_id": 129,
+        "published_at": "2022-10-09T17:04:37.000Z",
+        "observed_at": "2026-10-21T03:31:29.752603+00:00"
+      },
+      {
+        "id": 605020,
+        "source_id": "oh-official-endpoint-2018-11-05",
+        "snapshot_id": 1196,
+        "published_at": "2025-03-06T11:29:39Z",
+        "observed_at": "2026-10-21T13:27:30.002653+00:00"
+      },
+      {
+        "source_id": "oh-official-endpoint-2018-11-05",
+        "source_url": "https://web.archive.org/web/20181116121832id_/https://www.sos.state.oh.us/media-center/press-releases/2018/2018-11-05a/",
+        "sha256": "b86324b2c6065437c487539cdd500e761b6f7d8cee3f9fe9aee043a0fcb0e638",
+        "role": "dating_context",
+        "original_url": "https://www.sos.state.oh.us/media-center/press-releases/2018/2018-11-05a/",
+        "capture": "2018-11-16T12:18:32Z"
+      },
+      {
+        "id": 603243,
+        "source_id": "oh-official-survey-2022-11-07",
+        "snapshot_id": 1192,
+        "published_at": "2025-03-06T11:29:39Z",
+        "observed_at": "2026-10-21T13:27:29.592743+00:00"
+      },
+      {
+        "id": 604311,
+        "source_id": "oh-official-survey-2022-11-01",
+        "snapshot_id": 1194,
+        "published_at": "2025-03-07T22:44:16Z",
+        "observed_at": "2026-10-21T13:27:29.832387+00:00"
+      }
+    ]
+  },
+  "feature_inventory": [
+    {
+      "id": "geography_tilt_pp",
+      "label": "Where early voters live",
+      "unit": "percentage points",
+      "definition": "Existing county-weighted historical party-margin tilt; ecological context, never observed early-voter choice.",
+      "available_cases": 39,
+      "available_state_cycles": 8,
+      "available_cycles": [
+        2016,
+        2018,
+        2020,
+        2022
+      ],
+      "missing_cases": 0,
+      "missing_reasons": [],
+      "source_refs": [
+        {
+          "id": 432308,
+          "source_id": "ia-captured-archive-2016",
+          "snapshot_id": 1171,
+          "published_at": "2016-12-01T10:39:31+00:00",
+          "observed_at": "2026-10-21T13:00:53.722861+00:00"
+        },
+        {
+          "snapshot_id": 358,
+          "source_id": "medsl_county_2000_2016",
+          "result_id": 41475,
+          "revision": 71
+        }
+      ]
+    },
+    {
+      "id": "stage_volume_log_change",
+      "label": "How quickly early voting is growing",
+      "unit": "log ratio",
+      "definition": "Natural log of current stage EV divided by the most recent compatible earlier same-election-type stage report. This is volume growth, not a turnout rate.",
+      "available_cases": 17,
+      "available_state_cycles": 4,
+      "available_cycles": [
+        2020,
+        2022
+      ],
+      "missing_cases": 22,
+      "missing_reasons": [
+        {
+          "reason": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+          "cases": 22
+        }
+      ],
+      "source_refs": [
+        {
+          "id": 514655,
+          "source_id": "ia-captured-archive-2020",
+          "snapshot_id": 1184,
+          "published_at": "2020-11-16T15:53:59+00:00",
+          "observed_at": "2026-10-21T13:02:15.506872+00:00"
+        },
+        {
+          "id": 432308,
+          "source_id": "ia-captured-archive-2016",
+          "snapshot_id": 1171,
+          "published_at": "2016-12-01T10:39:31+00:00",
+          "observed_at": "2026-10-21T13:00:53.722861+00:00"
+        }
+      ]
+    },
+    {
+      "id": "turnout_pace_change_pp",
+      "label": "Early participation relative to earlier turnout",
+      "unit": "percentage points",
+      "definition": "Current stage EV / previous same-type administrative final participation, minus prior stage EV / its own earlier same-type final participation, multiplied by 100. All final denominators precede the case election.",
+      "available_cases": 3,
+      "available_state_cycles": 1,
+      "available_cycles": [
+        2022
+      ],
+      "missing_cases": 36,
+      "missing_reasons": [
+        {
+          "reason": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+          "cases": 22
+        },
+        {
+          "reason": "Received/returned ballots do not establish counted participation; no receipt-to-counted conversion is assumed.",
+          "cases": 12
+        },
+        {
+          "reason": "Two earlier compatible administrative participation endpoints are required; the held-out final turnout is never a denominator.",
+          "cases": 2
+        }
+      ],
+      "source_refs": [
+        {
+          "id": 122241,
+          "source_id": "nc-daily-reports-2022",
+          "snapshot_id": 158,
+          "published_at": "2022-11-07T14:06:38.000Z",
+          "observed_at": "2026-10-21T03:31:31.294286+00:00"
+        },
+        {
+          "id": 129815,
+          "source_id": "nc-daily-reports-2018",
+          "snapshot_id": 189,
+          "published_at": "2022-03-16T13:57:57.000Z",
+          "observed_at": "2026-10-21T03:31:32.837933+00:00"
+        }
+      ]
+    },
+    {
+      "id": "in_person_share_change_pp",
+      "label": "Change in the early in-person share",
+      "unit": "percentage points",
+      "definition": "Change in directly reported early-in-person / all-method EV at the same stage. Numerator and denominator must share source, date, status metric and a compatible non-inferred method definition. Receipt channels are not voting methods.",
+      "available_cases": 5,
+      "available_state_cycles": 2,
+      "available_cycles": [
+        2022
+      ],
+      "missing_cases": 34,
+      "missing_reasons": [
+        {
+          "reason": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+          "cases": 22
+        },
+        {
+          "reason": "No directly reported early-in-person numerator with the same source, date and status metric.",
+          "cases": 12
+        }
+      ],
+      "source_refs": [
+        {
+          "id": 122241,
+          "source_id": "nc-daily-reports-2022",
+          "snapshot_id": 158,
+          "published_at": "2022-11-07T14:06:38.000Z",
+          "observed_at": "2026-10-21T03:31:31.294286+00:00"
+        },
+        {
+          "id": 129815,
+          "source_id": "nc-daily-reports-2018",
+          "snapshot_id": 189,
+          "published_at": "2022-03-16T13:57:57.000Z",
+          "observed_at": "2026-10-21T03:31:32.837933+00:00"
+        }
+      ]
+    },
+    {
+      "id": "registration_balance_change_pp",
+      "label": "Change in party registration of early voters",
+      "unit": "percentage points",
+      "definition": "Change in (registered Republican minus registered Democrat) / all reported EV at the same stage. Published registration categories must form a complete partition; primary history and candidate choice are separate concepts.",
+      "available_cases": 5,
+      "available_state_cycles": 2,
+      "available_cycles": [
+        2020,
+        2022
+      ],
+      "missing_cases": 34,
+      "missing_reasons": [
+        {
+          "reason": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+          "cases": 22
+        },
+        {
+          "reason": "A directly published statewide Democrat/Republican registration partition is absent. Primary-history cohorts are not substituted.",
+          "cases": 12
+        }
+      ],
+      "source_refs": [
+        {
+          "id": 514655,
+          "source_id": "ia-captured-archive-2020",
+          "snapshot_id": 1184,
+          "published_at": "2020-11-16T15:53:59+00:00",
+          "observed_at": "2026-10-21T13:02:15.506872+00:00"
+        },
+        {
+          "id": 432308,
+          "source_id": "ia-captured-archive-2016",
+          "snapshot_id": 1171,
+          "published_at": "2016-12-01T10:39:31+00:00",
+          "observed_at": "2026-10-21T13:00:53.722861+00:00"
+        }
+      ]
+    },
+    {
+      "id": "precinct_distribution_shift_pp",
+      "label": "Change in which precincts turn out",
+      "unit": "percentage points of total variation",
+      "definition": "Half the sum of absolute changes in precinct shares at the same stage. Requires complete, reconciled precinct EV reports, verified stable precinct identifiers and matching boundary vintage. This measures spatial redistribution, not individual party or candidate support.",
+      "available_cases": 0,
+      "available_state_cycles": 0,
+      "available_cycles": [],
+      "missing_cases": 39,
+      "missing_reasons": [
+        {
+          "reason": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+          "cases": 22
+        },
+        {
+          "reason": "No compatible dated precinct-level EV observations. Historical precinct election results alone cannot supply historical early-vote patterns.",
+          "cases": 17
+        }
+      ],
+      "source_refs": []
+    }
+  ],
+  "headline_experiments": [
+    {
+      "id": "stage_volume:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "stage_volume",
+      "label": "How quickly early voting is growing",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "stage_volume_log_change"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "stage_volume_log_change"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 10,
+      "eligible_state_cycles": 4,
+      "eligible_cycles": [
+        2020,
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2020,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "stage_volume_log_change"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        },
+        {
+          "year": 2022,
+          "heldout_cases": 7,
+          "eligible": false,
+          "training_years": [
+            2020
+          ],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 3,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94",
+              "5c652d88192b18207e850a63",
+              "cbefbc9f4a5a16255229e1de"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 3,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94",
+              "5c652d88192b18207e850a63",
+              "cbefbc9f4a5a16255229e1de"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "stage_volume_log_change"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "turnout_pace:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "turnout_pace",
+      "label": "Early participation relative to earlier turnout",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "turnout_pace_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "turnout_pace_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 3,
+      "eligible_state_cycles": 1,
+      "eligible_cycles": [
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2022,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "turnout_pace_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "turnout_pace_change_pp"
+          ],
+          "reasons": {
+            "turnout_pace_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "turnout_pace_change_pp"
+          ],
+          "reasons": {
+            "turnout_pace_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "voting_methods:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "voting_methods",
+      "label": "Change in the early in-person share",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "in_person_share_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "in_person_share_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 4,
+      "eligible_state_cycles": 2,
+      "eligible_cycles": [
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2022,
+          "heldout_cases": 4,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "in_person_share_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "in_person_share_change_pp"
+          ],
+          "reasons": {
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "in_person_share_change_pp"
+          ],
+          "reasons": {
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "party_registration:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "party_registration",
+      "label": "Change in party registration of early voters",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "registration_balance_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "registration_balance_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 4,
+      "eligible_state_cycles": 2,
+      "eligible_cycles": [
+        2020,
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2020,
+          "heldout_cases": 1,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "registration_balance_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        },
+        {
+          "year": 2022,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [
+            2020
+          ],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 1,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 1,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "registration_balance_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "precinct_patterns:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "precinct_patterns",
+      "label": "Change in which precincts turn out",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "precinct_distribution_shift_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "precinct_distribution_shift_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 0,
+      "eligible_state_cycles": 0,
+      "eligible_cycles": [],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "precinct_distribution_shift_pp"
+          ],
+          "reasons": {
+            "precinct_distribution_shift_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "precinct_distribution_shift_pp"
+          ],
+          "reasons": {
+            "precinct_distribution_shift_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "volume_methods_party:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "volume_methods_party",
+      "label": "How quickly early voting is growing + Change in the early in-person share + Change in party registration of early voters",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "stage_volume_log_change",
+        "in_person_share_change_pp",
+        "registration_balance_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "stage_volume_log_change",
+        "in_person_share_change_pp",
+        "registration_balance_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 3,
+      "eligible_state_cycles": 1,
+      "eligible_cycles": [
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2022,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 16,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "stage_volume_log_change",
+              "in_person_share_change_pp",
+              "registration_balance_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 16,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change",
+            "in_person_share_change_pp",
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change",
+            "in_person_share_change_pp",
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stage_volume:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "stage_volume",
+      "label": "How quickly early voting is growing",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "stage_volume_log_change"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "stage_volume_log_change"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 10,
+      "eligible_state_cycles": 4,
+      "eligible_cycles": [
+        2020,
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2020,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "stage_volume_log_change"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        },
+        {
+          "year": 2022,
+          "heldout_cases": 7,
+          "eligible": false,
+          "training_years": [
+            2020
+          ],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 3,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94",
+              "5c652d88192b18207e850a63",
+              "cbefbc9f4a5a16255229e1de"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 3,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94",
+              "5c652d88192b18207e850a63",
+              "cbefbc9f4a5a16255229e1de"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "stage_volume_log_change"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "turnout_pace:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "turnout_pace",
+      "label": "Early participation relative to earlier turnout",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "turnout_pace_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "turnout_pace_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 3,
+      "eligible_state_cycles": 1,
+      "eligible_cycles": [
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2022,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "turnout_pace_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "turnout_pace_change_pp"
+          ],
+          "reasons": {
+            "turnout_pace_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "turnout_pace_change_pp"
+          ],
+          "reasons": {
+            "turnout_pace_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "voting_methods:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "voting_methods",
+      "label": "Change in the early in-person share",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "in_person_share_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "in_person_share_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 4,
+      "eligible_state_cycles": 2,
+      "eligible_cycles": [
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2022,
+          "heldout_cases": 4,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "in_person_share_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "in_person_share_change_pp"
+          ],
+          "reasons": {
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "in_person_share_change_pp"
+          ],
+          "reasons": {
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "party_registration:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "party_registration",
+      "label": "Change in party registration of early voters",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "registration_balance_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "registration_balance_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 4,
+      "eligible_state_cycles": 2,
+      "eligible_cycles": [
+        2020,
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2020,
+          "heldout_cases": 1,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2020,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "registration_balance_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        },
+        {
+          "year": 2022,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [
+            2020
+          ],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 1,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [
+              2020
+            ],
+            "training_state_cycles": 1,
+            "training_contests": 1,
+            "training_cases": 1,
+            "training_case_ids": [
+              "460b544c814e1829e42b2c94"
+            ],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "registration_balance_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 8,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "precinct_patterns:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "precinct_patterns",
+      "label": "Change in which precincts turn out",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "precinct_distribution_shift_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "precinct_distribution_shift_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 0,
+      "eligible_state_cycles": 0,
+      "eligible_cycles": [],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "precinct_distribution_shift_pp"
+          ],
+          "reasons": {
+            "precinct_distribution_shift_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "precinct_distribution_shift_pp"
+          ],
+          "reasons": {
+            "precinct_distribution_shift_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    },
+    {
+      "id": "volume_methods_party:retrospective_report:days_to_election:final_candidate_vote_distribution",
+      "experiment_id": "volume_methods_party",
+      "label": "How quickly early voting is growing + Change in the early in-person share + Change in party registration of early voters",
+      "feature_ids": [
+        "geography_tilt_pp",
+        "stage_volume_log_change",
+        "in_person_share_change_pp",
+        "registration_balance_change_pp"
+      ],
+      "features": [
+        "geography_tilt_pp",
+        "stage_volume_log_change",
+        "in_person_share_change_pp",
+        "registration_balance_change_pp"
+      ],
+      "chronology": "retrospective_report",
+      "alignment": "days_to_election",
+      "reference_kind": "final_candidate_vote_distribution",
+      "status": "insufficient_prior_only_holdouts",
+      "eligible_cases": 3,
+      "eligible_state_cycles": 1,
+      "eligible_cycles": [
+        2022
+      ],
+      "universe_cases": 25,
+      "paired_metrics": {
+        "historical_baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "paired": {
+        "baseline": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "geography_only": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        },
+        "augmented": {
+          "cases": 0,
+          "independent_contests": 0,
+          "distinct_contests": 0,
+          "independent_state_cycles": 0,
+          "independent_cycles": 0,
+          "margin_mae_pp": null,
+          "margin_rmse_pp": null,
+          "margin_bias_pp": null,
+          "direction_accuracy": null,
+          "brier_score": null,
+          "log_loss": null,
+          "interval_80_coverage": null,
+          "interval_95_coverage": null
+        }
+      },
+      "gains": {
+        "mae_pp": null,
+        "rmse_pp": null
+      },
+      "origins": [
+        {
+          "year": 2022,
+          "heldout_cases": 3,
+          "eligible": false,
+          "training_years": [],
+          "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count.",
+          "geography_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 16,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          },
+          "augmented_fit": {
+            "eligible": false,
+            "origin_year": 2022,
+            "training_years": [],
+            "training_state_cycles": 0,
+            "training_contests": 0,
+            "training_cases": 0,
+            "training_case_ids": [],
+            "feature_ids": [
+              "geography_tilt_pp",
+              "stage_volume_log_change",
+              "in_person_share_change_pp",
+              "registration_balance_change_pp"
+            ],
+            "coefficients": null,
+            "feature_scales": null,
+            "minimum_training_cycles": 3,
+            "minimum_training_state_cycles": 16,
+            "reason": "Too little independent earlier evidence to fit this feature set. Repeated checkpoints do not increase the state-election count."
+          }
+        }
+      ],
+      "cases": [],
+      "exclusions": [
+        {
+          "case_id": "00085b5104e96ff5c8ebb185",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change",
+            "in_person_share_change_pp",
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        },
+        {
+          "case_id": "e4b7aed0782f3721f8a6b894",
+          "state": "IA",
+          "year": 2016,
+          "kind": "missing_feature",
+          "missing_features": [
+            "stage_volume_log_change",
+            "in_person_share_change_pp",
+            "registration_balance_change_pp"
+          ],
+          "reasons": {
+            "stage_volume_log_change": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "in_person_share_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions.",
+            "registration_balance_change_pp": "No earlier same-election-type report matches the stage, report age, metric and method/status definitions."
+          }
+        }
+      ],
+      "promotion": {
+        "promoted": false,
+        "candidate_for_review": false,
+        "reason": "Insufficient independent held-out coverage or no consistent paired improvement. This feature does not change the live EV call.",
+        "minimum_heldout_cycles": 4,
+        "minimum_heldout_state_cycles": 30,
+        "minimum_mae_improvement_pp": 0.25,
+        "heldout_cycles": [],
+        "heldout_state_cycles": 0,
+        "yearly_errors": [],
+        "intervals_or_probabilities_validated": false
+      }
+    }
+  ]
+}

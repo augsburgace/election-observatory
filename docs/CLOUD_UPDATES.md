@@ -1,0 +1,57 @@
+# Free scheduled cloud updates
+
+The public distribution is [augsburgace/election-observatory](https://github.com/augsburgace/election-observatory). Its target application address is [the election research atlas](https://augsburgace.github.io/election-observatory/). The separate private development repository and its history are preserved. A reviewed source snapshot is exported with `scripts/prepare_public_source.py`; old local verification documents containing saved-view metadata are replaced in the public copy.
+
+## What runs in the cloud
+
+The `Public cloud updates` GitHub Actions workflow uses a standard `ubuntu-24.04` runner in the public repository. Its schedule is `17 */2 * * *` UTC: approximately every two hours, at minute 17. GitHub can delay or miss scheduled jobs; this is a best-effort research publisher, without a continuous-compute or availability guarantee. Collection does not require the owner's Mac to be running.
+
+The workflow has no pull-request or untrusted-fork execution path. It runs only on the approved public repository's `main` branch. Its actions are pinned to reviewed commit SHAs. Credentials use GitHub's short-lived workflow token and Pages deployment identity. No personal GitHub token, Cloudflare login, external AI key, paid runner, paid database, LFS purchase or cloud subscription is required.
+
+1. Restore a checksum-verified public collector checkpoint from a completed release.
+2. Retain the exact prior website by its complete publication-manifest hash.
+3. Check due public sources and calculate the analysis, preserving source-specific errors and the last valid observations.
+4. Freeze the local database revision, build all 50 states, verify raw and packed research readers, and compile the real application.
+5. Export a sanitized successor checkpoint. Verify it has no private research or job rows.
+6. Preserve the validated checkpoint and matching website together in a unique release **before** changing the live site.
+7. Deploy through GitHub Pages and verify the exact hosted manifest and the 75-check all-state reader.
+8. Record actual successful publication status in `publication-state.json` and rotate only generated collector checkpoints, retaining three verified states plus bootstrap.
+
+A validated checkpoint can be newer than the currently hosted website if deployment failed. It is not labeled as a successful website release until hosted verification passes. Rollback locates the exact previous manifest, including when multiple application builds share the same evidence revision.
+
+## Data and privacy
+
+Public release assets include normalized aggregate evidence, historical results, public boundary geometry, source metadata and the reviewed factual polling-table captures required to preserve their lineage. These are collector checkpoints, **not private full-store backups**.
+
+Private notebooks, saved personal investigations, job history, private correction reasons, credentials and original voter-file archives are excluded. The exporter scrubs deleted SQLite cells and vacuums the copy, sanitizes all small geometry metadata JSON, and checks member hashes. Published report and map objects retain their existing privacy filters. Raw downloads made on the ephemeral runner are not part of its next checkpoint or website.
+
+Individual source authorities can block cloud-hosted requests. Failures remain visible in source health, and existing validated observations remain available. Browser-only RCP captures retain their actual capture dates; the cloud workflow does not pretend to refresh them unattended. Historical EV gaps, absent demographic categories, unsupported joint filters and experimental forecast limits remain explicit.
+
+## Free-resource limits
+
+- Standard public-repository Actions runners are free; larger paid runners are not selected.
+- Checkpoints use GitHub Releases with each asset below 2 GiB, rather than Git LFS or retained Actions caches.
+- Published websites are limited to 950 MB, below Pages' 1 GB site limit. A stricter estimated 400 MB temporary-artifact gate bounds this workflow's use of Actions storage. Completed temporary deployment artifacts are deleted immediately, including rollback artifacts.
+- Checkpoints retain three verified generated states plus protected bootstrap. Other releases, private backups and private history are never rotated by this workflow.
+- The worker needs at least 25 GB free before restoring evidence because SQLite backup and vacuum can temporarily require several database-sized files. Only unused SDK directories on the disposable hosted runner are reclaimed. Insufficient disk stops the run before publication.
+- Pages has a soft bandwidth limit. Hosting limits, source availability and GitHub's schedule policies still apply. No automatic paid upgrade is configured.
+
+Successful publication status commits provide a real operations trail as the evidence is refreshed. GitHub can disable schedules in inactive public repositories; inspect the Actions page periodically rather than treating the schedule as permanent infrastructure.
+
+## Operate and inspect
+
+From the public repository, use **Actions → Public cloud updates → Run workflow**. Leave **collect** enabled for ordinary refreshes. **bootstrap** is only for the initial verified setup when the Pages site has not yet been published. An unexpected missing live site on a later run fails closed.
+
+```sh
+gh workflow run public-cloud.yml --repo augsburgace/election-observatory -f collect=true
+gh run list --repo augsburgace/election-observatory --workflow public-cloud.yml --limit 5
+gh api repos/augsburgace/election-observatory/contents/publication-state.json --jq .content
+```
+
+The last command returns base64 content from the public status file. The repository's normal file viewer shows decoded JSON. The website's publication banner and each source's reporting date describe different clocks; read both before interpreting change.
+
+Build and pre-deployment failures leave the previous website alone. A failed deployment or hosted-reader check triggers an exact prior-site deployment and its own hosted-reader verification. The workflow remains failed after a successful rollback. If rollback verification fails, inspect the live manifest and Actions log; do not claim recovery until verified.
+
+The local application, personal database and local source archives remain separate. During migration, the existing Mac publisher remains installed until the first cloud deployment passes. Afterward, its launchd job can return to collection-only operation; it must not continue competing to publish the redirected web address.
+
+Official references: [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits), [release asset limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases), [scheduled events](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).

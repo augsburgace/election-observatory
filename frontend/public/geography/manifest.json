@@ -1,0 +1,18 @@
+{
+  "source": "U.S. Census Bureau",
+  "vintage": "2024",
+  "files": [
+    {
+      "kind": "states",
+      "source_url": "https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_us_state_20m.zip",
+      "sha256": "7bc773d83c01b6df69b8aada9c2b5983d97f22f4551947cc5c00b87c663223ef",
+      "features": 50
+    },
+    {
+      "kind": "counties",
+      "source_url": "https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_us_county_5m.zip",
+      "sha256": "a867f8734059b45d1d54a0ba56189dd7e73c42eb451418fa56de44c35232614b",
+      "features": 3143
+    }
+  ]
+}

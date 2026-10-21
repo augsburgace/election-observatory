@@ -1,0 +1,375 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "electproject-dated-2020-nc",
+      "state": "NC",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 NC research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/NC.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "electproject-dated-2020-ga",
+      "state": "GA",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 GA research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/GA.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "electproject-dated-2020-mi",
+      "state": "MI",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 MI research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/MI.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "electproject-dated-2020-fl",
+      "state": "FL",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 FL research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/FL.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "electproject-dated-2020-ia",
+      "state": "IA",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 IA research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/IA.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "electproject-dated-2020-oh",
+      "state": "OH",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 OH research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/OH.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "electproject-dated-2020-tx",
+      "state": "TX",
+      "cycle": 2020,
+      "name": "US Elections Project original producer dated 2020 TX research archive",
+      "url": "https://api.github.com/repos/ElectProject/Early-Vote-2020G/commits?path=docs/TX.html&per_page=100&page=1&since=2020-09-01T00:00:00Z&until=2020-11-03T23:59:59Z",
+      "connector": "electproject_history",
+      "tier": 3,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Retrospective original-producer report snapshots; repository vintage does not establish original public publication. Preserve original numeric fields, county coverage, and asynchronous updates. Personal local research; review source permission before public redistribution."
+    },
+    {
+      "id": "ia-dated-archive-2016",
+      "state": "IA",
+      "cycle": 2016,
+      "name": "Iowa official 2016 dated absentee county/registration/receipt-channel archive",
+      "url": "https://sos.iowa.gov/elections/pdf/2016/general/AbsenteeCounty2016.pdf",
+      "connector": "iowa_history",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Combined original dated-report PDF. HTTP403 maintenance observed on 2026-10-21 ordinary retrieval; no bypass. Parser requires99-county reconciliation; receipt channel is not voting method. Report dates support retrospective reconstruction only."
+    },
+    {
+      "id": "ia-dated-archive-2018",
+      "state": "IA",
+      "cycle": 2018,
+      "name": "Iowa official 2018 dated absentee county/registration/receipt-channel archive",
+      "url": "https://sos.iowa.gov/elections/pdf/2018/general/AbsenteeCounty2018.pdf",
+      "connector": "iowa_history",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Combined original dated-report PDF. HTTP403 maintenance observed on 2026-10-21 ordinary retrieval; no bypass. Parser requires99-county reconciliation; receipt channel is not voting method. Report dates support retrospective reconstruction only."
+    },
+    {
+      "id": "ia-dated-archive-2020",
+      "state": "IA",
+      "cycle": 2020,
+      "name": "Iowa official 2020 dated absentee county/registration/receipt-channel archive",
+      "url": "https://sos.iowa.gov/elections/pdf/2020/general/AbsenteeCounty2020.pdf",
+      "connector": "iowa_history",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Combined original dated-report PDF. HTTP403 maintenance observed on 2026-10-21 ordinary retrieval; no bypass. Parser requires99-county reconciliation; receipt channel is not voting method. Report dates support retrospective reconstruction only."
+    },
+    {
+      "id": "ia-dated-archive-2022",
+      "state": "IA",
+      "cycle": 2022,
+      "name": "Iowa official 2022 dated absentee county/registration/receipt-channel archive",
+      "url": "https://sos.iowa.gov/elections/pdf/2022/general/AbsenteeCounty2022.pdf",
+      "connector": "iowa_history",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Combined original dated-report PDF. HTTP403 maintenance observed on 2026-10-21 ordinary retrieval; no bypass. Parser requires99-county reconciliation; receipt channel is not voting method. Report dates support retrospective reconstruction only."
+    },
+    {
+      "id": "ia-dated-archive-2024",
+      "state": "IA",
+      "cycle": 2024,
+      "name": "Iowa official 2024 dated absentee county/registration/receipt-channel archive",
+      "url": "https://sos.iowa.gov/elections/pdf/2024/general/AbsenteeCounty2024.pdf",
+      "connector": "iowa_history",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Combined original dated-report PDF. HTTP403 maintenance observed on 2026-10-21 ordinary retrieval; no bypass. Parser requires99-county reconciliation; receipt channel is not voting method. Report dates support retrospective reconstruction only."
+    },
+    {
+      "id": "nc-record-returns-2016",
+      "state": "NC",
+      "cycle": 2016,
+      "name": "NCSBE2016 final-accepted ballot-return-date reconstruction",
+      "url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2016_11_08/absentee_20161108.zip",
+      "final_aggregate_url": "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2016_11_08/absentee_counts_county_20161108.csv",
+      "connector": "nc_record_history",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "include_county_composition": false,
+      "native_calendar": {
+        "early_in_person_open": "2016-10-20",
+        "early_in_person_close": "2016-11-05",
+        "source_url": "https://www.ncsbe.gov/news/press-releases/2016/10/20/sbe-early-voting-begins-north-carolina"
+      },
+      "notes": "Retrospective final-ACCEPTED cohort by native return date; final acceptance and classification not established at the historical event cutoff. Records streamed and aggregate outputs only. Explicit anomaly/duplicate/method/county validation; reconcile to independent original county aggregate. SourceZIP139.6MB expands1.11GB."
+    },
+    {
+      "id": "nc-ip-calendar-2016",
+      "state": "NC",
+      "cycle": 2016,
+      "name": "NCSBE October20,2016 original early-voting announcement",
+      "url": "https://www.ncsbe.gov/news/press-releases/2016/10/20/sbe-early-voting-begins-north-carolina",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Statewide17-calendar-day period only. County operating days/hours and sites vary; HurricaneMatthew and restored17-day rules affect comparisons. Calendar span is not actual voting opportunities."
+    },
+    {
+      "id": "ia-captured-archive-2016",
+      "state": "IA",
+      "cycle": 2016,
+      "name": "Iowa 2016 original dated absentee reports preserved by Internet Archive",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sos.iowa.gov/elections/pdf/2016/general/AbsenteeCounty2016.pdf&output=json&filter=statuscode:200&filter=mimetype:application/pdf&collapse=digest&limit=50",
+      "original_url": "https://sos.iowa.gov/elections/pdf/2016/general/AbsenteeCounty2016.pdf",
+      "archive_captures": [
+        {
+          "timestamp": "20161201103931",
+          "digest": "564FMG7ACBMLHJDRKYV2C6L4O5L6X45E"
+        },
+        {
+          "timestamp": "20220808043423",
+          "digest": "6RUKW6CCQ2QNXPTPB7GY3OMP7RUJTB76"
+        },
+        {
+          "timestamp": "20221108023939",
+          "digest": "M2QJANW3UF3EDLIMBSMQL64LB3ZXZHH3"
+        }
+      ],
+      "connector": "iowa_history",
+      "tier": 2,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Archived original authority PDFs. Capture payloads must match independently archived CDX SHA1 digest. Contemporary availability begins at capture timestamp; later combined archives are reconstructed. Blank cells stay missing; complete 99-county detail must reconcile to printed Grand Total. Receipt channel is not voting method."
+    },
+    {
+      "id": "ia-captured-archive-2018",
+      "state": "IA",
+      "cycle": 2018,
+      "name": "Iowa 2018 original dated absentee reports preserved by Internet Archive",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sos.iowa.gov/elections/pdf/2018/general/AbsenteeCounty2018.pdf&output=json&filter=statuscode:200&filter=mimetype:application/pdf&collapse=digest&limit=50",
+      "original_url": "https://sos.iowa.gov/elections/pdf/2018/general/AbsenteeCounty2018.pdf",
+      "archive_captures": [
+        {
+          "timestamp": "20191114021256",
+          "digest": "B5W4SFRQT3X5CJYHW3XCUARQORMKQ53C"
+        },
+        {
+          "timestamp": "20200929213059",
+          "digest": "I7O3YV267ZWY5JK7ZBY4FIQAIMOJ2HIY"
+        }
+      ],
+      "connector": "iowa_history",
+      "tier": 2,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Archived original authority PDFs. Capture payloads must match independently archived CDX SHA1 digest. Contemporary availability begins at capture timestamp; later combined archives are reconstructed. Blank cells stay missing; complete 99-county detail must reconcile to printed Grand Total. Receipt channel is not voting method."
+    },
+    {
+      "id": "ia-captured-archive-2020",
+      "state": "IA",
+      "cycle": 2020,
+      "name": "Iowa 2020 original dated absentee reports preserved by Internet Archive",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sos.iowa.gov/elections/pdf/2020/general/AbsenteeCounty2020.pdf&output=json&filter=statuscode:200&filter=mimetype:application/pdf&collapse=digest&limit=50",
+      "original_url": "https://sos.iowa.gov/elections/pdf/2020/general/AbsenteeCounty2020.pdf",
+      "archive_captures": [
+        {
+          "timestamp": "20200929221317",
+          "digest": "JI4TOEQFWIHGM5I4HKCOS5YTF6O7TUC2"
+        },
+        {
+          "timestamp": "20201015062715",
+          "digest": "UYUFBPPW36DD7SLHRAZSMPZ3XGSSOIST"
+        },
+        {
+          "timestamp": "20201017194233",
+          "digest": "RAUHRCYLDUKIB4K3MVFWP3VDNCQYLYSN"
+        },
+        {
+          "timestamp": "20201028193503",
+          "digest": "UPTP25XVUHDTFWNRJSPYMQP443IONHG6"
+        },
+        {
+          "timestamp": "20201101044929",
+          "digest": "R5YBIAIHB3N3FESDPMZ2BXUWVEACIWMJ"
+        },
+        {
+          "timestamp": "20201110094621",
+          "digest": "WF5L26YTVWLWDK66IW43HBEEZOUDJZJJ"
+        },
+        {
+          "timestamp": "20201116155359",
+          "digest": "ULVNUGJM4K3FEV3AYEHCB3U7GXYP26OL"
+        }
+      ],
+      "connector": "iowa_history",
+      "tier": 2,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Archived original authority PDFs. Capture payloads must match independently archived CDX SHA1 digest. Contemporary availability begins at capture timestamp; later combined archives are reconstructed. Blank cells stay missing; complete 99-county detail must reconcile to printed Grand Total. Receipt channel is not voting method."
+    },
+    {
+      "id": "ia-captured-archive-2022",
+      "state": "IA",
+      "cycle": 2022,
+      "name": "Iowa 2022 original dated absentee reports preserved by Internet Archive",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sos.iowa.gov/elections/pdf/2022/general/AbsenteeCounty2022.pdf&output=json&filter=statuscode:200&filter=mimetype:application/pdf&collapse=digest&limit=50",
+      "original_url": "https://sos.iowa.gov/elections/pdf/2022/general/AbsenteeCounty2022.pdf",
+      "archive_captures": [
+        {
+          "timestamp": "20221021061846",
+          "digest": "74IYPTXJ34NHCKKTPDSBHZT7UXAOFCTT"
+        },
+        {
+          "timestamp": "20221108023909",
+          "digest": "NUVDIXDQLYWB4QJSIUT5ZRG5SMGXMWJA"
+        },
+        {
+          "timestamp": "20240113062803",
+          "digest": "PKGBCI3BQ45Y5JCSSSVJXSOQX7WTQGXA"
+        }
+      ],
+      "connector": "iowa_history",
+      "tier": 2,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Archived original authority PDFs. Capture payloads must match independently archived CDX SHA1 digest. Contemporary availability begins at capture timestamp; later combined archives are reconstructed. Blank cells stay missing; complete 99-county detail must reconcile to printed Grand Total. Receipt channel is not voting method."
+    },
+    {
+      "id": "ia-captured-archive-2024",
+      "state": "IA",
+      "cycle": 2024,
+      "name": "Iowa 2024 original dated absentee reports preserved by Internet Archive",
+      "url": "https://web.archive.org/cdx/search/cdx?url=sos.iowa.gov/elections/pdf/2024/general/AbsenteeCounty2024.pdf&output=json&filter=statuscode:200&filter=mimetype:application/pdf&collapse=digest&limit=50",
+      "original_url": "https://sos.iowa.gov/elections/pdf/2024/general/AbsenteeCounty2024.pdf",
+      "archive_captures": [
+        {
+          "timestamp": "20241026235318",
+          "digest": "YBUDHH3LQ64BQFWCWMMFVUSEPKOITT45"
+        },
+        {
+          "timestamp": "20250916231715",
+          "digest": "TGCAGEHBKXKYCGAKUEUQYK57JWNF7S3J"
+        }
+      ],
+      "connector": "iowa_history",
+      "tier": 2,
+      "enabled": false,
+      "on_demand": true,
+      "historical": true,
+      "expected_hours": 8760,
+      "notes": "Archived original authority PDFs. Capture payloads must match independently archived CDX SHA1 digest. Contemporary availability begins at capture timestamp; later combined archives are reconstructed. Blank cells stay missing; complete 99-county detail must reconcile to printed Grand Total. Receipt channel is not voting method."
+    },
+    {
+      "id": "ia-ip-calendar-2026",
+      "state": "IA",
+      "cycle": 2026,
+      "name": "Iowa Secretary of State September15,2026 original voting-plan announcement",
+      "url": "https://sos.iowa.gov/news-resources/secretary-pate-encourages-iowans-make-plan-vote-2026-general-election",
+      "connector": "calendar_reference",
+      "tier": 1,
+      "enabled": false,
+      "on_demand": true,
+      "historical": false,
+      "expected_hours": 8760,
+      "notes": "Ordinary in-person absentee voting window only. County office opening days/hours and satellite opportunities vary. This is not an all-method opening date; UOCAVA can precede ordinary absentee voting. Calendar span is not actual voting opportunities."
+    }
+  ]
+}

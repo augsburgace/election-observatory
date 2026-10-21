@@ -1,0 +1,19 @@
+{
+  "url": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_place_national.zip",
+  "source_sha256": "cf262fc92b2326f7a8c62a89d156a60eb17d64d6d35f7a62310c43bb08972c06",
+  "vintage": "2024",
+  "producer": "U.S. Census Bureau",
+  "license": "U.S. public domain",
+  "definition": "Editorially selected place orientation labels using Census Gazetteer representative points; not population rankings or election reporting units.",
+  "matched": 201,
+  "missing_choices": [
+    [
+      "GA",
+      "Augusta"
+    ],
+    [
+      "KY",
+      "Lexington-Fayette"
+    ]
+  ]
+}
