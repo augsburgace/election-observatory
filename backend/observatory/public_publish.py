@@ -80,6 +80,7 @@ class Publication:
         self.max_files = max_files
         self.bytes = 0
         self.files: dict[str, dict] = {}
+        self._stored_by_digest: dict[str, dict] = {}
         research = {**RESEARCH_DEFAULTS, "revision": revision, "as_of": as_of}
         bounded = {"revision": revision}
         forecast = {"cycle": 2026, "revision": revision, "as_of": as_of}
@@ -124,6 +125,12 @@ class Publication:
     def _store(self, payload) -> dict:
         encoded = json.dumps(payload, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
         digest = hashlib.sha256(encoded).hexdigest()
+        existing = self._stored_by_digest.get(digest)
+        if existing is not None:
+            # Repeated map geometry is already represented by these exact
+            # canonical bytes. Retain only the descriptor, never the raw payload,
+            # and avoid recompressing it for each contest and research view.
+            return existing
         stored = gzip.compress(encoded, compresslevel=6, mtime=0) if len(encoded) >= 1024 else encoded
         compressed = len(stored) < len(encoded) * .95
         stored = stored if compressed else encoded
@@ -143,6 +150,7 @@ class Publication:
         if compressed:
             descriptor["compression"] = "gzip"
         self.files[relative] = descriptor
+        self._stored_by_digest[digest] = descriptor
         self.bytes += len(stored)
         return descriptor
 

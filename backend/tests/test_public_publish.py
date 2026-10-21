@@ -73,6 +73,61 @@ def test_content_addressing_deduplicates_and_scrubs_private_values(tmp_path):
     assert json.loads(content)["source"]["url"] == "https://official.example/results"
 
 
+def test_repeated_exact_geometry_is_compressed_once_without_changing_public_bytes(tmp_path, monkeypatch):
+    from observatory import public_publish
+    publication = Publication(tmp_path, revision=1, as_of="2026-10-21", settings=Settings(tmp_path), states=["NC"])
+    geometry = {"type": "Polygon", "coordinates": [[[index / 10000, (index % 9) / 10000]
+        for index in range(2500)]]}
+    encoded = json.dumps(geometry, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
+    digest = hashlib.sha256(encoded).hexdigest()
+    compress = gzip.compress
+    expected_bytes = compress(encoded, compresslevel=6, mtime=0)
+    assert len(expected_bytes) < len(encoded) * .95
+    calls = []
+
+    def counted(value, **kwargs):
+        calls.append(hashlib.sha256(value).hexdigest())
+        return compress(value, **kwargs)
+
+    monkeypatch.setattr(public_publish.gzip, "compress", counted)
+    first = publication._store(geometry)
+    bytes_before = publication.bytes
+    for _ in range(4):
+        # A separately decoded object has identical evidence bytes; object
+        # identity and mutable reference caching cannot satisfy this check.
+        assert publication._store(json.loads(encoded)) == first
+    assert calls == [digest]
+    assert publication.bytes == bytes_before == len(expected_bytes)
+    assert len(publication.files) == 1
+    assert first == {"path": f"objects/{digest[:2]}/{digest}.json.gz", "sha256": digest,
+        "bytes": len(expected_bytes), "uncompressed_bytes": len(encoded), "compression": "gzip"}
+    assert (tmp_path / first["path"]).read_bytes() == expected_bytes
+
+
+def test_shared_geometry_across_contest_overlays_skips_duplicate_compression(tmp_path, monkeypatch):
+    from observatory import public_publish
+    publication = Publication(tmp_path, revision=1, as_of="2026-10-21", settings=Settings(tmp_path), states=["NC"])
+    coordinates = [[[index / 10000, (index % 9) / 10000] for index in range(2500)]]
+    encoded = json.dumps(coordinates, separators=(",", ":"), ensure_ascii=False).encode()
+    encoded_ring = json.dumps(coordinates[0], separators=(",", ":"), ensure_ascii=False).encode()
+    compress = gzip.compress
+    coordinate_compressions = 0
+
+    def counted(value, **kwargs):
+        nonlocal coordinate_compressions
+        if value == encoded_ring:
+            coordinate_compressions += 1
+        return compress(value, **kwargs)
+
+    monkeypatch.setattr(public_publish.gzip, "compress", counted)
+    first = publication.object({"type": "Feature", "properties": {"contest": "A", "votes": 123},
+        "geometry": {"type": "Polygon", "coordinates": coordinates}})
+    second = publication.object({"type": "Feature", "properties": {"contest": "B", "votes": 456},
+        "geometry": {"type": "Polygon", "coordinates": json.loads(encoded)}})
+    assert first != second
+    assert coordinate_compressions == 1
+
+
 def test_publication_budget_failure_keeps_previous_bundle(tmp_path):
     database = synthetic_database(tmp_path)
     output = tmp_path / "public-data"
