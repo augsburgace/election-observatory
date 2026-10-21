@@ -9,6 +9,13 @@ import pytest
 from scripts import cloud_workflow
 
 
+@pytest.fixture(autouse=True)
+def isolated_runner_environment(monkeypatch):
+    # Individual tests opt into Actions explicitly; the host must not change
+    # which policy branch an otherwise local unit fixture exercises.
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+
+
 def manifest(revision=588):
     return json.dumps({"dataset_revision": revision, "states": sorted(cloud_workflow.cloud_checkpoint.STATES)}).encode()
 
