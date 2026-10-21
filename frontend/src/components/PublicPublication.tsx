@@ -6,10 +6,12 @@ export function PublicPublication() {
   const query = useQuery({ queryKey: ["public-publication"], queryFn: () => getPublicManifest(), enabled: isPublicMode(), refetchInterval: 60_000 });
   if (!isPublicMode() || !query.data) return null;
   const value = query.data, age = publicationAge(value), published = new Date(value.published_at);
+  const successor = value.successor_url === "https://augsburgace.github.io/election-observatory/" ? value.successor_url : undefined;
   const sources = new URLSearchParams(location.search); sources.set("page", "sources");
-  return <aside className={`public-publication ${age.status}`} aria-label="Public evidence publication status">
-    <Cloud size={19}/><div><strong>Public research edition · validated revision {value.dataset_revision}</strong><p><time dateTime={value.published_at}>Published {Number.isNaN(published.valueOf()) ? value.published_at : published.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" })}</time> · evidence through {value.data_as_of} · {value.schedule?.description || "Scheduled updates; last validated evidence remains available."}</p>
-    {age.status !== "current" && <p className="public-delay"><Clock3 size={13}/>{age.status === "stale" ? "Publication is over 24 hours old. Check source reporting dates before interpreting changes." : "Publication is over 6 hours old; the next scheduled update may be delayed."}</p>}
+  return <aside className={`public-publication ${successor ? "archived" : age.status}`} aria-label="Public evidence publication status">
+    <Cloud size={19}/><div><strong>{successor ? "Archived initial edition · evidence revision" : "Public research edition · validated revision"} {value.dataset_revision}</strong><p><time dateTime={value.published_at}>Published {Number.isNaN(published.valueOf()) ? value.published_at : published.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" })}</time> · evidence through {value.data_as_of} · {value.schedule?.description || "Scheduled updates; last validated evidence remains available."}</p>
+    {successor && <p><a className="public-successor" href={successor} target="_blank" rel="noreferrer">Open the cloud-updated atlas ↗</a> <span>Original browser notes remain available here.</span></p>}
+    {!successor && age.status !== "current" && <p className="public-delay"><Clock3 size={13}/>{age.status === "stale" ? "Publication is over 24 hours old. Check source reporting dates before interpreting changes." : "Publication is over 6 hours old; the next scheduled update may be delayed."}</p>}
     <p className="public-privacy"><ShieldCheck size={12}/> Notes and saved investigations stay in this browser. Download your notebook to keep a backup.</p></div><a href={`?${sources}`}>Coverage & sources ↗</a>
   </aside>;
 }

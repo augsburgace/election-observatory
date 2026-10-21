@@ -10,7 +10,9 @@ import shutil
 import subprocess
 import sys
 import time
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import httpx
 
@@ -72,6 +74,45 @@ def validate_directory(directory: Path) -> Path:
     return directory
 
 
+def validate_pages_asset_base(site: Path) -> None:
+    """A data manifest alone cannot prove the browser shell uses this subpath."""
+    class EntryAssets(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.urls: list[str] = []
+            self.module_count = 0
+
+        def handle_starttag(self, tag, attrs):
+            values = dict(attrs)
+            if tag == "script" and values.get("src"):
+                self.urls.append(values["src"])
+                if values.get("type") == "module":
+                    self.module_count += 1
+            elif tag == "link" and values.get("href") and set(values.get("rel", "").split()) & {"stylesheet", "modulepreload"}:
+                self.urls.append(values["href"])
+
+    try:
+        assets = EntryAssets()
+        assets.feed((site / "index.html").read_text())
+        if not assets.module_count:
+            raise ValueError
+        for url in assets.urls:
+            parsed = urlsplit(url)
+            if (parsed.scheme or parsed.netloc or not parsed.path.startswith(BASE + "assets/")
+                    or ".." in Path(parsed.path).parts or "\\" in parsed.path
+                    or not (site / parsed.path.removeprefix(BASE)).is_file()):
+                raise ValueError
+    except (OSError, ValueError, TypeError):
+        raise ValueError("The Pages browser shell must use existing assets under /election-observatory/") from None
+
+
+def write_prepare_outputs(prepared: dict) -> None:
+    output = os.environ.get("GITHUB_OUTPUT")
+    if output:
+        with Path(output).open("a") as stream:
+            stream.write("has_previous_site=" + ("true" if prepared["previous_site_existed"] else "false") + "\n")
+
+
 def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
     directory = validate_directory(directory)
     if directory.exists():
@@ -95,6 +136,8 @@ def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
     rollback_identity = manifest_identity((directory / "rollback/site/public-data/manifest.json").read_bytes())
     if previous and rollback_identity != previous:
         raise ValueError("Rollback artifact does not match the exact live publication")
+    if previous:
+        validate_pages_asset_base(directory / "rollback/site")
     source = directory / "checkpoint" / downloaded["seed"]
     restored = restore_seed(source, directory / "data")
     source.unlink()  # Verified release asset remains recoverable on GitHub.
@@ -124,6 +167,7 @@ def persist(directory: Path) -> dict:
     estimated_tar = sum(p.stat().st_size for p in files) + len(files) * 1024 + 1_000_000
     if estimated_tar > MAX_TEMP_ARTIFACT_BYTES:
         raise ValueError("The temporary Pages artifact exceeds its bounded free storage budget")
+    validate_pages_asset_base(site)
     run = os.environ.get("GITHUB_RUN_ID")
     attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     if not run or not run.isdigit() or not attempt.isdigit():
@@ -154,8 +198,14 @@ def cleanup_artifacts() -> dict:
 
 def verify(directory: Path, *, rollback: bool = False) -> dict:
     directory = validate_directory(directory)
-    expected = load(directory / "prepared.json")["previous"] if rollback else manifest_identity(
-        (directory / "publication/site/public-data/manifest.json").read_bytes())
+    if rollback:
+        prepared = load(directory / "prepared.json")
+        if not prepared["previous_site_existed"]:
+            raise ValueError("No previous Pages website existed; bootstrap evidence is not a prior-site rollback")
+        validate_pages_asset_base(directory / "rollback/site")
+        expected = prepared["previous"]
+    else:
+        expected = manifest_identity((directory / "publication/site/public-data/manifest.json").read_bytes())
     matched = False
     for attempt in range(12):
         try:
@@ -215,6 +265,7 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "prepare":
         result = prepare(args.directory, bootstrap=args.bootstrap)
+        write_prepare_outputs(result)
     elif args.command == "build":
         result = build(args.directory, skip_collect=args.skip_collect)
     elif args.command == "persist":

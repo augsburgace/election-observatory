@@ -5,6 +5,7 @@ export interface PublicManifest {
   published_at: string;
   data_as_of: string;
   dataset_revision: number;
+  successor_url?: string;
   schedule?: { description?: string; interval_hours?: number };
   requests: Record<string, string | { path: string; sha256?: string; bytes?: number; encoding?: string }>;
   request_defaults?: Record<string, Record<string, unknown>>;

@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -71,3 +72,95 @@ def test_orphan_cleanup_is_limited_to_generated_pages_transfers(monkeypatch):
     assert cloud_workflow.cleanup_artifacts()["deleted_generated_transfers"] == [12, 13]
     assert len(calls) == 2
     assert all("repos/augsburgace/election-observatory/actions/artifacts/" in args[-1] for args in calls)
+
+
+def pages_site(directory: Path, *, base: str = cloud_workflow.BASE) -> Path:
+    (directory / "assets").mkdir(parents=True)
+    (directory / "assets/app.js").write_text("/* built application */")
+    (directory / "assets/app.css").write_text("/* built styles */")
+    (directory / "index.html").write_text(f'<script type="module" src="{base}assets/app.js"></script>'
+        f'<link rel="stylesheet" href="{base}assets/app.css">')
+    (directory / "public-data").mkdir()
+    (directory / "public-data/manifest.json").write_bytes(manifest())
+    return directory
+
+
+def test_pages_shell_accepts_existing_subpath_assets(tmp_path):
+    cloud_workflow.validate_pages_asset_base(pages_site(tmp_path / "site"))
+
+
+@pytest.mark.parametrize("base", ["/", "https://other.invalid/election-observatory/", "/another-repository/"])
+def test_pages_shell_rejects_root_or_foreign_build_even_with_matching_data_manifest(tmp_path, base):
+    source = pages_site(tmp_path / "site", base=base)
+    assert cloud_workflow.manifest_identity((source / "public-data/manifest.json").read_bytes())["revision"] == 588
+    with pytest.raises(ValueError, match="browser shell"):
+        cloud_workflow.validate_pages_asset_base(source)
+
+
+def test_pages_shell_rejects_missing_script_asset(tmp_path):
+    source = pages_site(tmp_path / "site")
+    (source / "assets/app.js").unlink()
+    with pytest.raises(ValueError, match="browser shell"):
+        cloud_workflow.validate_pages_asset_base(source)
+
+
+@pytest.fixture
+def prepared_checkpoint(tmp_path, monkeypatch):
+    control = SimpleNamespace(previous=None, base="/", restored=False)
+    monkeypatch.setattr(cloud_workflow.shutil, "disk_usage", lambda path: SimpleNamespace(free=30_000_000_000))
+    monkeypatch.setattr(cloud_workflow, "live_identity", lambda **kwargs: control.previous)
+
+    def download(destination, **kwargs):
+        destination.mkdir(parents=True)
+        pages_site(destination / "site", base=control.base)
+        (destination / "seed.zip").write_bytes(b"synthetic public checkpoint")
+        return {"seed": "seed.zip", "site": "site", "metadata": {"revision": 588,
+            "site": {"manifest_sha256": hashlib.sha256(manifest()).hexdigest()},
+            "seed": {"sha256": "a" * 64}}}
+
+    def restore(source, destination):
+        control.restored = True
+        destination.mkdir()
+        return {"revision": 588}
+
+    monkeypatch.setattr(cloud_workflow.cloud_checkpoint, "download", download)
+    monkeypatch.setattr(cloud_workflow, "restore_seed", restore)
+    return SimpleNamespace(directory=tmp_path / "workflow", control=control)
+
+
+def test_bootstrap_evidence_is_never_claimed_as_a_previous_pages_site(prepared_checkpoint, monkeypatch, tmp_path):
+    prepared = cloud_workflow.prepare(prepared_checkpoint.directory, bootstrap=True)
+    assert prepared["previous_site_existed"] is False
+    assert prepared_checkpoint.control.restored
+    output = tmp_path / "step-output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    cloud_workflow.write_prepare_outputs(prepared)
+    assert output.read_text() == "has_previous_site=false\n"
+    with pytest.raises(ValueError, match="No previous Pages website"):
+        cloud_workflow.verify(prepared_checkpoint.directory, rollback=True)
+
+
+def test_actual_previous_pages_site_requires_a_subpath_browser_shell(prepared_checkpoint):
+    prepared_checkpoint.control.previous = cloud_workflow.manifest_identity(manifest())
+    with pytest.raises(ValueError, match="browser shell"):
+        cloud_workflow.prepare(prepared_checkpoint.directory)
+    assert not prepared_checkpoint.control.restored
+    assert not (prepared_checkpoint.directory / "prepared.json").exists()
+
+
+def test_verified_previous_pages_site_enables_rollback_output(prepared_checkpoint, monkeypatch, tmp_path):
+    prepared_checkpoint.control.previous = cloud_workflow.manifest_identity(manifest())
+    prepared_checkpoint.control.base = cloud_workflow.BASE
+    prepared = cloud_workflow.prepare(prepared_checkpoint.directory)
+    assert prepared["previous_site_existed"] is True
+    output = tmp_path / "step-output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(output))
+    cloud_workflow.write_prepare_outputs(prepared)
+    assert output.read_text() == "has_previous_site=true\n"
+
+
+def test_workflow_rollback_upload_requires_actual_previous_site():
+    workflow = Path(__file__).resolve().parents[2] / ".github/workflows/public-cloud.yml"
+    text = workflow.read_text()
+    rollback = text.split("id: rollback_upload", 1)[1].split("uses:", 1)[0]
+    assert "steps.prepare.outputs.has_previous_site == 'true'" in rollback
