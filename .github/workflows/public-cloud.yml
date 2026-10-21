@@ -36,7 +36,6 @@ jobs:
     env:
       TZ: America/New_York
       PYTHONUNBUFFERED: '1'
-      WORK_DIRECTORY: ${{ runner.temp }}/observatory-cloud
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -46,6 +45,7 @@ jobs:
         run: |
           test "$GITHUB_ACTIONS" = true
           test "$RUNNER_OS" = Linux
+          echo "WORK_DIRECTORY=$RUNNER_TEMP/observatory-cloud" >> "$GITHUB_ENV"
           sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc /opt/hostedtoolcache/CodeQL
           df -h "$RUNNER_TEMP"
           python3 -c 'import os,shutil; assert shutil.disk_usage(os.environ["RUNNER_TEMP"]).free >= 25_000_000_000, "Insufficient free runner disk; hosted release retained"'
