@@ -128,10 +128,28 @@ def persist(directory: Path) -> dict:
     attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "1")
     if not run or not run.isdigit() or not attempt.isdigit():
         raise ValueError("A GitHub workflow run identity is required")
+    cleanup_artifacts()
     result = cloud_checkpoint.publish(directory / "publication/checkpoint.zip", ready["dataset_revision"],
         f"{run}-{attempt}", ready["data_as_of"], site=site)
     save(directory / "persisted.json", result)
     return result
+
+
+def cleanup_artifacts() -> dict:
+    """Remove only generated Pages transfers; durable release checkpoints remain."""
+    value = cloud_checkpoint._api("actions/artifacts?per_page=100")
+    if not isinstance(value, dict) or not isinstance(value.get("artifacts"), list):
+        raise ValueError("Could not verify bounded temporary deployment storage")
+    deleted = []
+    for artifact in value["artifacts"]:
+        if artifact.get("name") not in {"github-pages", "github-pages-rollback"}:
+            continue
+        identity = artifact.get("id")
+        if not isinstance(identity, int) or isinstance(identity, bool) or identity <= 0:
+            raise ValueError("Invalid generated Pages artifact identity")
+        cloud_checkpoint._gh(["api", "--method", "DELETE", f"repos/{REPOSITORY}/actions/artifacts/{identity}"])
+        deleted.append(identity)
+    return {"deleted_generated_transfers": deleted}
 
 
 def verify(directory: Path, *, rollback: bool = False) -> dict:

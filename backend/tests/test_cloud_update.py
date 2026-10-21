@@ -6,6 +6,8 @@ import json
 import shutil
 import sqlite3
 import subprocess
+import traceback
+import zipfile
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -17,6 +19,7 @@ from observatory.settings import Settings
 from scripts import update_cloud
 
 STATES = [state["code"] for state in all_states()]
+PRIVATE_DIAGNOSTIC = "PRIVATE_RAW_VOTER_RECORD_MARKER_NEVER_PUBLIC"
 
 
 @pytest.fixture
@@ -36,8 +39,12 @@ def cloud_build(tmp_path, monkeypatch):
     def run(command, **kwargs):
         commands.append((command, kwargs))
         if "collect" in command:
+            assert kwargs["stderr"] == subprocess.STDOUT
+            kwargs["stdout"].write(PRIVATE_DIAGNOSTIC + "\n")
+            kwargs["stdout"].flush()
             if state.fail == "collect":
-                raise subprocess.CalledProcessError(1, command)
+                raise subprocess.CalledProcessError(1, command, output=PRIVATE_DIAGNOSTIC,
+                    stderr=PRIVATE_DIAGNOSTIC)
             if state.collection:
                 with sqlite3.connect(settings.database_path) as connection:
                     connection.execute("INSERT INTO revisions(id,reason,created_at) VALUES(?,?,?)",
@@ -128,11 +135,38 @@ def test_build_uses_explicit_ephemeral_database_and_pages_subpath(cloud_build):
 @pytest.mark.parametrize("failure", ["collect", "reader", "build", "packed-reader"])
 def test_failure_never_creates_ready_marker_or_successor_checkpoint(cloud_build, failure):
     cloud_build.state.fail = failure
-    with pytest.raises(subprocess.CalledProcessError):
+    with pytest.raises(ValueError if failure == "collect" else subprocess.CalledProcessError):
         cloud_build.build()
     assert not (cloud_build.output / "ready.json").exists()
     assert cloud_build.state.checkpoints == 0
     assert not list(cloud_build.output.glob(".cloud-build-*"))
+
+
+def test_parser_diagnostics_remain_private_on_success_and_never_enter_artifacts(cloud_build, capsys):
+    cloud_build.build()
+    captured = capsys.readouterr()
+    assert PRIVATE_DIAGNOSTIC not in captured.out + captured.err
+    private_log = cloud_build.settings.data_dir / "cloud-collection.private.log"
+    assert private_log.read_text().strip() == PRIVATE_DIAGNOSTIC
+    assert private_log.stat().st_mode & 0o777 == 0o600
+    for path in cloud_build.output.rglob("*"):
+        if path.is_file() and path.suffix != ".zip":
+            assert PRIVATE_DIAGNOSTIC.encode() not in path.read_bytes()
+    with zipfile.ZipFile(cloud_build.output / "checkpoint.zip") as checkpoint:
+        assert all(PRIVATE_DIAGNOSTIC.encode() not in checkpoint.read(name)
+            for name in checkpoint.namelist())
+
+
+def test_failed_parser_cannot_leak_original_error_output_or_traceback(cloud_build, capsys):
+    cloud_build.state.fail = "collect"
+    with pytest.raises(ValueError, match="Original diagnostics remain only in ephemeral") as error:
+        cloud_build.build()
+    rendered = "".join(traceback.format_exception(error.value))
+    captured = capsys.readouterr()
+    assert PRIVATE_DIAGNOSTIC not in rendered + captured.out + captured.err
+    assert "CalledProcessError" not in rendered
+    assert not (cloud_build.output / "ready.json").exists()
+    assert cloud_build.state.checkpoints == 0
 
 
 def test_bad_checkpoint_privacy_proof_cannot_publish_ready_marker(cloud_build):

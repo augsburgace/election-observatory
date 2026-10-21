@@ -53,3 +53,14 @@ def test_persistence_gate_rejects_oversized_temp_artifacts_before_release_upload
     monkeypatch.setattr(cloud_workflow.cloud_checkpoint, "publish", lambda *a, **k: pytest.fail("No upload allowed"))
     with pytest.raises(ValueError, match="storage budget"):
         cloud_workflow.persist(tmp_path)
+
+
+def test_orphan_cleanup_is_limited_to_generated_pages_transfers(monkeypatch):
+    calls = []
+    monkeypatch.setattr(cloud_workflow.cloud_checkpoint, "_api", lambda path: {"artifacts": [
+        {"name": "github-pages", "id": 12}, {"name": "github-pages-rollback", "id": 13},
+        {"name": "human-research-package", "id": 14}]})
+    monkeypatch.setattr(cloud_workflow.cloud_checkpoint, "_gh", lambda arguments: calls.append(arguments))
+    assert cloud_workflow.cleanup_artifacts()["deleted_generated_transfers"] == [12, 13]
+    assert len(calls) == 2
+    assert all("repos/augsburgace/election-observatory/actions/artifacts/" in args[-1] for args in calls)

@@ -123,11 +123,24 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
         except BlockingIOError as error:
             raise ValueError("Another cloud publication is already using this evidence directory") from error
         if not skip_collect:
-            subprocess.run([sys.executable, "-m", "observatory.cli", "collect", "--due", "--warm-forecasts"],
-                cwd=settings.project_root, env=environment, check=True)
+            # Parser tracebacks can quote an individual source record. Never
+            # stream those diagnostics into public Actions logs; this ordinary
+            # worker file is excluded from both the seed and the published site.
+            diagnostics = settings.data_dir / "cloud-collection.private.log"
+            try:
+                with diagnostics.open("w") as log:
+                    diagnostics.chmod(0o600)
+                    subprocess.run([sys.executable, "-m", "observatory.cli", "collect", "--due", "--warm-forecasts"],
+                        cwd=settings.project_root, env=environment, check=True,
+                        stdout=log, stderr=subprocess.STDOUT)
+            except (OSError, subprocess.SubprocessError):
+                raise ValueError("Public source collection failed; the prior hosted release is retained. Original diagnostics remain only in ephemeral worker storage.") from None
         with frozen_evidence(settings.database_path) as revision:
             if revision < max(previous_seed_revision, previous_revision):
                 raise ValueError("Collection moved evidence backwards; the prior hosted release must be retained")
+            if not skip_collect:
+                _event({"stage": "collection", "status": "completed", "revision": revision,
+                    "diagnostics": "Original parser diagnostics are withheld from public logs and artifacts"})
             database = readonly_database(settings)
             try:
                 with tempfile.TemporaryDirectory(prefix=".cloud-build-", dir=output) as temporary:
