@@ -217,9 +217,13 @@ def validate_seed(path: Path, revision: int) -> None:
         raise ValueError("Checkpoint is not a verified sanitized aggregate export") from None
 
 
-def _releases() -> list[dict]:
+def _all_releases() -> list[dict]:
     pages = json.loads(_gh(["api", f"repos/{REPOSITORY}/releases?per_page=100", "--paginate", "--slurp"]))
-    values = [value for page in pages for value in page]
+    return [value for page in pages for value in page if isinstance(value, dict)]
+
+
+def _releases() -> list[dict]:
+    values = _all_releases()
     selected = [value for value in values if isinstance(value, dict)
         and isinstance(value.get("tag_name"), str) and value["tag_name"].startswith(PREFIX)
         and not value.get("draft") and value.get("published_at")]
@@ -333,7 +337,15 @@ def publish(seed: Path, revision: int, run_id: str, as_of: str, *, site: Path | 
              "Machine-generated sanitized aggregate collector state. Private notebooks, original voter records and credentials are excluded."])
         uploads = [str(upload), str(context)] + ([str(stage / SITE_NAME)] if site is not None else [])
         _gh(["release", "upload", tag, *uploads, "--repo", REPOSITORY], timeout=1800)
-        release = _api(f"releases/tags/{tag}")
+        # Draft releases may not have a Git tag yet, so the by-tag endpoint can
+        # return 404 even to their authenticated creator. Locate the draft in
+        # the authenticated release inventory, then verify it by numeric ID.
+        matches = [value for value in _all_releases()
+            if value.get("tag_name") == tag and value.get("draft") is True]
+        if (len(matches) != 1 or not isinstance(matches[0].get("id"), int)
+                or isinstance(matches[0]["id"], bool) or matches[0]["id"] <= 0):
+            raise ValueError("GitHub did not identify the unique uploaded draft checkpoint")
+        release = _api(f"releases/{matches[0]['id']}")
         if not isinstance(release, dict) or release.get("tag_name") != tag or release.get("draft") is not True:
             raise ValueError("New checkpoint must remain a draft until both assets are verified")
         _assets(release, metadata)

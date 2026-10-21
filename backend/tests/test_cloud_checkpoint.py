@@ -63,6 +63,7 @@ class FakeGitHub:
     def add(self, value: dict, seed: Path, *, published: str = "2026-10-21T20:00:00Z",
             draft: bool = False, site_archive: Path | None = None):
         record = release(value, published=published, draft=draft)
+        record["id"] = len(self.releases) + 1
         self.releases.append(record)
         tag = record["tag_name"]
         self.files[tag] = {checkpoints.METADATA_NAME: json.dumps(value).encode(),
@@ -76,8 +77,14 @@ class FakeGitHub:
         if arguments[:2] == ["api", f"repos/{checkpoints.REPOSITORY}/releases?per_page=100"]:
             return json.dumps([self.releases])
         if arguments[0] == "api":
-            tag = arguments[1].rsplit("/", 1)[-1]
-            return json.dumps(next(value for value in self.releases if value["tag_name"] == tag))
+            identity = arguments[1].rsplit("/", 1)[-1]
+            if "/releases/tags/" in arguments[1]:
+                record = next(value for value in self.releases if value["tag_name"] == identity)
+                if record["draft"]:
+                    raise ValueError("Synthetic GitHub 404: draft has no tag yet")
+            else:
+                record = next(value for value in self.releases if value["id"] == int(identity))
+            return json.dumps(record)
         command, tag = arguments[1:3]
         if command == "download":
             name = arguments[arguments.index("--pattern") + 1]
@@ -88,7 +95,8 @@ class FakeGitHub:
         elif command == "create":
             if any(value["tag_name"] == tag for value in self.releases):
                 raise ValueError("Synthetic existing immutable release")
-            self.releases.append({"tag_name": tag, "draft": True, "published_at": None, "assets": []})
+            self.releases.append({"id": len(self.releases) + 1, "tag_name": tag,
+                "draft": True, "published_at": None, "assets": []})
             self.files[tag] = {}
         elif command == "upload":
             if self.fail_upload:
@@ -129,6 +137,11 @@ def test_publish_is_draft_until_complete_and_metadata_has_no_local_paths(tmp_pat
     operations = [call[1] for call in github.calls if call[0] == "release"]
     assert operations == ["create", "upload", "edit"]
     assert "--latest=false" in github.calls[-2]
+    assert ["api", f"repos/{checkpoints.REPOSITORY}/releases/1"] in github.calls
+    # The fake returns 404 for a draft-by-tag read, matching the real bootstrap
+    # failure. Only the post-publication confirmation may use this endpoint.
+    tag_reads = [call for call in github.calls if call == ["api", f"repos/{checkpoints.REPOSITORY}/releases/tags/{tag}"]]
+    assert len(tag_reads) == 1
 
 
 def test_failed_upload_never_publishes_a_draft(tmp_path, github):
