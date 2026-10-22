@@ -21,6 +21,7 @@ import {
   type EVStageHistory,
 } from "../../earlyVoteApi";
 import { useViewOption } from "../../viewState";
+import { isPublicMode } from "../../publicData";
 import { downloadData } from "../../api";
 import { CYCLE_COLORS, MODE_COLORS, compact, fmt, human } from "../../utils";
 import { Badge, Empty, Loading, Notice, Panel, Select } from "../ui";
@@ -96,7 +97,7 @@ export const ForecastHistory = memo(function ForecastHistory({
   );
   const [cycleSet, setCycleSet] = useViewOption<string>(
     "forecast_history_cycles",
-    "2018,2022",
+    isPublicMode() ? "2016,2018,2020,2022,2024" : "2018,2022",
   );
   const [preOpening, setPreOpening] = useViewOption<string>(
     "forecast_history_preopening",

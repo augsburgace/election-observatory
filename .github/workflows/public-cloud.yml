@@ -17,6 +17,10 @@ on:
         description: Rebuild even when evidence and application inputs are unchanged
         type: boolean
         default: false
+      shell_only:
+        description: Rebuild frontend only against the exact live evidence (analytical changes prohibited)
+        type: boolean
+        default: false
 
 permissions: {}
 concurrency:
@@ -44,6 +48,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - name: Reclaim disposable runner SDKs and check free space
         shell: bash
         run: |
@@ -80,19 +85,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           BOOTSTRAP: ${{ inputs.bootstrap || false }}
+          SHELL_ONLY: ${{ inputs.shell_only || false }}
         run: |
           arguments=()
           if [[ "$BOOTSTRAP" == true ]]; then arguments+=(--bootstrap); fi
+          if [[ "$SHELL_ONLY" == true ]]; then arguments+=(--retain-seed); fi
           python scripts/cloud_workflow.py prepare --directory "$WORK_DIRECTORY" "${arguments[@]}"
       - name: Collect and verify the full fifty-state publication
         id: build
         env:
           COLLECT: ${{ github.event_name != 'workflow_dispatch' || inputs.collect }}
           FORCE: ${{ inputs.force || false }}
+          SHELL_ONLY: ${{ inputs.shell_only || false }}
         run: |
           arguments=()
           if [[ "$COLLECT" != true ]]; then arguments+=(--skip-collect); fi
           if [[ "$FORCE" == true ]]; then arguments+=(--force); fi
+          if [[ "$SHELL_ONLY" == true ]]; then arguments+=(--shell-only); fi
           python scripts/cloud_workflow.py build --directory "$WORK_DIRECTORY" "${arguments[@]}"
       - name: Preserve matching validated checkpoint before deployment
         id: checkpoint

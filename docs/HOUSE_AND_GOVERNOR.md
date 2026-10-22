@@ -37,3 +37,5 @@ Install the additional reference source with:
 The companion House source is `snyder_house_2006_2024`. Both are part of `atlas --core`. The normal cloud collection job installs it once, then skips already validated content. Original snapshots remain content-addressed outside Git. Source failures preserve validated content and the previous public release.
 
 Verification: `pytest`, Ruff, frontend tests, TypeScript, Vite; browser checks cover office/district switching, the exact-race report, both themes and narrow screens. Test fixtures are explicitly isolated; the frontend regression fixture contains only archived public aggregate Ohio candidate returns.
+
+For a presentation-only correction, the cloud workflow accepts `shell_only=true`. This mode refuses backend, source, or analytical changes since the verified release. It retains the exact aggregate objects and sanitized seed, rebuilds the browser application, verifies the complete bundle and hosted reader, and preserves normal checkpoint/rollback protection. It does not claim to have checked new sources. Scheduled collection continues through the full publication path.

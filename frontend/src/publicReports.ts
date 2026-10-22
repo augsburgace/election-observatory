@@ -116,7 +116,12 @@ export async function previewPublicReport(
     throw new Error(
       "A selected report section is not present in this public evidence packet.",
     );
-  nodes.forEach((node) => node.remove());
+  // A replacement overwrites the map entry, so its original DOM node is no
+  // longer in `nodes`. Remove the published sections themselves before
+  // assembling the selected story, including replaced or disabled sections.
+  document
+    .querySelectorAll('section[id^="section-"]')
+    .forEach((node) => node.remove());
   const footer = document.querySelector("footer");
   for (const section of selected) {
     const node = nodes.get(section.id);

@@ -28,6 +28,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "linkedom": "0.18.12",
     "tailwindcss": "^4.1.0",
     "typescript": "~5.9.2",
     "vite": "^7.1.0",

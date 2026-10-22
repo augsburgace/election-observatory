@@ -6,6 +6,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -23,7 +24,8 @@ from observatory.domain import utc_now  # noqa: E402
 from observatory.settings import Settings  # noqa: E402
 
 from scripts import cloud_checkpoint  # noqa: E402
-from scripts.cloud_changes import restore_check_clocks  # noqa: E402
+from scripts.cloud_changes import restore_check_clocks, source_receipts  # noqa: E402
+from scripts.prepare_web_site import verify_site  # noqa: E402
 from scripts.public_seed import restore_seed  # noqa: E402
 from scripts.update_cloud import build_cloud_publication  # noqa: E402
 
@@ -115,7 +117,7 @@ def write_prepare_outputs(prepared: dict) -> None:
             stream.write("has_previous_site=" + ("true" if prepared["previous_site_existed"] else "false") + "\n")
 
 
-def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
+def prepare(directory: Path, *, bootstrap: bool = False, retain_seed: bool = False) -> dict:
     directory = validate_directory(directory)
     if directory.exists():
         raise ValueError("Choose a new cloud workflow directory")
@@ -142,7 +144,8 @@ def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
         validate_pages_asset_base(directory / "rollback/site")
     source = directory / "checkpoint" / downloaded["seed"]
     restored = restore_seed(source, directory / "data")
-    source.unlink()  # Verified release asset remains recoverable on GitHub.
+    if not retain_seed:
+        source.unlink()  # Verified release asset remains recoverable on GitHub.
     receipts = Path(__file__).resolve().parents[1] / CHECK_PATH
     if receipts.is_file():
         restore_check_clocks(directory / "data/observatory.sqlite3", load(receipts),
@@ -150,14 +153,88 @@ def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
     prepared = {"schema": "observatory-cloud-workflow-v1", "restored_revision": restored["revision"],
         "previous": previous or rollback_identity, "previous_site_existed": previous is not None,
         "checkpoint_sha256": metadata["seed"]["sha256"], "prepared_at": utc_now()}
+    if retain_seed:
+        prepared["retained_seed"] = str(source.relative_to(directory))
     save(directory / "prepared.json", prepared)
     return prepared
 
 
-def build(directory: Path, *, skip_collect: bool = False, force: bool = False) -> dict:
+def validate_shell_changes(paths: list[str]) -> None:
+    allowed = {"scripts/cloud_workflow.py", ".github/workflows/public-cloud.yml", STATE_PATH, CHECK_PATH}
+    if any(not (path in allowed or path.startswith(("frontend/", "backend/tests/", "docs/"))) for path in paths):
+        raise ValueError("Frontend-only publication cannot reuse evidence after analytical or source changes")
+
+
+def build_shell(directory: Path) -> dict:
+    """Rebuild presentation against the exact verified aggregate checkpoint."""
+    directory = validate_directory(directory)
+    project = Path(__file__).resolve().parents[1]
+    prepared = load(directory / "prepared.json")
+    previous = load(project / STATE_PATH)
+    source_commit = previous.get("source_commit", "")
+    if not isinstance(source_commit, str) or not re.fullmatch(r"[0-9a-f]{40}", source_commit):
+        raise ValueError("A verified analytical source commit is required for a frontend-only release")
+    changed = subprocess.run(["git", "diff", "--name-only", source_commit, "HEAD"],
+        cwd=project, capture_output=True, text=True, check=True).stdout.splitlines()
+    validate_shell_changes(changed)
+    seed = directory / str(prepared.get("retained_seed", "missing"))
+    if (not seed.is_file() or not seed.is_relative_to(directory / "checkpoint")
+            or cloud_checkpoint._digest(seed) != prepared["checkpoint_sha256"]):
+        raise ValueError("The exact verified public seed must be retained for a frontend-only release")
+    output = directory / "publication"
+    output.mkdir()
+    site = output / "site"
+    shutil.copytree(directory / "rollback/site", site)
+    manifest_path = site / "public-data/manifest.json"
+    publication = load(manifest_path)
+    if manifest_identity(manifest_path.read_bytes()) != prepared["previous"]:
+        raise ValueError("Frontend-only source data no longer match the live checkpoint")
+    if prepared["restored_revision"] != publication["dataset_revision"]:
+        raise ValueError("Frontend-only release requires a seed at the exact live evidence revision")
+    environment = {**os.environ, "VITE_PUBLIC_DATA_MODE": "true", "VITE_PUBLIC_BASE": BASE,
+        "VITE_PUBLICATION_ID": f"shell-{os.environ.get('GITHUB_SHA', '')}"}
+    dist = directory / "shell-dist"
+    subprocess.run(["pnpm", "--dir", str(project / "frontend"), "exec", "vite", "build", "--outDir", str(dist)],
+        cwd=project, env=environment, check=True)
+    for child in dist.iterdir():
+        if child.name == "public-data":
+            continue
+        destination = site / child.name
+        if destination.is_dir():
+            shutil.rmtree(destination)
+        elif destination.exists():
+            destination.unlink()
+        if child.is_dir():
+            shutil.copytree(child, destination)
+        else:
+            shutil.copy2(child, destination)
+    shutil.copy2(site / "index.html", site / "404.html")
+    publication["published_at"] = utc_now()
+    publication["frontend_release"] = {"source_commit": os.environ.get("GITHUB_SHA"),
+        "analytical_source_commit": source_commit, "evidence_revision": publication["dataset_revision"]}
+    save(manifest_path, publication)
+    validate_pages_asset_base(site)
+    proof = verify_site(site, provider="github")
+    subprocess.run(["node", str(project / "frontend/scripts/smoke-public-data.mjs"),
+        str(site / "public-data"), str(output / "reader-proof.json"), "--all-states"], cwd=project, check=True)
+    shutil.copy2(seed, output / "checkpoint.zip")
+    revision = publication["dataset_revision"]
+    ready = {"schema": "observatory-cloud-publication-v1", "status": "verified", "frontend_only": True,
+        "dataset_revision": revision, "data_as_of": publication["data_as_of"], "verification": proof,
+        "parent_checkpoint_sha256": prepared["checkpoint_sha256"], "deployment_performed": False}
+    save(output / "ready.json", ready)
+    receipts = source_receipts(directory / "data/observatory.sqlite3")
+    save(output / "check.json", {"schema": "observatory-source-check-v1", "checked_at": utc_now(),
+        "revision": revision, "publication_required": True, "reasons": ["frontend-only; analytical data unchanged"],
+        "checked_sources": 0, "failed_sources": [row["source_id"] for row in receipts if row["status"] == "failed"],
+        "source_checks": receipts})
+    return ready
+
+
+def build(directory: Path, *, skip_collect: bool = False, force: bool = False, shell_only: bool = False) -> dict:
     directory = validate_directory(directory)
     prepared = load(directory / "prepared.json")
-    result = build_cloud_publication(Settings(directory / "data"), directory / "publication", base=BASE,
+    result = build_shell(directory) if shell_only else build_cloud_publication(Settings(directory / "data"), directory / "publication", base=BASE,
         previous_revision=prepared["previous"]["revision"], skip_collect=skip_collect,
         parent_checkpoint_sha256=prepared["checkpoint_sha256"], force=force,
         previous_manifest=load(directory / "rollback/site/public-data/manifest.json")
@@ -316,12 +393,14 @@ def main() -> None:
     parser.add_argument("--skip-collect", action="store_true")
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--rollback", action="store_true")
+    parser.add_argument("--shell-only", action="store_true")
+    parser.add_argument("--retain-seed", action="store_true")
     args = parser.parse_args()
     if args.command == "prepare":
-        result = prepare(args.directory, bootstrap=args.bootstrap)
+        result = prepare(args.directory, bootstrap=args.bootstrap, retain_seed=args.retain_seed)
         write_prepare_outputs(result)
     elif args.command == "build":
-        result = build(args.directory, skip_collect=args.skip_collect, force=args.force)
+        result = build(args.directory, skip_collect=args.skip_collect, force=args.force, shell_only=args.shell_only)
     elif args.command == "persist":
         result = persist(args.directory)
     elif args.command == "verify":

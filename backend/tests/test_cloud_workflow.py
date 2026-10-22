@@ -29,6 +29,19 @@ def test_rollback_identity_distinguishes_app_releases_at_same_evidence_revision(
     assert cloud_workflow.manifest_identity(raw)["manifest_sha256"] == hashlib.sha256(raw).hexdigest()
 
 
+def test_frontend_only_release_accepts_presentation_and_operational_changes():
+    cloud_workflow.validate_shell_changes(["frontend/src/publicReports.ts", "frontend/pnpm-lock.yaml",
+        "scripts/cloud_workflow.py", ".github/workflows/public-cloud.yml", "backend/tests/test_cloud_workflow.py",
+        "publication-state.json", "source-check-state.json"])
+
+
+@pytest.mark.parametrize("path", ["backend/observatory/early_vote.py", "config/sources.yaml",
+    "scripts/update_cloud.py", "requirements.lock"])
+def test_frontend_only_release_rejects_changes_to_evidence_or_calculations(path):
+    with pytest.raises(ValueError, match="analytical or source changes"):
+        cloud_workflow.validate_shell_changes(["frontend/src/publicReports.ts", path])
+
+
 @pytest.mark.parametrize("revision", [True, -1, "588"])
 def test_invalid_live_evidence_identity_is_rejected(revision):
     with pytest.raises(ValueError, match="invalid revision"):
@@ -87,6 +100,51 @@ def pages_site(directory: Path, *, base: str = cloud_workflow.BASE) -> Path:
 
 def test_pages_shell_accepts_existing_subpath_assets(tmp_path):
     cloud_workflow.validate_pages_asset_base(pages_site(tmp_path / "site"))
+
+
+def test_frontend_only_build_retains_exact_evidence_and_seed(tmp_path, monkeypatch):
+    project = tmp_path / "project"
+    (project / "scripts").mkdir(parents=True)
+    (project / cloud_workflow.STATE_PATH).write_text(json.dumps({"source_commit": "d" * 40}))
+    monkeypatch.setattr(cloud_workflow, "__file__", str(project / "scripts/cloud_workflow.py"))
+    directory = tmp_path / "runner"
+    original = pages_site(directory / "rollback/site")
+    bundle = original / "public-data"
+    raw = json.dumps({**json.loads(manifest()), "data_as_of": "2026-10-21"}).encode()
+    (bundle / "manifest.json").write_bytes(raw)
+    (bundle / "aggregate.json").write_bytes(b'{"verified_original_value":123}')
+    seed = directory / "checkpoint/collector-seed.zip"
+    seed.parent.mkdir()
+    seed.write_bytes(b"isolated validated seed fixture")
+    cloud_workflow.save(directory / "prepared.json", {"previous": cloud_workflow.manifest_identity(raw),
+        "retained_seed": "checkpoint/collector-seed.zip", "restored_revision": 588,
+        "checkpoint_sha256": hashlib.sha256(seed.read_bytes()).hexdigest()})
+
+    def run(arguments, **kwargs):
+        if arguments[0] == "git":
+            return SimpleNamespace(stdout="frontend/src/publicReports.ts\n", returncode=0)
+        if arguments[0] == "pnpm":
+            dist = Path(arguments[-1])
+            (dist / "assets").mkdir(parents=True)
+            (dist / "assets/new.js").write_text("new presentation")
+            (dist / "index.html").write_text('<script type="module" src="/election-observatory/assets/new.js"></script>')
+            (dist / "public-data").mkdir()
+            (dist / "public-data/aggregate.json").write_text("stale development data must not replace evidence")
+        return SimpleNamespace(stdout="", returncode=0)
+
+    monkeypatch.setattr(cloud_workflow.subprocess, "run", run)
+    monkeypatch.setattr(cloud_workflow, "verify_site", lambda *a, **k: {"dataset_revision": 588})
+    monkeypatch.setattr(cloud_workflow, "source_receipts", lambda *a: [])
+    monkeypatch.setenv("GITHUB_SHA", "e" * 40)
+    result = cloud_workflow.build_shell(directory)
+    site = directory / "publication/site"
+    assert result["dataset_revision"] == 588 and result["frontend_only"]
+    assert (site / "public-data/aggregate.json").read_bytes() == (bundle / "aggregate.json").read_bytes()
+    assert (directory / "publication/checkpoint.zip").read_bytes() == seed.read_bytes()
+    assert (bundle / "manifest.json").read_bytes() == raw
+    assert cloud_workflow.load(site / "public-data/manifest.json")["frontend_release"]["analytical_source_commit"] == "d" * 40
+    assert (site / "404.html").read_bytes() == (site / "index.html").read_bytes()
+    assert cloud_workflow.load(directory / "publication/check.json")["checked_sources"] == 0
 
 
 @pytest.mark.parametrize("base", ["/", "https://other.invalid/election-observatory/", "/another-repository/"])
