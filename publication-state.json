@@ -3,12 +3,12 @@
   "status": "published",
   "url": "https://augsburgace.github.io/election-observatory/",
   "revision": 659,
-  "manifest_sha256": "6e16e5fae5d77111c2fbfa2a3600c2e0c4b652718791f4ee1fa430dbeacc90a9",
+  "manifest_sha256": "472dbeb629142e6c164b02950c9e8853985ef3df6dca2da8316a64c8a06cde2c",
   "reader_checks": 77,
-  "verified_at": "2026-10-22T03:42:19.495121+00:00",
-  "checkpoint": "collector-checkpoint-39707424116-1",
-  "workflow_run": "39707424116",
-  "source_commit": "d9bbc39e781d5b2b8fe0e4b17c000d2293eea837",
+  "verified_at": "2026-10-22T03:59:03.304314+00:00",
+  "checkpoint": "collector-checkpoint-39719197881-1",
+  "workflow_run": "39719197881",
+  "source_commit": "098331071294739496d9d45f80c982fff2432272",
   "interval_hours": 2,
   "execution": "github-actions"
 }
