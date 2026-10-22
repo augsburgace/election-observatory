@@ -142,7 +142,12 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
                         subprocess.run([sys.executable, "-m", "observatory.cli", "atlas", "--dataset", dataset],
                             cwd=settings.project_root, env=environment, check=True,
                             stdout=log, stderr=subprocess.STDOUT)
-                    subprocess.run([sys.executable, "-m", "observatory.cli", "collect", "--due", "--warm-forecasts"],
+                    # Restored public checkpoints deliberately omit runtime
+                    # model caches. Warming here would rebuild every forecast
+                    # even when the change gate below will retain the site.
+                    # The publisher computes forecasts once, after that gate,
+                    # against the final frozen evidence revision.
+                    subprocess.run([sys.executable, "-m", "observatory.cli", "collect", "--due"],
                         cwd=settings.project_root, env=environment, check=True,
                         stdout=log, stderr=subprocess.STDOUT)
             except (OSError, subprocess.SubprocessError):

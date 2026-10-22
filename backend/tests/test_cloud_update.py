@@ -138,7 +138,7 @@ def test_cloud_build_requires_both_reader_checks_and_matching_sanitized_checkpoi
 def test_build_uses_explicit_ephemeral_database_and_pages_subpath(cloud_build):
     cloud_build.build()
     collection, config = next((command, config) for command, config in cloud_build.commands if "collect" in command)
-    assert "--due" in collection and "--warm-forecasts" in collection
+    assert "--due" in collection and "--warm-forecasts" not in collection
     assert config["env"]["OBSERVATORY_DATA_DIR"] == str(cloud_build.settings.data_dir)
     assert config["env"]["OBSERVATORY_PUBLIC_MODE"] == "false"
     vite = next(config for command, config in cloud_build.commands if "vite" in command)
@@ -204,6 +204,7 @@ def test_unchanged_sources_skip_all_analytics_compression_checkpoint_and_deploym
     key = publication_key(cloud_build.settings.database_path, cloud_build.settings.project_root,
         revision=588, as_of="2026-10-21", base="/battleground-senate-observatory/")
     result = cloud_build.build(previous_manifest={"publication_inputs": key})
+    assert not any('--warm-forecasts' in command for command, _ in cloud_build.commands)
     assert result["status"] == "unchanged" and result["deployment_performed"] is False
     assert any("collect" in command for command, _ in cloud_build.commands)
     assert not any(command[0] in {"node", "pnpm"} for command, _ in cloud_build.commands)
