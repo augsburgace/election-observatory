@@ -39,6 +39,7 @@ NAVY = '#16324c'
 MUTED = '#52687d'
 CYCLE_COLORS = {2026: TEAL, 2024: VIOLET, 2022: GOLD, 2020: '#39946c', 2018: '#60748f'}
 SECTION_CATALOG = [
+    {'id': 'office_call', 'title': 'House or governor race evidence', 'kind': 'office_research', 'description': 'Exact office and race, historical candidate returns and current forecast limitations.'},
     {'id': 'ev_call', 'title': 'Experimental Senate EV-led research call', 'kind': 'ev_forecast', 'description': 'The exact conditional margin, turnout assumptions, paired historical evaluation and validation limits.'},
     {'id': 'summary', 'title': 'Research findings', 'kind': 'summary', 'description': 'What the selected evidence supports, with exact scope and dates.'},
     {'id': 'ev_trajectory', 'title': 'Participation through time', 'kind': 'participation', 'description': 'Actual observation steps and compatible historical alignment.'},
@@ -77,6 +78,7 @@ def _poll_responses(estimates: list[dict]) -> str:
 
 
 TEMPLATES = [
+    {'id': 'office', 'label': 'House / governor research dossier', 'sections': ['office_call', 'summary', 'ev_trajectory', 'ev_changes', 'ev_composition', 'evidence']},
     {'id': 'ev_senate', 'label': 'Senate EV-led forecast dossier', 'sections': ['ev_call', 'summary', 'ev_trajectory', 'ev_changes', 'ev_map', 'ev_composition', 'polls', 'evidence']},
     {'id': 'state', 'label': 'Complete state research dossier', 'sections': ['summary', 'ev_trajectory', 'ev_changes', 'ev_map', 'ev_places', 'ev_composition', 'results_map', 'results_distribution', 'historical_trend', 'comparison', 'context_ranking', 'polls', 'evidence']},
     {'id': 'daily', 'label': 'Early-voting daily brief', 'sections': ['summary', 'ev_trajectory', 'ev_changes', 'ev_map', 'ev_places', 'evidence']},
@@ -116,6 +118,7 @@ class ReportRequest(BaseModel):
     model_config = ConfigDict(extra='forbid')
     title: str = Field(default='Election research dossier', min_length=1, max_length=250)
     template: str = Field(default='state', max_length=50)
+    race_id: str | None = Field(default=None, max_length=100)
     query: ResearchQuery
     results: ResultsScope = Field(default_factory=ResultsScope)
     context_metric: Literal['population', 'median_age', 'median_household_income'] = 'population'
@@ -386,6 +389,15 @@ def _document(database, request: ReportRequest):
         projection = {'selected': model_run['selected'], 'validation': model_run['validation'] if model_run['selected'] else {},
             'backtesting': model_run.get('backtesting', {}), 'manifest': model_run['manifest'], 'warnings': model_run['warnings']}
         projection = _public(projection)
+    office_projection = None
+    if 'office_research' in kinds:
+        from .office_research import office_research
+        desk = office_research(database, office=request.results.office, revision=revision,
+            as_of=pinned_query.get('as_of'), cycle=request.query.cycle)
+        office_projection = next((r for r in desk['calls'] if r['state'] == request.query.state and (not request.race_id or r['id'] == request.race_id)), None)
+        if request.race_id and office_projection is None:
+            raise ValueError('The selected race does not belong to this state and office. No different race is substituted.')
+        pinned_request.race_id = office_projection['id'] if office_projection else None
     precinct_bundle = None
     precinct_boundaries = []
     if results and results['coverage'].get('status') != 'withheld_future_final_returns' and request.results.geography_level == 'precinct' and any(s.id == 'results_map' for s in selected):
@@ -409,6 +421,8 @@ def _document(database, request: ReportRequest):
         evidence['precinct_map'] = _public({k: v for k, v in precinct_bundle.items() if k != 'features'})
     if context:
         evidence['context'] = _public(context)
+    if office_projection:
+        evidence['office_projection'] = _public(office_projection)
     snapshot_ids = set()
     if projection and projection['selected']:
         snapshot_ids.update(r['id'] for r in projection['selected']['sources'])
@@ -443,7 +457,25 @@ def _document(database, request: ReportRequest):
         item = _section(choice.id)
         item['researcher_caption'] = choice.caption
         sid = choice.id
-        if sid == 'ev_call':
+        if sid == 'office_call':
+            if not office_projection:
+                item['warnings'].append('No scheduled race matches the selected state and office.')
+            else:
+                race = office_projection
+                item['paragraphs'] = [race['name'], race['finding'], race['candidate_verification'],
+                    'EV direction not established. No same-stage EV model has been validated for this office. Senate scores and coefficients are not reused.',
+                    race['historical_reference']['description']]
+                item['warnings'] = race['warnings']
+                item['tables'] = [_table(['Year', 'Contest', 'Boundary vintage', 'Actual R minus D pp', 'Candidate votes', 'Round'],
+                    [[r['year'], r['contest_name'], r['boundary_vintage'], r['margin_pp'], r['total_votes'], r['round']] for r in race['history']], 'Historical office results'),
+                    _table(['Year', 'Candidate', 'Party', 'Votes', 'Share %'],
+                    [[r['year'], o['name'], o['party'], o['votes'], o['share_pct']] for r in race['history'] for o in r['options']], 'All published candidate options')]
+                latest = race['latest_result']
+                if latest:
+                    figure = _bars(f"{latest['year']} actual candidate votes · {race['name']}",
+                        [{'name': o['name'], 'value': o['votes'], 'color': party_color(o['party'])} for o in latest['options']], 'candidate votes')
+                    item['figures'] = [figure] if figure else []
+        elif sid == 'ev_call':
             call = projection['selected'] if projection else None
             if not call:
                 item['warnings'].append('No scheduled 2026 Senate contest exists in this state, or a supported model call is unavailable. Participation research remains separate.')

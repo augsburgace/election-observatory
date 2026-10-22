@@ -25,6 +25,10 @@ import { downloadData } from "../../api";
 import { CYCLE_COLORS, MODE_COLORS, compact, fmt, human } from "../../utils";
 import { Badge, Empty, Loading, Notice, Panel, Select } from "../ui";
 import { ResearchGuide } from "../ResearchGuide";
+type ParticipationContext = {
+  state: string;
+  evidence: Pick<EVCall["evidence"], "early_vote" | "turnout_projection">;
+};
 const tooltip = {
   background: "var(--popover)",
   color: "var(--text)",
@@ -70,7 +74,7 @@ export const ForecastHistory = memo(function ForecastHistory({
   asOf,
 }: {
   ctx: AppContext;
-  call: EVCall;
+  call: ParticipationContext;
   revision: number;
   asOf: string;
 }) {
@@ -822,7 +826,7 @@ function ForecastTurnout({
   call,
 }: {
   data: EVStageHistory;
-  call: EVCall;
+  call: ParticipationContext;
 }) {
   const turnout = data.turnout,
     registration = turnout.registration_denominator;

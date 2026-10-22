@@ -213,6 +213,12 @@ def register_atlas_routes(app, database, executor, query_dependency):
     def ev_calls(state: str = "NC", revision: int | None = None, as_of: str | None = None, cycle: int = 2026):
         return early_vote_forecasts(database, state=state_code(state), revision=revision_bound(revision), as_of=as_of, cycle=cycle)
 
+    @app.get("/api/v2/forecasts/offices")
+    def office_desk(office: Literal['US HOUSE', 'GOVERNOR'] = 'GOVERNOR', revision: int | None = None,
+                    as_of: str | None = None, cycle: int = 2026):
+        from .office_research import office_research
+        return office_research(database, office=office, revision=revision_bound(revision), as_of=as_of, cycle=cycle)
+
     @app.get("/api/v2/forecasts/reasoning")
     def ev_reasoning(state: str = "OH", revision: int | None = None, as_of: str | None = None,
                      cycle: int = 2026, include_polls: bool = False, include_markets: bool = False,

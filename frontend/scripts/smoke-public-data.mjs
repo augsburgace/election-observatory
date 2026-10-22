@@ -69,6 +69,17 @@ try {
     await check('exact evidence inspector', '/api/v1/evidence/' + id, data => { assert.equal(data.observation.id, id); assert.ok(data.source?.url); assert.ok(data.snapshot?.sha256); });
   }
   const forecastQuery = { state, cycle: 2026, revision, as_of: manifest.data_as_of };
+  for (const [office, count] of [['US HOUSE', 435], ['GOVERNOR', 36]]) {
+    const url = '/api/v2/forecasts/offices?' + params({ office, cycle: 2026, revision, as_of: manifest.data_as_of });
+    if (manifest.requests[canonicalPublicKey(url, manifest)]) await check('office-specific evidence ' + office, url, data => {
+      assert.equal(data.revision, revision); assert.equal(data.office, office); assert.equal(data.calls.length, count);
+      assert.equal(data.coverage.scheduled_races, count);
+      assert.ok(data.calls.every(r => r.office === office && r.call.eventual_winner_probability == null));
+      assert.ok(data.calls.every(r => r.history.every(h => h.year < Number(manifest.data_as_of.slice(0, 4)))));
+      if (office === 'US HOUSE') assert.ok(data.calls.every(r => r.call.margin_pp == null && r.call.ev_adjustment_pp == null));
+      else assert.equal(data.validation.office, office);
+    });
+  }
   if (manifest.requests[canonicalPublicKey('/api/v2/forecasts/early-vote?' + params(forecastQuery), manifest)]) {
     const calls = await check('experimental EV calls', '/api/v2/forecasts/early-vote?' + params(forecastQuery), data => assert.equal(data.revision, revision));
     if (calls.selected) {

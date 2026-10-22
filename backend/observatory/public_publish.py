@@ -97,6 +97,7 @@ class Publication:
                 "/api/v1/polling": {**research, "window_days": 21, "population": "LV",
                     "include_partisan": True, "question_type": "vote_choice"},
                 "/api/v2/forecasts/early-vote": forecast, "/api/v2/forecasts/feature-tests": forecast,
+                "/api/v2/forecasts/offices": {**forecast, "office": "GOVERNOR"},
                 "/api/v2/forecasts/reasoning": {**forecast, "include_polls": False,
                     "include_markets": False, "include_context": False},
                 "/api/v2/early-vote/history": {**forecast, "alignment": "days_to_election",
@@ -392,7 +393,7 @@ def _state_research(database, publication, state, revision, as_of, evidence, *, 
             _html,
         )
         sections = [ReportSection(id=row["id"]) for row in SECTION_CATALOG
-                    if include_forecasts or row["id"] != "ev_call"]
+                    if row['id'] != 'office_call' and (include_forecasts or row["id"] != "ev_call")]
         request = ReportRequest(title=f"{primary['state']['name']} election research dossier", query=base,
             sections=sections, include_notes=False,
             results=ResultsScope(geography_level="state" if state == "AK" else "county"))
@@ -442,6 +443,10 @@ def _forecasts(database, publication, states, revision, as_of):
     from .ev_feature_validation import build_feature_validation
     from .ev_forecast import early_vote_forecasts
     from .forecast_reasoning import forecast_reasoning
+    from .office_research import office_research
+    for office in ('GOVERNOR', 'US HOUSE'):
+        publication.response('/api/v2/forecasts/offices', {'office': office, 'cycle': 2026, 'revision': revision, 'as_of': as_of},
+            office_research(database, office=office, revision=revision, as_of=as_of))
     run = early_vote_forecasts(database, state=states[0], revision=revision, as_of=as_of)
     features = build_feature_validation(database, revision, as_of, backtesting=run["backtesting"])
     for state in states:

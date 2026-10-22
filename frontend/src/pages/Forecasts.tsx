@@ -52,6 +52,11 @@ import "../forecastsExpansion.css";
 import "../forecastBriefing.css";
 import { ForecastBriefing } from "../components/forecasts/ForecastBriefing";
 import { ForecastFeatureTests } from "../components/forecasts/ForecastFeatureTests";
+import type { ResearchOffice } from "../officeApi";
+import "../components/forecasts/officeForecasts.css";
+const OfficeForecastDesk = lazy(
+  () => import("../components/forecasts/OfficeForecastDesk"),
+);
 const ValidatedForecast = lazy(() => import("../components/ValidatedForecast"));
 const MemoCallEvidence = memo(CallEvidence),
   MemoCallValidation = memo(CallValidation);
@@ -150,6 +155,40 @@ function MarginRange({
   );
 }
 export default function Forecasts(ctx: AppContext & { embedded?: boolean }) {
+  const [storedOffice, setOffice] = useViewOption<string>(
+    "forecast_office",
+    "US SENATE",
+  );
+  const office: ResearchOffice =
+    storedOffice === "US HOUSE" || storedOffice === "GOVERNOR"
+      ? storedOffice
+      : "US SENATE";
+  return (
+    <>
+      <div className="forecast-office-picker">
+        <span>Research an office</span>
+        <Segmented
+          label="Forecast office"
+          value={office}
+          onChange={setOffice}
+          items={[
+            { id: "US SENATE", label: "U.S. Senate" },
+            { id: "US HOUSE", label: "U.S. House" },
+            { id: "GOVERNOR", label: "Governor" },
+          ]}
+        />
+      </div>
+      {office === "US SENATE" ? (
+        <SenateForecasts {...ctx} />
+      ) : (
+        <Suspense fallback={<Loading label="Opening office research…" />}>
+          <OfficeForecastDesk {...ctx} office={office} />
+        </Suspense>
+      )}
+    </>
+  );
+}
+function SenateForecasts(ctx: AppContext & { embedded?: boolean }) {
   const { query, workspace, embedded } = ctx,
     revision = query.revision ?? workspace.revision;
   const calls = useQuery({
@@ -449,27 +488,27 @@ export default function Forecasts(ctx: AppContext & { embedded?: boolean }) {
             asOf={data?.as_of || query.as_of}
           />
           <section id="forecast-nationwide" className="forecast-anchor">
-          <div className="call-national-strip">
-            <span>
-              <Vote size={15} />
-              <b>{data?.calls.length || 0}</b> scheduled Senate contests
-            </span>
-            <span>
-              <b>{data?.calls.filter((c) => c.watchlist).length || 0}</b>{" "}
-              watchlist races
-            </span>
-            <span>
-              <b>
-                {data?.calls.filter((c) => c.call.status === "ev_informed")
-                  .length || 0}
-              </b>{" "}
-              EV-informed calls
-            </span>
-            <span>
-              Evidence r<b>{data?.revision}</b> ·{" "}
-              {String(data?.as_of || "").slice(0, 10)}
-            </span>
-          </div>
+            <div className="call-national-strip">
+              <span>
+                <Vote size={15} />
+                <b>{data?.calls.length || 0}</b> scheduled Senate contests
+              </span>
+              <span>
+                <b>{data?.calls.filter((c) => c.watchlist).length || 0}</b>{" "}
+                watchlist races
+              </span>
+              <span>
+                <b>
+                  {data?.calls.filter((c) => c.call.status === "ev_informed")
+                    .length || 0}
+                </b>{" "}
+                EV-informed calls
+              </span>
+              <span>
+                Evidence r<b>{data?.revision}</b> ·{" "}
+                {String(data?.as_of || "").slice(0, 10)}
+              </span>
+            </div>
             <NationalForecastMap
               calls={data?.calls || []}
               selected={selected}
@@ -887,7 +926,9 @@ function CallEvidence(ctx: AppContext & { call: EVCall }) {
                       <Cell
                         key={row.id}
                         stroke={
-                          (ctx.selectedGeographyIds ?? ctx.query.geography_ids).includes(row.id)
+                          (
+                            ctx.selectedGeographyIds ?? ctx.query.geography_ids
+                          ).includes(row.id)
                             ? "var(--selection)"
                             : "transparent"
                         }
@@ -1004,7 +1045,9 @@ function CallEvidence(ctx: AppContext & { call: EVCall }) {
                     <tr
                       key={row.id}
                       className={
-                        (ctx.selectedGeographyIds ?? ctx.query.geography_ids).includes(row.id)
+                        (
+                          ctx.selectedGeographyIds ?? ctx.query.geography_ids
+                        ).includes(row.id)
                           ? "selected"
                           : ""
                       }

@@ -753,7 +753,7 @@ export default function App() {
                     },
                     {
                       value: "forecasts",
-                      label: "Make an EV-led Senate call",
+                      label: "Research Senate, House or governor",
                     },
                   ]}
                 />

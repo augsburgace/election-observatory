@@ -103,8 +103,8 @@ export default function Overview(ctx: AppContext) {
   return (
     <>
       <div className="senate-priority-banner">
-        <div><strong>2026 Senate research desk</strong><span>Early-voting geography, methods, composition, historical comparisons, and explicit research calls.</span></div>
-        <button className="button" onClick={()=>setPage("forecasts")}>Open EV-led Senate calls <ArrowRight size={15}/></button>
+        <div><strong>2026 race research desk</strong><span>Early-voting geography, methods, composition, historical comparisons, and explicit research calls.</span></div>
+        <button className="button" onClick={()=>setPage("forecasts")}>Open Senate, House & governor research <ArrowRight size={15}/></button>
       </div>
       <div className="page-intro new-today-intro">
         <div>

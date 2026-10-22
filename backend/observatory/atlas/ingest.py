@@ -99,7 +99,11 @@ def parse_results(source: dict, path: str, *, deep: bool = True) -> tuple[list[d
     native = {}
     warnings = []
     suppressed = 0
-    for row in _csv_rows(path, zipped=provider == "precinct"):
+    input_rows = _csv_rows(path, zipped=provider == "precinct")
+    if provider in {'snyder_governor', 'snyder_house'}:
+        from .governor_history import governor_rows
+        input_rows = governor_rows(input_rows, house=provider == 'snyder_house')
+    for row in input_rows:
         state = (row.get("state_po") or STATE_NAMES.get(str(row.get("state_name", "")).upper()) or source.get("state", "")).upper()
         if state not in STATES:
             continue
@@ -204,7 +208,15 @@ def parse_results(source: dict, path: str, *, deep: bool = True) -> tuple[list[d
         warnings.append(f"{suppressed} suppressed or nonnumeric source rows retained as incomplete, never converted to reported zeroes.")
     if provider == "precinct":
         warnings.append("TOTAL values supersede method components per native reporting unit; source-native method categories are retained in provenance.")
-    return rows, {"warnings": warnings, "suppressed_rows": suppressed, "offices": sorted({r['office'] for r in rows})}
+    metadata = {"warnings": warnings, "suppressed_rows": suppressed, "offices": sorted({r['office'] for r in rows})}
+    if provider == 'snyder_governor':
+        # First local import used the regular GEN stage for these special
+        # contests. Preserve its snapshot but withdraw the inferred dates in a
+        # new validation revision; special election dates are not supplied.
+        metadata['invalidated_contest_ids'] = ['contest:' + stable_id(f'{state}-{year}-GEN-SPECIAL-GOVERNOR-STATEWIDE-')
+            for state, year in [('UT', 2010), ('WV', 2011), ('OR', 2016)]]
+        metadata['validation_reason'] = 'Academic governor special-election dates were not supplied. Earlier GEN groupings are withheld; separate special stages retain unknown dates.'
+    return rows, metadata
 
 
 def parse_bridge(source: dict, path: str) -> tuple[list[dict], dict]:
@@ -308,7 +320,7 @@ def _publish(database, source: dict, document, rows: list[dict], metadata: dict,
         if metadata.get('invalidated_contest_ids'):
             session.add(AtlasResultValidation(dataset_id=source['id'], revision=revision.id,
                 invalidated_contest_ids=metadata['invalidated_contest_ids'],
-                reason='Separate judicial seats or other repeated office codes use distinct documented candidate option sets; the earlier mixed-office grouping is withheld.',
+                reason=metadata.get('validation_reason', 'Separate judicial seats or other repeated office codes use distinct documented candidate option sets; the earlier mixed-office grouping is withheld.'),
                 payload={'parser_version':metadata.get('precinct_parser_version'), 'source_sha256':document.sha256}))
         if not stored:
             stored = DatasetState(id=source['id'],dataset_id=source['id'],state=source.get('state'),status="loaded")
@@ -373,7 +385,7 @@ def load_dataset(database, dataset_id: str, state: str | None = None, *, deep: b
 def core_install(database, *, progress=None) -> dict:
     """Small nationwide reference datasets; large precinct files remain on demand."""
     ensure_schema(database)
-    ids = ['medsl_state_president','medsl_state_senate','medsl_house_1976_2018','medsl_county_2000_2016',
+    ids = ['medsl_state_president','medsl_state_senate','medsl_house_1976_2018','snyder_governor_2006_2024','snyder_house_2006_2024','medsl_county_2000_2016',
         'county_president_2020_bridge','county_president_2024_bridge','acs2024_population']
     results = []
     for index,dataset_id in enumerate(ids):

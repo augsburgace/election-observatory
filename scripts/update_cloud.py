@@ -135,6 +135,13 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
             try:
                 with diagnostics.open("w") as log:
                     diagnostics.chmod(0o600)
+                    # Small immutable reference source. The atlas loader skips
+                    # an already validated parser version, so this adds no
+                    # repeated download to ordinary two-hour source checks.
+                    for dataset in ('snyder_governor_2006_2024', 'snyder_house_2006_2024'):
+                        subprocess.run([sys.executable, "-m", "observatory.cli", "atlas", "--dataset", dataset],
+                            cwd=settings.project_root, env=environment, check=True,
+                            stdout=log, stderr=subprocess.STDOUT)
                     subprocess.run([sys.executable, "-m", "observatory.cli", "collect", "--due", "--warm-forecasts"],
                         cwd=settings.project_root, env=environment, check=True,
                         stdout=log, stderr=subprocess.STDOUT)

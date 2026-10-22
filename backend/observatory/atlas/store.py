@@ -44,16 +44,25 @@ def _rows(database, *, state, years, office, level, revision, contest_id=None,
     with database.session() as session:
         rows = [record_dict(r) for r in session.scalars(statement.order_by(ElectionResult.revision, ElectionResult.id))]
         contest_ids={r['contest_id'] for r in rows}
-        identities={r.id:(r.state,r.year,r.office,r.district.upper(),r.payload.get('special',False),
-            r.election_id.split(':')[-1],r.name.upper().replace('STATEWIDE',''))
-            for r in session.scalars(select(Contest).where(Contest.id.in_(contest_ids)))}
+        identities={}
+        district_scopes={}
+        for contest in session.scalars(select(Contest).where(Contest.id.in_(contest_ids))):
+            identity=(contest.state,contest.year,contest.office,contest.district.upper(),contest.payload.get('special',False),
+                contest.election_id.split(':')[-1],contest.name.upper().replace('STATEWIDE',''))
+            if level == 'district' and contest.office == 'US HOUSE' and not contest.payload.get('special'):
+                district=house_district_identity(contest.state,contest.year,contest.district)
+                if district is not None:
+                    identity=(contest.state,contest.year,contest.office,district,False,contest.election_id.split(':')[-1])
+                    district_scopes[contest.id]=(contest.state,contest.year,district)
+            identities[contest.id]=identity
     latest = {r['logical_key']:r for r in rows}
     from .result_validation import apply_result_validations
     validated_rows = apply_result_validations(database, list(latest.values()), revision)
     # Entire geography/contest uses one producer, rather than mixing candidate rows.
     grouped = defaultdict(list)
     for row in validated_rows:
-        grouped[(row['year'],identities.get(row['contest_id'],row['contest_id']),row['geography_id'])].append(row)
+        grouped[(row['year'],identities.get(row['contest_id'],row['contest_id']),
+                 district_scopes.get(row['contest_id'],row['geography_id']))].append(row)
     output=[]
     for members in grouped.values():
         scores = {}
@@ -61,10 +70,26 @@ def _rows(database, *, state, years, office, level, revision, contest_id=None,
             tier=row['payload'].get('source_tier',9)
             # At state grain prefer dedicated certified statewide compilation.
             specificity = 0 if row['dataset_id'].startswith('medsl_state_') else 1
-            scores[row['dataset_id']] = (tier,specificity)
+            scores[row['dataset_id']] = (tier,specificity,row['dataset_id'].startswith('snyder_'))
         chosen=min(scores,key=lambda key:scores[key])
         output.extend(r for r in members if r['dataset_id']==chosen)
     return output
+
+
+def house_district_identity(state, year, district):
+    """Within one election only: aliases are not a cross-year boundary match."""
+    text=str(district).strip().upper()
+    if text in {'STATEWIDE','AT LARGE','AT-LARGE','AL','0','00','000'}:
+        return 'AL'
+    try:
+        number=int(text)
+    except ValueError:
+        return None
+    if number <= 0:
+        return None
+    if number == 1 and year >= 2006 and (state in {'AK','DE','ND','SD','VT','WY'} or (state == 'MT' and year <= 2020)):
+        return 'AL'
+    return str(number)
 
 
 def _contest_identity(contest: dict) -> tuple:

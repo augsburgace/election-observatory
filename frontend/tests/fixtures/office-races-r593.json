@@ -1,0 +1,1798 @@
+{
+  "US HOUSE": {
+    "id": "2026-OH-HOUSE-01",
+    "state": "OH",
+    "state_name": "Ohio",
+    "office": "US HOUSE",
+    "cycle": 2026,
+    "name": "Ohio \u00b7 District 1",
+    "district": 1,
+    "at_large": false,
+    "election_date": "2026-11-03",
+    "election_system": "plurality",
+    "possible_runoff_date": null,
+    "watchlist": true,
+    "special": false,
+    "candidates": [],
+    "candidate_verification": "Current official ballot roster not yet verified; historical candidates are not current nominees.",
+    "race_id": "2026-OH-HOUSE-01",
+    "history": [
+      {
+        "year": 2014,
+        "margin_pp": 26.433380787605824,
+        "total_votes": 197383.0,
+        "contest_id": "contest:fc7b16698df9d8355d25a112",
+        "contest_name": "Us House \u00b7 1",
+        "district": "1",
+        "boundary_vintage": "2014",
+        "geography_level": "district",
+        "geography_id": "district:OH:2014:congress:1",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 101479,
+            "revision": 77
+          },
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 101480,
+            "revision": 77
+          }
+        ],
+        "options": [
+          {
+            "id": "option:214e7c2eb302bf0fc8e091ab",
+            "name": "Steve Chabot",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 124779.0,
+            "share_pct": 63.216690393802914,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 101479,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          },
+          {
+            "id": "option:3770569b50b3787092e66975",
+            "name": "Fred Kundrata",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 72604.0,
+            "share_pct": 36.783309606197086,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 101480,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      },
+      {
+        "year": 2016,
+        "margin_pp": 18.425087657981667,
+        "total_votes": 354788.0,
+        "contest_id": "contest:a424076048416344c95ba650",
+        "contest_name": "Us House \u00b7 1",
+        "district": "1",
+        "boundary_vintage": "2016",
+        "geography_level": "district",
+        "geography_id": "district:OH:2016:congress:1",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 102833,
+            "revision": 77
+          },
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 102835,
+            "revision": 77
+          },
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 102834,
+            "revision": 77
+          }
+        ],
+        "options": [
+          {
+            "id": "option:d4f4de8ba642956f2209f795",
+            "name": "Steve Chabot",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 210014.0,
+            "share_pct": 59.194223028963776,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 102833,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          },
+          {
+            "id": "option:ac52d57cd6e10a8879601304",
+            "name": "Michele Young",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 144644.0,
+            "share_pct": 40.769135370982106,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 102835,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          },
+          {
+            "id": "option:5b34446b2d63d5e7462af59a",
+            "name": "NA",
+            "party": null,
+            "kind": "candidate",
+            "votes": 130.0,
+            "share_pct": 0.036641600054116825,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 102834,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "UNCLASSIFIED"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      },
+      {
+        "year": 2018,
+        "margin_pp": 4.417507835584021,
+        "total_votes": 300871.0,
+        "contest_id": "contest:0ba123aa1485ee0fac518f97",
+        "contest_name": "Us House \u00b7 1",
+        "district": "1",
+        "boundary_vintage": "2018",
+        "geography_level": "district",
+        "geography_id": "district:OH:2018:congress:1",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 104091,
+            "revision": 77
+          },
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 104094,
+            "revision": 77
+          },
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 104093,
+            "revision": 77
+          },
+          {
+            "snapshot_id": 364,
+            "source_id": "medsl_house_1976_2018",
+            "result_id": 104092,
+            "revision": 77
+          }
+        ],
+        "options": [
+          {
+            "id": "option:186e6277d25bde71a19caa0e",
+            "name": "Steve Chabot",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 154409.0,
+            "share_pct": 51.32066566734581,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 104091,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          },
+          {
+            "id": "option:8ef76ec4ec72a7076f71fd53",
+            "name": "Aftab Pureval",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 141118.0,
+            "share_pct": 46.90315783176178,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 104094,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          },
+          {
+            "id": "option:1343ce4908d280ec9f18d8f3",
+            "name": "Dirk Kubala",
+            "party": "LIB",
+            "kind": "candidate",
+            "votes": 5339.0,
+            "share_pct": 1.7745146591063945,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 104093,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "LIB"
+            ]
+          },
+          {
+            "id": "option:2e1d78357f237198dfa307c4",
+            "name": "NA",
+            "party": null,
+            "kind": "candidate",
+            "votes": 5.0,
+            "share_pct": 0.0016618417860146044,
+            "source_refs": [
+              {
+                "snapshot_id": 364,
+                "source_id": "medsl_house_1976_2018",
+                "result_id": 104092,
+                "revision": 77
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "UNCLASSIFIED"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      },
+      {
+        "year": 2022,
+        "margin_pp": -5.5175158698570534,
+        "total_votes": 296474.0,
+        "contest_id": "contest:abbedd3de5d3a75e0abf0c96",
+        "contest_name": "Us House \u00b7 001",
+        "district": "001",
+        "boundary_vintage": "2022",
+        "geography_level": "district",
+        "geography_id": "district:OH:2022:US HOUSE:001",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5244413,
+            "revision": 173
+          },
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5243861,
+            "revision": 173
+          }
+        ],
+        "options": [
+          {
+            "id": "option:13fe8affd1698940eefe5ff0",
+            "name": "GREG LANDSMAN",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 156416.0,
+            "share_pct": 52.758757934928525,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5244413,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          },
+          {
+            "id": "option:d354085300d431bc6dbdd381",
+            "name": "STEVE CHABOT",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 140058.0,
+            "share_pct": 47.241242065071475,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5243861,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      },
+      {
+        "year": 2024,
+        "margin_pp": -9.166158470461255,
+        "total_votes": 391909.0,
+        "contest_id": "contest:dbfd4de484fbf53935c4105f",
+        "contest_name": "Us House \u00b7 001",
+        "district": "001",
+        "boundary_vintage": "2024",
+        "geography_level": "district",
+        "geography_id": "district:OH:2024:US HOUSE:001",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 602,
+            "source_id": "medsl_2024_OH",
+            "result_id": 2221257,
+            "revision": 169
+          },
+          {
+            "snapshot_id": 602,
+            "source_id": "medsl_2024_OH",
+            "result_id": 2230224,
+            "revision": 169
+          }
+        ],
+        "options": [
+          {
+            "id": "option:efb13244130a08e4462ea5fd",
+            "name": "GREG LANDSMAN",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 213916.0,
+            "share_pct": 54.58307923523063,
+            "source_refs": [
+              {
+                "snapshot_id": 602,
+                "source_id": "medsl_2024_OH",
+                "result_id": 2221257,
+                "revision": 169
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          },
+          {
+            "id": "option:f1b603dc279abe68652f4377",
+            "name": "ORLANDO SONZA",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 177993.0,
+            "share_pct": 45.41692076476937,
+            "source_refs": [
+              {
+                "snapshot_id": 602,
+                "source_id": "medsl_2024_OH",
+                "result_id": 2230224,
+                "revision": 169
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      }
+    ],
+    "history_range": [
+      1976,
+      2024
+    ],
+    "latest_result": {
+      "year": 2024,
+      "margin_pp": -9.166158470461255,
+      "total_votes": 391909.0,
+      "contest_id": "contest:dbfd4de484fbf53935c4105f",
+      "contest_name": "Us House \u00b7 001",
+      "district": "001",
+      "boundary_vintage": "2024",
+      "geography_level": "district",
+      "geography_id": "district:OH:2024:US HOUSE:001",
+      "election_system": "source_reported",
+      "round": "reported",
+      "source_refs": [
+        {
+          "snapshot_id": 602,
+          "source_id": "medsl_2024_OH",
+          "result_id": 2221257,
+          "revision": 169
+        },
+        {
+          "snapshot_id": 602,
+          "source_id": "medsl_2024_OH",
+          "result_id": 2230224,
+          "revision": 169
+        }
+      ],
+      "options": [
+        {
+          "id": "option:efb13244130a08e4462ea5fd",
+          "name": "GREG LANDSMAN",
+          "party": "DEM",
+          "kind": "candidate",
+          "votes": 213916.0,
+          "share_pct": 54.58307923523063,
+          "source_refs": [
+            {
+              "snapshot_id": 602,
+              "source_id": "medsl_2024_OH",
+              "result_id": 2221257,
+              "revision": 169
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "DEM"
+          ]
+        },
+        {
+          "id": "option:f1b603dc279abe68652f4377",
+          "name": "ORLANDO SONZA",
+          "party": "REP",
+          "kind": "candidate",
+          "votes": 177993.0,
+          "share_pct": 45.41692076476937,
+          "source_refs": [
+            {
+              "snapshot_id": 602,
+              "source_id": "medsl_2024_OH",
+              "result_id": 2230224,
+              "revision": 169
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "REP"
+          ]
+        }
+      ],
+      "margin_status": "available"
+    },
+    "historical_reference": {
+      "margin_pp": null,
+      "cycles": [
+        {
+          "year": 2022,
+          "margin_pp": -5.5175158698570534,
+          "total_votes": 296474.0,
+          "contest_id": "contest:abbedd3de5d3a75e0abf0c96",
+          "contest_name": "Us House \u00b7 001",
+          "district": "001",
+          "boundary_vintage": "2022",
+          "geography_level": "district",
+          "geography_id": "district:OH:2022:US HOUSE:001",
+          "election_system": "source_reported",
+          "round": "reported",
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5244413,
+              "revision": 173
+            },
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5243861,
+              "revision": 173
+            }
+          ],
+          "options": [
+            {
+              "id": "option:13fe8affd1698940eefe5ff0",
+              "name": "GREG LANDSMAN",
+              "party": "DEM",
+              "kind": "candidate",
+              "votes": 156416.0,
+              "share_pct": 52.758757934928525,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5244413,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "DEM"
+              ]
+            },
+            {
+              "id": "option:d354085300d431bc6dbdd381",
+              "name": "STEVE CHABOT",
+              "party": "REP",
+              "kind": "candidate",
+              "votes": 140058.0,
+              "share_pct": 47.241242065071475,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5243861,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "REP"
+              ]
+            }
+          ],
+          "margin_status": "available",
+          "weight": 0.49338596673675117
+        },
+        {
+          "year": 2018,
+          "margin_pp": 4.417507835584021,
+          "total_votes": 300871.0,
+          "contest_id": "contest:0ba123aa1485ee0fac518f97",
+          "contest_name": "Us House \u00b7 1",
+          "district": "1",
+          "boundary_vintage": "2018",
+          "geography_level": "district",
+          "geography_id": "district:OH:2018:congress:1",
+          "election_system": "source_reported",
+          "round": "reported",
+          "source_refs": [
+            {
+              "snapshot_id": 364,
+              "source_id": "medsl_house_1976_2018",
+              "result_id": 104091,
+              "revision": 77
+            },
+            {
+              "snapshot_id": 364,
+              "source_id": "medsl_house_1976_2018",
+              "result_id": 104094,
+              "revision": 77
+            },
+            {
+              "snapshot_id": 364,
+              "source_id": "medsl_house_1976_2018",
+              "result_id": 104093,
+              "revision": 77
+            },
+            {
+              "snapshot_id": 364,
+              "source_id": "medsl_house_1976_2018",
+              "result_id": 104092,
+              "revision": 77
+            }
+          ],
+          "options": [
+            {
+              "id": "option:186e6277d25bde71a19caa0e",
+              "name": "Steve Chabot",
+              "party": "REP",
+              "kind": "candidate",
+              "votes": 154409.0,
+              "share_pct": 51.32066566734581,
+              "source_refs": [
+                {
+                  "snapshot_id": 364,
+                  "source_id": "medsl_house_1976_2018",
+                  "result_id": 104091,
+                  "revision": 77
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "REP"
+              ]
+            },
+            {
+              "id": "option:8ef76ec4ec72a7076f71fd53",
+              "name": "Aftab Pureval",
+              "party": "DEM",
+              "kind": "candidate",
+              "votes": 141118.0,
+              "share_pct": 46.90315783176178,
+              "source_refs": [
+                {
+                  "snapshot_id": 364,
+                  "source_id": "medsl_house_1976_2018",
+                  "result_id": 104094,
+                  "revision": 77
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "DEM"
+              ]
+            },
+            {
+              "id": "option:1343ce4908d280ec9f18d8f3",
+              "name": "Dirk Kubala",
+              "party": "LIB",
+              "kind": "candidate",
+              "votes": 5339.0,
+              "share_pct": 1.7745146591063945,
+              "source_refs": [
+                {
+                  "snapshot_id": 364,
+                  "source_id": "medsl_house_1976_2018",
+                  "result_id": 104093,
+                  "revision": 77
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "LIB"
+              ]
+            },
+            {
+              "id": "option:2e1d78357f237198dfa307c4",
+              "name": "NA",
+              "party": null,
+              "kind": "candidate",
+              "votes": 5.0,
+              "share_pct": 0.0016618417860146044,
+              "source_refs": [
+                {
+                  "snapshot_id": 364,
+                  "source_id": "medsl_house_1976_2018",
+                  "result_id": 104092,
+                  "revision": 77
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "UNCLASSIFIED"
+              ]
+            }
+          ],
+          "margin_status": "available",
+          "weight": 0.3108136826071823
+        },
+        {
+          "year": 2014,
+          "margin_pp": 26.433380787605824,
+          "total_votes": 197383.0,
+          "contest_id": "contest:fc7b16698df9d8355d25a112",
+          "contest_name": "Us House \u00b7 1",
+          "district": "1",
+          "boundary_vintage": "2014",
+          "geography_level": "district",
+          "geography_id": "district:OH:2014:congress:1",
+          "election_system": "source_reported",
+          "round": "reported",
+          "source_refs": [
+            {
+              "snapshot_id": 364,
+              "source_id": "medsl_house_1976_2018",
+              "result_id": 101479,
+              "revision": 77
+            },
+            {
+              "snapshot_id": 364,
+              "source_id": "medsl_house_1976_2018",
+              "result_id": 101480,
+              "revision": 77
+            }
+          ],
+          "options": [
+            {
+              "id": "option:214e7c2eb302bf0fc8e091ab",
+              "name": "Steve Chabot",
+              "party": "REP",
+              "kind": "candidate",
+              "votes": 124779.0,
+              "share_pct": 63.216690393802914,
+              "source_refs": [
+                {
+                  "snapshot_id": 364,
+                  "source_id": "medsl_house_1976_2018",
+                  "result_id": 101479,
+                  "revision": 77
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "REP"
+              ]
+            },
+            {
+              "id": "option:3770569b50b3787092e66975",
+              "name": "Fred Kundrata",
+              "party": "DEM",
+              "kind": "candidate",
+              "votes": 72604.0,
+              "share_pct": 36.783309606197086,
+              "source_refs": [
+                {
+                  "snapshot_id": 364,
+                  "source_id": "medsl_house_1976_2018",
+                  "result_id": 101480,
+                  "revision": 77
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "DEM"
+              ]
+            }
+          ],
+          "margin_status": "available",
+          "weight": 0.19580035065606646
+        }
+      ],
+      "seat_context_status": "same_regular_special_category",
+      "election_type": "midterm",
+      "excluded_context": [
+        {
+          "year": 2016,
+          "margin_pp": 18.425087657981667,
+          "contest_id": "contest:a424076048416344c95ba650",
+          "election_type": "presidential",
+          "reason": "Different election environment; retained as context, excluded from the point."
+        },
+        {
+          "year": 2024,
+          "margin_pp": -9.166158470461255,
+          "contest_id": "contest:dbfd4de484fbf53935c4105f",
+          "election_type": "presidential",
+          "reason": "Different election environment; retained as context, excluded from the point."
+        }
+      ],
+      "description": "Same-number district history only. Boundaries are election-specific; this is not a current-district reference or forecast.",
+      "scope": "same_number_historical_district"
+    },
+    "call": {
+      "status": "unavailable",
+      "margin_pp": null,
+      "direction": null,
+      "eventual_winner_probability": null,
+      "ev_adjustment_pp": null,
+      "label": "EV direction not established"
+    },
+    "finding": "Latest archived us house result: 2024, 391,909 candidate votes. Open the candidate shares and election-specific district history below. A current House call awaits verified district boundaries and office-specific validation.",
+    "warnings": [
+      "Current official ballot roster not yet verified; historical candidates are not current nominees.",
+      "Participation records do not identify candidate votes. Registration, race, religion and past party context cannot reveal an individual ballot.",
+      "No held-out same-stage EV validation has been completed for this office. No EV-adjusted margin or winner probability is published.",
+      "District numbers can refer to different boundaries in different years, including changes after 2024. No verified 2026 crosswalk is installed. Statewide or county EV is never allocated into these districts."
+    ],
+    "validation": {
+      "office": "US HOUSE",
+      "ev_model_promoted": false,
+      "ev_backtest_cases": 0,
+      "reason": "Senate backtest scores and coefficients are not transferred to House or governor races."
+    }
+  },
+  "GOVERNOR": {
+    "id": "2026-OH-GOV",
+    "state": "OH",
+    "state_name": "Ohio",
+    "office": "GOVERNOR",
+    "cycle": 2026,
+    "name": "Ohio \u00b7 Governor",
+    "district": null,
+    "at_large": false,
+    "election_date": "2026-11-03",
+    "election_system": "plurality",
+    "possible_runoff_date": null,
+    "watchlist": true,
+    "special": false,
+    "candidates": [],
+    "candidate_verification": "Current official ballot roster not yet verified; historical candidates are not current nominees.",
+    "race_id": "2026-OH-GOV",
+    "history": [
+      {
+        "year": 2014,
+        "margin_pp": 31.666332115522035,
+        "total_votes": 2954207.0,
+        "contest_id": "contest:62a973c32ac625cf838ae75d",
+        "contest_name": "Governor \u00b7 STATEWIDE",
+        "district": "STATEWIDE",
+        "boundary_vintage": "2014",
+        "geography_level": "state",
+        "geography_id": "state:OH",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 2015,
+            "source_id": "snyder_governor_2006_2024",
+            "result_id": 5598686,
+            "revision": 593
+          },
+          {
+            "snapshot_id": 2015,
+            "source_id": "snyder_governor_2006_2024",
+            "result_id": 5598685,
+            "revision": 593
+          }
+        ],
+        "options": [
+          {
+            "id": "option:758e05c2cc8bdc3870246430",
+            "name": "KASICH, JOHN R.",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 1944848.0,
+            "share_pct": 65.83316605776102,
+            "source_refs": [
+              {
+                "snapshot_id": 2015,
+                "source_id": "snyder_governor_2006_2024",
+                "result_id": 5598686,
+                "revision": 593
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          },
+          {
+            "id": "option:871a134fb694909c21426c01",
+            "name": "FITZGERALD, EDWARD (ED)",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 1009359.0,
+            "share_pct": 34.16683394223898,
+            "source_refs": [
+              {
+                "snapshot_id": 2015,
+                "source_id": "snyder_governor_2006_2024",
+                "result_id": 5598685,
+                "revision": 593
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      },
+      {
+        "year": 2018,
+        "margin_pp": 3.7375813387647105,
+        "total_votes": 4435462.0,
+        "contest_id": "contest:67d885935b9b2689b4ad850c",
+        "contest_name": "Governor \u00b7 STATEWIDE",
+        "district": "STATEWIDE",
+        "boundary_vintage": "2018",
+        "geography_level": "state",
+        "geography_id": "state:OH",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 2015,
+            "source_id": "snyder_governor_2006_2024",
+            "result_id": 5598880,
+            "revision": 593
+          },
+          {
+            "snapshot_id": 2015,
+            "source_id": "snyder_governor_2006_2024",
+            "result_id": 5598877,
+            "revision": 593
+          },
+          {
+            "snapshot_id": 2015,
+            "source_id": "snyder_governor_2006_2024",
+            "result_id": 5598879,
+            "revision": 593
+          },
+          {
+            "snapshot_id": 2015,
+            "source_id": "snyder_governor_2006_2024",
+            "result_id": 5598878,
+            "revision": 593
+          }
+        ],
+        "options": [
+          {
+            "id": "option:5ba196a7f68b399e3e891882",
+            "name": "DEWINE, MICHAEL (MIKE)",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 2235825.0,
+            "share_pct": 50.407939466057876,
+            "source_refs": [
+              {
+                "snapshot_id": 2015,
+                "source_id": "snyder_governor_2006_2024",
+                "result_id": 5598880,
+                "revision": 593
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          },
+          {
+            "id": "option:1f1155aa1dc8dec6d428508e",
+            "name": "CORDRAY, RICHARD A.",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 2070046.0,
+            "share_pct": 46.67035812729316,
+            "source_refs": [
+              {
+                "snapshot_id": 2015,
+                "source_id": "snyder_governor_2006_2024",
+                "result_id": 5598877,
+                "revision": 593
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          },
+          {
+            "id": "option:1f3d17d533ea23261196ab20",
+            "name": "IRVINE, TRAVIS M.",
+            "party": "LIB",
+            "kind": "candidate",
+            "votes": 80055.0,
+            "share_pct": 1.804885263361517,
+            "source_refs": [
+              {
+                "snapshot_id": 2015,
+                "source_id": "snyder_governor_2006_2024",
+                "result_id": 5598879,
+                "revision": 593
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "LIB"
+            ]
+          },
+          {
+            "id": "option:6019bfe1bfb53c502bf17734",
+            "name": "GADELL-NEWTON, CONSTANCE",
+            "party": "GRN",
+            "kind": "candidate",
+            "votes": 49536.0,
+            "share_pct": 1.116817143287441,
+            "source_refs": [
+              {
+                "snapshot_id": 2015,
+                "source_id": "snyder_governor_2006_2024",
+                "result_id": 5598878,
+                "revision": 593
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "GRN"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      },
+      {
+        "year": 2022,
+        "margin_pp": 25.02940232563145,
+        "total_votes": 4134877.0,
+        "contest_id": "contest:6d690bb3ba594a523b5968ea",
+        "contest_name": "Governor \u00b7 STATEWIDE",
+        "district": "STATEWIDE",
+        "boundary_vintage": "2022",
+        "geography_level": "state",
+        "geography_id": "state:OH",
+        "election_system": "source_reported",
+        "round": "reported",
+        "source_refs": [
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5072444,
+            "revision": 173
+          },
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5081466,
+            "revision": 173
+          },
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5327315,
+            "revision": 173
+          },
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5326784,
+            "revision": 173
+          },
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5327138,
+            "revision": 173
+          },
+          {
+            "snapshot_id": 609,
+            "source_id": "medsl_2022_OH",
+            "result_id": 5326961,
+            "revision": 173
+          }
+        ],
+        "options": [
+          {
+            "id": "option:d89abf6d4ddd56bc7a35f507",
+            "name": "MIKE DEWINE",
+            "party": "REP",
+            "kind": "candidate",
+            "votes": 2580424.0,
+            "share_pct": 62.40630616098133,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5072444,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "REP"
+            ]
+          },
+          {
+            "id": "option:7fc4032de2f8c76ed49a3f92",
+            "name": "NAN WHALEY",
+            "party": "DEM",
+            "kind": "candidate",
+            "votes": 1545489.0,
+            "share_pct": 37.37690383534988,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5081466,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "DEM"
+            ]
+          },
+          {
+            "id": "option:a78924eeb7f00669d9c0a5f6",
+            "name": "MARSHALL USHER",
+            "party": null,
+            "kind": "candidate",
+            "votes": 8082.0,
+            "share_pct": 0.1954592603359181,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5327315,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "UNCLASSIFIED"
+            ]
+          },
+          {
+            "id": "option:9a259e8b4fdb5521bbe35ebb",
+            "name": "TIMOTHY GRADY",
+            "party": null,
+            "kind": "candidate",
+            "votes": 574.0,
+            "share_pct": 0.01388191232774276,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5326784,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "UNCLASSIFIED"
+            ]
+          },
+          {
+            "id": "option:9f8140dfb8d3790f69539c77",
+            "name": "RENEA TURNER",
+            "party": null,
+            "kind": "candidate",
+            "votes": 231.0,
+            "share_pct": 0.005586623253847696,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5327138,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "UNCLASSIFIED"
+            ]
+          },
+          {
+            "id": "option:651aa62044ab19693e29b6ad",
+            "name": "CRAIG PATTON",
+            "party": null,
+            "kind": "candidate",
+            "votes": 77.0,
+            "share_pct": 0.0018622077512825653,
+            "source_refs": [
+              {
+                "snapshot_id": 609,
+                "source_id": "medsl_2022_OH",
+                "result_id": 5326961,
+                "revision": 173
+              }
+            ],
+            "partial_suppression": false,
+            "ballot_parties": [
+              "UNCLASSIFIED"
+            ]
+          }
+        ],
+        "margin_status": "available"
+      }
+    ],
+    "history_range": [
+      2006,
+      2022
+    ],
+    "latest_result": {
+      "year": 2022,
+      "margin_pp": 25.02940232563145,
+      "total_votes": 4134877.0,
+      "contest_id": "contest:6d690bb3ba594a523b5968ea",
+      "contest_name": "Governor \u00b7 STATEWIDE",
+      "district": "STATEWIDE",
+      "boundary_vintage": "2022",
+      "geography_level": "state",
+      "geography_id": "state:OH",
+      "election_system": "source_reported",
+      "round": "reported",
+      "source_refs": [
+        {
+          "snapshot_id": 609,
+          "source_id": "medsl_2022_OH",
+          "result_id": 5072444,
+          "revision": 173
+        },
+        {
+          "snapshot_id": 609,
+          "source_id": "medsl_2022_OH",
+          "result_id": 5081466,
+          "revision": 173
+        },
+        {
+          "snapshot_id": 609,
+          "source_id": "medsl_2022_OH",
+          "result_id": 5327315,
+          "revision": 173
+        },
+        {
+          "snapshot_id": 609,
+          "source_id": "medsl_2022_OH",
+          "result_id": 5326784,
+          "revision": 173
+        },
+        {
+          "snapshot_id": 609,
+          "source_id": "medsl_2022_OH",
+          "result_id": 5327138,
+          "revision": 173
+        },
+        {
+          "snapshot_id": 609,
+          "source_id": "medsl_2022_OH",
+          "result_id": 5326961,
+          "revision": 173
+        }
+      ],
+      "options": [
+        {
+          "id": "option:d89abf6d4ddd56bc7a35f507",
+          "name": "MIKE DEWINE",
+          "party": "REP",
+          "kind": "candidate",
+          "votes": 2580424.0,
+          "share_pct": 62.40630616098133,
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5072444,
+              "revision": 173
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "REP"
+          ]
+        },
+        {
+          "id": "option:7fc4032de2f8c76ed49a3f92",
+          "name": "NAN WHALEY",
+          "party": "DEM",
+          "kind": "candidate",
+          "votes": 1545489.0,
+          "share_pct": 37.37690383534988,
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5081466,
+              "revision": 173
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "DEM"
+          ]
+        },
+        {
+          "id": "option:a78924eeb7f00669d9c0a5f6",
+          "name": "MARSHALL USHER",
+          "party": null,
+          "kind": "candidate",
+          "votes": 8082.0,
+          "share_pct": 0.1954592603359181,
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5327315,
+              "revision": 173
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "id": "option:9a259e8b4fdb5521bbe35ebb",
+          "name": "TIMOTHY GRADY",
+          "party": null,
+          "kind": "candidate",
+          "votes": 574.0,
+          "share_pct": 0.01388191232774276,
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5326784,
+              "revision": 173
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "id": "option:9f8140dfb8d3790f69539c77",
+          "name": "RENEA TURNER",
+          "party": null,
+          "kind": "candidate",
+          "votes": 231.0,
+          "share_pct": 0.005586623253847696,
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5327138,
+              "revision": 173
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "id": "option:651aa62044ab19693e29b6ad",
+          "name": "CRAIG PATTON",
+          "party": null,
+          "kind": "candidate",
+          "votes": 77.0,
+          "share_pct": 0.0018622077512825653,
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5326961,
+              "revision": 173
+            }
+          ],
+          "partial_suppression": false,
+          "ballot_parties": [
+            "UNCLASSIFIED"
+          ]
+        }
+      ],
+      "margin_status": "available"
+    },
+    "historical_reference": {
+      "margin_pp": 19.711126215430777,
+      "cycles": [
+        {
+          "year": 2022,
+          "margin_pp": 25.02940232563145,
+          "total_votes": 4134877.0,
+          "contest_id": "contest:6d690bb3ba594a523b5968ea",
+          "contest_name": "Governor \u00b7 STATEWIDE",
+          "district": "STATEWIDE",
+          "boundary_vintage": "2022",
+          "geography_level": "state",
+          "geography_id": "state:OH",
+          "election_system": "source_reported",
+          "round": "reported",
+          "source_refs": [
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5072444,
+              "revision": 173
+            },
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5081466,
+              "revision": 173
+            },
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5327315,
+              "revision": 173
+            },
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5326784,
+              "revision": 173
+            },
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5327138,
+              "revision": 173
+            },
+            {
+              "snapshot_id": 609,
+              "source_id": "medsl_2022_OH",
+              "result_id": 5326961,
+              "revision": 173
+            }
+          ],
+          "options": [
+            {
+              "id": "option:d89abf6d4ddd56bc7a35f507",
+              "name": "MIKE DEWINE",
+              "party": "REP",
+              "kind": "candidate",
+              "votes": 2580424.0,
+              "share_pct": 62.40630616098133,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5072444,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "REP"
+              ]
+            },
+            {
+              "id": "option:7fc4032de2f8c76ed49a3f92",
+              "name": "NAN WHALEY",
+              "party": "DEM",
+              "kind": "candidate",
+              "votes": 1545489.0,
+              "share_pct": 37.37690383534988,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5081466,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "DEM"
+              ]
+            },
+            {
+              "id": "option:a78924eeb7f00669d9c0a5f6",
+              "name": "MARSHALL USHER",
+              "party": null,
+              "kind": "candidate",
+              "votes": 8082.0,
+              "share_pct": 0.1954592603359181,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5327315,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "UNCLASSIFIED"
+              ]
+            },
+            {
+              "id": "option:9a259e8b4fdb5521bbe35ebb",
+              "name": "TIMOTHY GRADY",
+              "party": null,
+              "kind": "candidate",
+              "votes": 574.0,
+              "share_pct": 0.01388191232774276,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5326784,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "UNCLASSIFIED"
+              ]
+            },
+            {
+              "id": "option:9f8140dfb8d3790f69539c77",
+              "name": "RENEA TURNER",
+              "party": null,
+              "kind": "candidate",
+              "votes": 231.0,
+              "share_pct": 0.005586623253847696,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5327138,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "UNCLASSIFIED"
+              ]
+            },
+            {
+              "id": "option:651aa62044ab19693e29b6ad",
+              "name": "CRAIG PATTON",
+              "party": null,
+              "kind": "candidate",
+              "votes": 77.0,
+              "share_pct": 0.0018622077512825653,
+              "source_refs": [
+                {
+                  "snapshot_id": 609,
+                  "source_id": "medsl_2022_OH",
+                  "result_id": 5326961,
+                  "revision": 173
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "UNCLASSIFIED"
+              ]
+            }
+          ],
+          "margin_status": "available",
+          "weight": 0.49338596673675117
+        },
+        {
+          "year": 2018,
+          "margin_pp": 3.7375813387647105,
+          "total_votes": 4435462.0,
+          "contest_id": "contest:67d885935b9b2689b4ad850c",
+          "contest_name": "Governor \u00b7 STATEWIDE",
+          "district": "STATEWIDE",
+          "boundary_vintage": "2018",
+          "geography_level": "state",
+          "geography_id": "state:OH",
+          "election_system": "source_reported",
+          "round": "reported",
+          "source_refs": [
+            {
+              "snapshot_id": 2015,
+              "source_id": "snyder_governor_2006_2024",
+              "result_id": 5598880,
+              "revision": 593
+            },
+            {
+              "snapshot_id": 2015,
+              "source_id": "snyder_governor_2006_2024",
+              "result_id": 5598877,
+              "revision": 593
+            },
+            {
+              "snapshot_id": 2015,
+              "source_id": "snyder_governor_2006_2024",
+              "result_id": 5598879,
+              "revision": 593
+            },
+            {
+              "snapshot_id": 2015,
+              "source_id": "snyder_governor_2006_2024",
+              "result_id": 5598878,
+              "revision": 593
+            }
+          ],
+          "options": [
+            {
+              "id": "option:5ba196a7f68b399e3e891882",
+              "name": "DEWINE, MICHAEL (MIKE)",
+              "party": "REP",
+              "kind": "candidate",
+              "votes": 2235825.0,
+              "share_pct": 50.407939466057876,
+              "source_refs": [
+                {
+                  "snapshot_id": 2015,
+                  "source_id": "snyder_governor_2006_2024",
+                  "result_id": 5598880,
+                  "revision": 593
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "REP"
+              ]
+            },
+            {
+              "id": "option:1f1155aa1dc8dec6d428508e",
+              "name": "CORDRAY, RICHARD A.",
+              "party": "DEM",
+              "kind": "candidate",
+              "votes": 2070046.0,
+              "share_pct": 46.67035812729316,
+              "source_refs": [
+                {
+                  "snapshot_id": 2015,
+                  "source_id": "snyder_governor_2006_2024",
+                  "result_id": 5598877,
+                  "revision": 593
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "DEM"
+              ]
+            },
+            {
+              "id": "option:1f3d17d533ea23261196ab20",
+              "name": "IRVINE, TRAVIS M.",
+              "party": "LIB",
+              "kind": "candidate",
+              "votes": 80055.0,
+              "share_pct": 1.804885263361517,
+              "source_refs": [
+                {
+                  "snapshot_id": 2015,
+                  "source_id": "snyder_governor_2006_2024",
+                  "result_id": 5598879,
+                  "revision": 593
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "LIB"
+              ]
+            },
+            {
+              "id": "option:6019bfe1bfb53c502bf17734",
+              "name": "GADELL-NEWTON, CONSTANCE",
+              "party": "GRN",
+              "kind": "candidate",
+              "votes": 49536.0,
+              "share_pct": 1.116817143287441,
+              "source_refs": [
+                {
+                  "snapshot_id": 2015,
+                  "source_id": "snyder_governor_2006_2024",
+                  "result_id": 5598878,
+                  "revision": 593
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "GRN"
+              ]
+            }
+          ],
+          "margin_status": "available",
+          "weight": 0.3108136826071823
+        },
+        {
+          "year": 2014,
+          "margin_pp": 31.666332115522035,
+          "total_votes": 2954207.0,
+          "contest_id": "contest:62a973c32ac625cf838ae75d",
+          "contest_name": "Governor \u00b7 STATEWIDE",
+          "district": "STATEWIDE",
+          "boundary_vintage": "2014",
+          "geography_level": "state",
+          "geography_id": "state:OH",
+          "election_system": "source_reported",
+          "round": "reported",
+          "source_refs": [
+            {
+              "snapshot_id": 2015,
+              "source_id": "snyder_governor_2006_2024",
+              "result_id": 5598686,
+              "revision": 593
+            },
+            {
+              "snapshot_id": 2015,
+              "source_id": "snyder_governor_2006_2024",
+              "result_id": 5598685,
+              "revision": 593
+            }
+          ],
+          "options": [
+            {
+              "id": "option:758e05c2cc8bdc3870246430",
+              "name": "KASICH, JOHN R.",
+              "party": "REP",
+              "kind": "candidate",
+              "votes": 1944848.0,
+              "share_pct": 65.83316605776102,
+              "source_refs": [
+                {
+                  "snapshot_id": 2015,
+                  "source_id": "snyder_governor_2006_2024",
+                  "result_id": 5598686,
+                  "revision": 593
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "REP"
+              ]
+            },
+            {
+              "id": "option:871a134fb694909c21426c01",
+              "name": "FITZGERALD, EDWARD (ED)",
+              "party": "DEM",
+              "kind": "candidate",
+              "votes": 1009359.0,
+              "share_pct": 34.16683394223898,
+              "source_refs": [
+                {
+                  "snapshot_id": 2015,
+                  "source_id": "snyder_governor_2006_2024",
+                  "result_id": 5598685,
+                  "revision": 593
+                }
+              ],
+              "partial_suppression": false,
+              "ballot_parties": [
+                "DEM"
+              ]
+            }
+          ],
+          "margin_status": "available",
+          "weight": 0.19580035065606646
+        }
+      ],
+      "seat_context_status": "same_regular_special_category",
+      "election_type": "midterm",
+      "excluded_context": [],
+      "description": "Recency-weighted, same-election-type governor history; candidates and current conditions are not modeled.",
+      "scope": "same_office_statewide"
+    },
+    "call": {
+      "status": "reference_only",
+      "margin_pp": 19.711126215430777,
+      "direction": "Republican",
+      "eventual_winner_probability": null,
+      "ev_adjustment_pp": null,
+      "label": "Historical governor context only"
+    },
+    "finding": "Latest archived governor result: 2022, 4,134,877 candidate votes. The same-type governor reference is historical context, not a prediction from current early voters.",
+    "warnings": [
+      "Current official ballot roster not yet verified; historical candidates are not current nominees.",
+      "Participation records do not identify candidate votes. Registration, race, religion and past party context cannot reveal an individual ballot.",
+      "No held-out same-stage EV validation has been completed for this office. No EV-adjusted margin or winner probability is published."
+    ],
+    "validation": {
+      "office": "GOVERNOR",
+      "ev_model_promoted": false,
+      "ev_backtest_cases": 0,
+      "reason": "Senate backtest scores and coefficients are not transferred to House or governor races."
+    }
+  }
+}
