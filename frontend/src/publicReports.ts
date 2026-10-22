@@ -5,7 +5,7 @@ import {
   loadPublishedObject,
 } from "./publicData";
 import { officeDesk } from "./officeApi";
-import { officeReportSection } from "./officeReport";
+import { officeContextSection, officeReportSection } from "./officeReport";
 function sameScope(a: Record<string, unknown>, b: Record<string, unknown>) {
   return [...new Set([...Object.keys(a), ...Object.keys(b)])].every((key) => {
     const left = a[key],
@@ -105,6 +105,12 @@ export async function previewPublicReport(
     available.set("office_call", office.section);
     officeSources = office.sources;
     officeEvidence = { race, sources: office.sources };
+    for (const id of ["summary", "polls"] as const) {
+      if (!selected.some((section) => section.id === id)) continue;
+      const context = officeContextSection(document, race, id);
+      nodes.set(id, context.node);
+      available.set(id, context.section);
+    }
   }
   if (selected.some((section) => !available.has(section.id)))
     throw new Error(

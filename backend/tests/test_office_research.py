@@ -12,6 +12,7 @@ from observatory.office_research import district_number, office_research
 from observatory.report_composer import compose_report, export_report
 from pypdf import PdfReader
 from test_evidence_workflows import harness as harness
+from test_evidence_workflows import survey
 
 
 def install(database, root, *, office='GOVERNOR'):
@@ -141,3 +142,27 @@ def test_house_leading_zero_aliases_choose_one_producer_without_combining_votes(
     one=next(r for r in desk['calls'] if r['id']=='2026-OH-HOUSE-01')
     assert len([r for r in one['history'] if r['year']==2024])==1
     assert one['latest_result']['margin_pp']==20
+
+
+def test_office_report_excludes_senate_polling_from_brief_inventory_and_evidence(harness):
+    polls=[]
+    for index in range(3):
+        poll=survey()
+        poll.update(study_id=f'senate-only-{index}',producer=f'Independent Senate fixture {index}',
+            question='Synthetic Senate vote choice?')
+        polls.append(poll)
+    harness.state.payload['polls']=polls
+    harness.collect()
+    revision=install(harness.database,harness.root)
+    request={'title':'Office-scoped report','race_id':'2026-OH-GOV','template':'office',
+        'query':{'state':'NC','revision':revision,'as_of':'2026-10-21'},
+        'results':{'office':'GOVERNOR'},'sections':[{'id':'office_call'},{'id':'summary'},{'id':'ev_trajectory'},{'id':'polls'}]}
+    # North Carolina has no scheduled 2026 governor race: the participation
+    # packet remains useful, without borrowing the state's Senate surveys.
+    request['race_id']=None
+    report=compose_report(harness.database,request)
+    assert 'Independent Senate fixture' not in report['html']
+    summary=next(s for s in report['sections'] if s['id']=='summary')
+    assert not any('descriptive average' in text for text in summary['paragraphs'])
+    poll_section=next(s for s in report['sections'] if s['id']=='polls')
+    assert all(not table['rows'] for table in poll_section['tables'])

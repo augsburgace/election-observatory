@@ -1,6 +1,45 @@
 import type { OfficeDesk, OfficeRace } from "./officeApi";
 import { fmt, partyColor } from "./utils";
 
+export function officeSummaryParagraphs(race: OfficeRace) {
+  return [
+    race.finding,
+    "The participation charts describe the selected election-wide evidence. They do not establish candidate votes in this race.",
+    "Senate polling summaries and model estimates are excluded. No verified office-matched polling or market connector is installed for this race.",
+  ];
+}
+
+export function officeContextSection(
+  document: Document,
+  race: OfficeRace,
+  id: "summary" | "polls",
+) {
+  const node = document.createElement("section");
+  node.id = "section-" + id;
+  const title =
+    id === "summary"
+      ? "Research findings · " + race.name
+      : "Office-matched polling coverage";
+  const heading = document.createElement("h2");
+  heading.textContent = title;
+  node.append(heading);
+  const paragraphs =
+    id === "summary"
+      ? officeSummaryParagraphs(race)
+      : [
+          "No verified polling inventory is installed for this office and race. Senate studies are excluded; unavailable is not a tied race.",
+        ];
+  for (const text of paragraphs) {
+    const p = document.createElement("p");
+    p.textContent = text;
+    node.append(p);
+  }
+  return {
+    node,
+    section: { id, title, paragraphs, figures: [], tables: [], warnings: [] },
+  };
+}
+
 /** Source-derived report section; all text enters the document as textContent. */
 export function officeReportSection(
   document: Document,

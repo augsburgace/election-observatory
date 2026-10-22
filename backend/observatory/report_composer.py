@@ -338,6 +338,13 @@ def _document(database, request: ReportRequest):
     if kinds <= {'summary', 'evidence'}:
         kinds.add('participation')
     ev = workspace(database, request.query.model_copy(update={'revision': revision})) if 'participation' in kinds else None
+    if ev and 'office_research' in kinds:
+        # Participation is election-wide, but the current polling inventory is
+        # Senate-specific. A different office must never inherit its averages,
+        # candidate responses or source records through the general state brief.
+        ev = {**ev, 'polls': [], 'brief': [s for s in ev['brief'] if s.get('id') != 'polling'],
+            'summary': {k: v for k, v in ev['summary'].items() if k != 'poll_count'},
+            'warnings': [*ev['warnings'], 'Statewide Senate polling is excluded from this House/governor report; no verified office-matched polling inventory is installed.']}
     pinned_query = ev['query'] if ev else {**request.query.model_dump(), 'revision': revision}
     pinned_request = request.model_copy(deep=True)
     pinned_request.query = ResearchQuery.model_validate(pinned_query)
