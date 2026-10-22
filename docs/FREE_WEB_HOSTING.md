@@ -1,10 +1,12 @@
 # Free public web application
 
-Open [Battleground Senate Observatory](https://battleground-senate-observatory.pages.dev).
+> Historical Mac/Cloudflare operating guide. The active edition is now [GitHub Pages](https://augsburgace.github.io/election-observatory/), with [free cloud collection and recovery](CLOUD_UPDATES.md). The original Cloudflare site is retained as an archive to preserve access to browser-local notebooks. The Mac publisher commands below describe the earlier release and are not the active schedule.
 
-Cloudflare Pages serves the real React application and immutable aggregate research data on its free plan. The GitHub source repository remains private. The existing Mac collects evidence, builds the research publication and deploys updates every two hours while awake, logged in and online. The hosted application remains available with its last successful publication when the Mac is asleep or offline. Fresh source collection resumes with a later successful scheduled run; the schedule does not wake the Mac.
+Open [the archived initial edition](https://battleground-senate-observatory.pages.dev).
 
-This is one deployment path: Cloudflare Pages **Direct Upload**, driven by `scripts/update_web.py`. There is no GitHub Actions cloud publisher or Git-connected Pages deployment. Pushing a source or generated-data branch alone does not update this website.
+The initial release used Cloudflare Pages to serve the real React application and immutable aggregate research data on its free plan. Its development repository was private. The Mac collected evidence, built the research publication and deployed updates every two hours while awake, logged in and online. That publisher is now retired from the automatic schedule. The original website preserves revision 588 and its browser-local notebooks; current cloud updates use the separate public distribution linked above.
+
+This historical deployment path is Cloudflare Pages **Direct Upload**, driven by `scripts/update_web.py`. Pushing source or a generated-data branch alone never updated that address. The active GitHub Actions publisher is a separate path documented in [cloud operations](CLOUD_UPDATES.md).
 
 ## What the web edition contains
 

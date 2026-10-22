@@ -1,12 +1,14 @@
 # Free scheduled cloud updates
 
-The public distribution is [augsburgace/election-observatory](https://github.com/augsburgace/election-observatory). Its target application address is [the election research atlas](https://augsburgace.github.io/election-observatory/). The separate private development repository and its history are preserved. A reviewed source snapshot is exported with `scripts/prepare_public_source.py`; old local verification documents containing saved-view metadata are replaced in the public copy.
+The public distribution is [augsburgace/election-observatory](https://github.com/augsburgace/election-observatory). Its application address is [the election research atlas](https://augsburgace.github.io/election-observatory/). The separate private development repository and its history are preserved. A reviewed source snapshot is exported with `scripts/prepare_public_source.py`; old local verification documents containing saved-view metadata are replaced in the public copy.
 
 ## What runs in the cloud
 
 The `Public cloud updates` GitHub Actions workflow uses a standard `ubuntu-24.04` runner in the public repository. Its schedule is `17 */2 * * *` UTC: approximately every two hours, at minute 17. GitHub can delay or miss scheduled jobs; this is a best-effort research publisher, without a continuous-compute or availability guarantee. Collection does not require the owner's Mac to be running.
 
 The workflow has no pull-request or untrusted-fork execution path. It runs only on the approved public repository's `main` branch. Its actions are pinned to reviewed commit SHAs. Credentials use GitHub's short-lived workflow token and Pages deployment identity. No personal GitHub token, Cloudflare login, external AI key, paid runner, paid database, LFS purchase or cloud subscription is required.
+
+The first complete cloud publication passed at revision 592 on October 21, 2026. It took approximately two hours, including collection, the full analytical rebuild, checkpoint preparation and hosted verification. Source checks occur at the beginning of a run; a newly published website is not evidence that every authority reported new figures at that publication time. Long runs serialize, and missed or delayed schedules can extend the interval. A subsequent exact-byte compression cache avoids recompressing identical geometry; its output equivalence is tested, but a complete future cloud runtime is not yet measured. Read the [release record](CLOUD_WEB_RELEASE.md) for the observed result.
 
 1. Restore a checksum-verified public collector checkpoint from a completed release.
 2. Retain the exact prior website by its complete publication-manifest hash.
@@ -21,7 +23,7 @@ A validated checkpoint can be newer than the currently hosted website if deploym
 
 ## Data and privacy
 
-Public release assets include normalized aggregate evidence, historical results, public boundary geometry, source metadata and the reviewed factual polling-table captures required to preserve their lineage. These are collector checkpoints, **not private full-store backups**.
+Public release assets include normalized aggregate evidence, historical results, public boundary geometry, source metadata, the two fixed original Census county-change reference pages, and the reviewed factual polling-table captures required to preserve their lineage. These are collector checkpoints, **not private full-store backups**. The Census documents use an exact source/URL/type/size/hash whitelist. Missing or corrupted originals withhold county differences while preserving the two original result sets.
 
 Private notebooks, saved personal investigations, job history, private correction reasons, credentials and original voter-file archives are excluded. The exporter scrubs deleted SQLite cells and vacuums the copy, sanitizes all small geometry metadata JSON, and checks member hashes. Published report and map objects retain their existing privacy filters. Raw downloads made on the ephemeral runner are not part of its next checkpoint or website.
 
@@ -52,6 +54,10 @@ The last command returns base64 content from the public status file. The reposit
 
 Build and pre-deployment failures leave the previous website alone. A failed deployment or hosted-reader check triggers an exact prior-site deployment and its own hosted-reader verification. The workflow remains failed after a successful rollback. If rollback verification fails, inspect the live manifest and Actions log; do not claim recovery until verified.
 
-The local application, personal database and local source archives remain separate. During migration, the existing Mac publisher remains installed until the first cloud deployment passes. Afterward, its launchd job can return to collection-only operation; it must not continue competing to publish the redirected web address.
+On the first deployment there is no prior GitHub Pages website to restore. Bootstrap evidence is never presented as that missing prior website. Actual rollback sites and new publications must contain existing application assets under `/election-observatory/`, so a correct data manifest cannot conceal an incompatible browser build.
+
+The local application, personal database and local source archives remain separate. The Mac's launchd job runs collection only; it does not publish over the cloud edition or the archived site. To reinstall that local-only schedule, run `.venv/bin/python scripts/install_schedule.py --defer-first-run` from the local checkout.
+
+The original [Cloudflare address](https://battleground-senate-observatory.pages.dev) preserves the initial revision and provides a prominent link to the cloud-updated edition. It remains a functional archive rather than redirecting automatically, because browser-local notebooks belong to that original origin. Download a notebook there to keep a portable backup. New notes at the GitHub address remain local to that browser and origin too.
 
 Official references: [Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions), [Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits), [release asset limits](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases), [scheduled events](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).

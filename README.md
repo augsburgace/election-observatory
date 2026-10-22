@@ -2,11 +2,13 @@
 
 A local 50-state election research atlas, retaining the 2026 Senate watchlist and expanding into verified federal, state, judicial, local, and ballot-measure records. Real archived evidence drives maps, charts, historical comparisons, original polling, deterministic briefs, scenarios, notebooks, and reproducible exports. Bright editorial and navy themes, compact density, mobile navigation, and accessible table alternatives are included. Available offices and years follow each source's actual coverage.
 
-**Web application:** [Battleground Senate Observatory](https://battleground-senate-observatory.pages.dev). Cloudflare Pages hosts the public aggregate edition on its free plan; the source repository remains private. The existing Mac checks sources and publishes validated updates every two hours while awake and online. The website keeps its last successful release when the Mac is asleep or offline.
+**Web application:** [Battleground Senate Observatory](https://augsburgace.github.io/election-observatory/). GitHub Pages serves the public aggregate edition. Free standard GitHub Actions runners check sources and publish validated updates approximately every two hours, independently of the owner's Mac. Jobs can be delayed or missed; the website retains its last successful release.
 
-**Cloud update migration:** [the public source distribution](https://github.com/augsburgace/election-observatory) adds free GitHub-hosted collection and [GitHub Pages](https://augsburgace.github.io/election-observatory/). Its first complete cloud run must pass before the existing Mac publisher is retired. The private development repository and its old history stay private; only the reviewed source snapshot and sanitized aggregate checkpoints are public. See [cloud updates and recovery](docs/CLOUD_UPDATES.md).
+**Public code and evidence:** [the source distribution](https://github.com/augsburgace/election-observatory) contains reviewed application code and sanitized aggregate checkpoints. Private development history, notebooks, original voter files and credentials remain excluded. [The original Cloudflare edition](https://battleground-senate-observatory.pages.dev) is retained as an archive so browser notes at that origin remain accessible. See [cloud updates and recovery](docs/CLOUD_UPDATES.md).
 
-**Full local application:** [http://127.0.0.1:8776](http://127.0.0.1:8776), while the server is running. The local edition retains arbitrary evidence queries, source collection, original archives and private research. The web edition serves explicitly published investigations, browser-local notes, maps, polling research and editable reports. It never substitutes a different cutoff or filter for an unavailable query. See [web operation, publication and rollback](docs/FREE_WEB_HOSTING.md).
+The first complete cloud publication passed on October 21, 2026 at evidence revision **592**, including 75 actual hosted-reader checks and browser verification of the nationwide atlas, EV reasoning controls and report export. See the [cloud release record](docs/CLOUD_WEB_RELEASE.md).
+
+**Full local application:** [http://127.0.0.1:8776](http://127.0.0.1:8776), while the server is running. The local edition retains arbitrary evidence queries, source collection, original archives and private research. The web edition serves explicitly published investigations, browser-local notes, maps, polling research and editable reports. It never substitutes a different cutoff or filter for an unavailable query. [Public edition capabilities](docs/FREE_WEB_HOSTING.md#what-the-web-edition-contains) describe the static research interface; [cloud operations](docs/CLOUD_UPDATES.md) describe the active publisher.
 
 ## Install and run
 
@@ -41,22 +43,16 @@ Participation source IDs are listed in `config/sources.json` and the runtime sou
 
 The cloud distribution uses **Actions → Public cloud updates** in `augsburgace/election-observatory`. Standard public runners collect sources and publish independently of the Mac. The workflow preserves exact rollback artifacts, checks the actual hosted research reader, and uses short-lived GitHub credentials. No Cloudflare login is copied into GitHub. See [cloud operating instructions](docs/CLOUD_UPDATES.md).
 
-The following commands describe the existing Mac publisher retained during the migration:
-
-The installed publisher uses the existing Cloudflare sign-in and the approved Observatory Pages project. No paid host, public source repository or external AI API is required.
-
 ```sh
-# Collect due sources, build and verify all-state public data, then publish.
-.venv/bin/python scripts/update_web.py
+# Start an ordinary cloud refresh; the scheduled workflow runs automatically.
+gh workflow run public-cloud.yml --repo augsburgace/election-observatory -f collect=true
+gh run list --repo augsburgace/election-observatory --workflow public-cloud.yml --limit 5
 
-# Build an unpublished evidence batch without changing the hosted website.
-.venv/bin/python scripts/update_web.py --skip-collect --build-only
-
-# Install the combined two-hour collector/publisher after a verified first release.
-.venv/bin/python scripts/install_schedule.py --publish-web --defer-first-run
+# Keep the full local edition fresh separately, without publishing from the Mac.
+.venv/bin/python scripts/install_schedule.py --defer-first-run
 ```
 
-Publication configuration and status remain outside Git in the application-data directory as `web-publishing.json` and `web-status.json`. The updater snapshots SQLite, validates the static reader across all 50 states, enforces free-host limits and verifies the deployed revision and hosted research workflows. Failed builds retain the previous release; failed post-deployment verification triggers a checked rollback. An already-published revision returns `unchanged`; application-only changes need a new validated evidence batch before this automatic publisher republishes them. Source collection and publication share one existing launchd schedule rather than duplicate timers. [Operating commands and recovery](docs/FREE_WEB_HOSTING.md#operate-the-installed-publisher) explain status, logs, sign-in and rollback.
+Public `publication-state.json` records the actual verified release, cloud run and matching recovery checkpoint. The cloud worker validates the static reader across all 50 states, enforces free-resource limits and verifies the deployed revision and hosted research workflows. Failed builds retain the previous release; failed post-deployment verification restores an existing exact prior website and verifies it again. The historical Mac/Cloudflare publishing scripts remain available for recovery but are not the active update path. Browser notes belong to their website origin: download them from the original edition if you want a portable backup.
 
 
 Install or expand historical evidence from the command line:
