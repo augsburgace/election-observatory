@@ -18,7 +18,7 @@ from .db import ObservationRecord, Snapshot
 from .ev_forecast import early_vote_forecasts
 from .settings import local_today
 
-VERSION = "sourced-ev-explanation-1"
+VERSION = "sourced-ev-explanation-2"
 
 
 def _hash(value):
@@ -226,7 +226,9 @@ def explain_call(call, signals, *, revision, cutoff, switches):
     margin = call["call"].get("margin_pp")
     state = call["state_name"]
     status = call["call"]["status"]
-    headline = f"{state}: {_margin(margin)} under the early-vote model"
+    headline = (f"{state}: {_margin(margin)} under the conditional EV model" if status == 'ev_informed' else
+                f"{state}: historical reference only; EV direction not established" if margin is not None else
+                f"{state}: no supported election call")
     summary = (f"The provisional call is {_margin(margin)}. " if margin is not None else "The available evidence does not support a party-margin estimate. ")
     summary += ("It starts with earlier Senate results and adjusts for where current early participation is coming from."
                 if status == "ev_informed" else "Eligible early-vote geography cannot currently support an adjustment, so any displayed point is historical context only.")
@@ -241,7 +243,7 @@ def explain_call(call, signals, *, revision, cutoff, switches):
                     "text": f"Source reporting date: {early.get('date') or 'unavailable'}", "direction": "neutral"})
     if reference.get("margin_pp") is not None:
         text = f"Earlier Senate contests provide a starting reference of {_margin(reference['margin_pp'])}. "
-        if geography.get("available"):
+        if status == 'ev_informed':
             adjustment = geography.get("adjustment_pp") or 0
             text += (f"The geographic mix adds {abs(adjustment):.2f} points toward {'Republicans' if adjustment >= 0 else 'Democrats'} under the explicit 0.35 conversion assumption. "
                 f"{geography.get('matched_areas', 0)} reporting areas are matched. "
@@ -266,6 +268,11 @@ def explain_call(call, signals, *, revision, cutoff, switches):
         "Earlier voting can mean more eventual participants, a shift from Election Day to early voting, or a switch between mail and in-person methods. The turnout workbench separates those possibilities. "
         + ("A prior-cycle participation analogue is available below; its span excludes model error and is not a confidence interval." if turnout.get("available") or turnout.get("status") in {"available", "supported"} else "The retained same-stage history is not sufficient for a supported final-turnout extrapolation here. Explicit low/reference/high assumptions remain available."),
         "evidence_refs": turnout.get("source_refs", [])})
+    if call.get('audit'):
+        audit = call['audit']
+        paragraphs.append({'title': 'Why these historical comparisons qualify',
+            'text': audit['checks'][0]['detail'] + ' ' + audit['state_note'] + ' ' + audit['conclusion'],
+            'evidence_refs': reference.get('source_refs', [])})
     composition = call["evidence"].get("composition", [])
     if composition:
         dimensions = sorted({str(r.get("dimension")) for r in composition if r.get("dimension")})
@@ -302,6 +309,41 @@ def explain_call(call, signals, *, revision, cutoff, switches):
     return headline, summary, paragraphs, drivers
 
 
+def disagreement_review(call, signals):
+    """An inspection trigger, never an automatic pull toward polling or markets."""
+    margin = call['call'].get('margin_pp')
+    studies = []
+    if margin is not None:
+        for study in signals.get('polls', {}).get('studies', []):
+            other = study.get('margin_pp')
+            if not isinstance(other, (int, float)):
+                continue
+            studies.append({'producer': study['producer'], 'poll_margin_pp': other,
+                'research_margin_pp': margin, 'gap_pp': margin-other,
+                'large_gap': abs(margin-other) >= 5, 'opposite_direction': margin*other < 0,
+                'field_end': study.get('field_end'), 'source_refs': study.get('source_refs', [])})
+    markets = []
+    for market in signals.get('markets', {}).get('markets', []):
+        party, price = market.get('party'), market.get('price_pct')
+        if party not in {'DEM', 'REP'} or price is None:
+            continue
+        markets.append({'label': market.get('outcome_label') or party, 'party': party,
+            'price_pct': price, 'quote_at': market.get('quote_at'),
+            'challenges_direction': bool(margin is not None and price > 50 and (margin > 0) != (party == 'REP'))})
+    flagged = any(row['large_gap'] or row['opposite_direction'] for row in studies) or any(row['challenges_direction'] for row in markets)
+    return {'status': 'review_required' if flagged else 'context_compared' if studies or markets else 'outside_context_off_or_unavailable',
+        'large_gap_threshold_pp': 5, 'studies': studies, 'markets': markets,
+        'point_changed': False, 'market_margin_conversion': False,
+        'interpretation': 'A five-point gap or different favored party triggers scrutiny; it is not a statistical significance test. Survey margins are vote-share differences. Contract prices are payout prices and are shown separately, never converted into vote margins.',
+        'review_steps': [
+            'Check whether the displayed point is an EV adjustment or merely a historical reference.',
+            'Inspect the same-type, same-stage comparisons, method definitions, report age and matched geography.',
+            'Inspect candidate/seat changes and whether turnout moved between methods instead of increasing overall.',
+            'Check genuinely held-out state/election errors before claiming EV outperforms polls.',
+            'Keep disagreement unresolved when the archive cannot distinguish the explanations; never force the EV point to match outside sources.',
+        ]}
+
+
 def forecast_reasoning(database, *, state="OH", revision=None, as_of=None, cycle=2026,
                        include_polls=False, include_markets=False, include_context=False, race_id=None):
     revision = database.latest_revision() if revision is None else revision
@@ -317,6 +359,7 @@ def forecast_reasoning(database, *, state="OH", revision=None, as_of=None, cycle
         "status": "off", "summary": "Excluded from this explanation.", "reason": "Enable explicitly to inspect additional evidence.", "source_refs": []}
         for key, enabled in switches.items()}
     headline, summary, paragraphs, drivers = explain_call(call, signals, revision=revision, cutoff=cutoff, switches=switches)
+    review = disagreement_review(call, signals)
     refs = list({(r.get("snapshot_id") or r.get("id"), r.get("url") or r.get("source_url")): r
         for r in call.get("sources", []) + [r for signal in signals.values() for r in signal.get("source_refs", [])]}.values())
     # Do not expose the legacy contextual poll-count field in an EV-only result.
@@ -328,7 +371,7 @@ def forecast_reasoning(database, *, state="OH", revision=None, as_of=None, cycle
         "point_policy": "External signals inform the written context; they do not alter the EV model point, its range or validation record."}
     return {"revision": revision, "as_of": cutoff, "state": state, "mode": "expanded" if any(switches.values()) else "ev_only",
         "switches": switches, "headline": headline, "summary": summary, "paragraphs": paragraphs, "drivers": drivers,
-        "signals": signals, "ev_call": public_call, "warnings": [
+        "signals": signals, "comparison_review": review, "ev_call": public_call, "warnings": [
             "Polling, market contracts and analyst assessments can share information and are not independent confirmations.",
             "Optional outside context does not change the EV estimate. A combined forecast requires separate historical validation."] if any(switches.values()) else ["EV-only mode excludes polling results, market prices and external analyst ratings from this explanation."],
         "source_refs": refs, "method": {"generator": "Deterministic sourced explanation", "external_api_required": False,

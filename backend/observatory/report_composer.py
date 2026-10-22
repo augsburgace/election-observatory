@@ -449,21 +449,25 @@ def _document(database, request: ReportRequest):
                 item['warnings'].append('No scheduled 2026 Senate contest exists in this state, or a supported model call is unavailable. Participation research remains separate.')
             else:
                 output = call['call']
+                call_audit = call.get('audit', {})
+                point_role = call_audit.get('point_role') or ('Historical context only' if output['status'] == 'reference_only' else 'Conditional research point')
                 item['paragraphs'] = [f'{call["state_name"]} Senate: {output["label"]}. Basis: {output["status"].replace("_", " ")}. Margin is Republican minus Democratic percentage points.',
                     'This is an experimental conditional party-margin projection. No winner probability is published. The current official candidate roster is unverified; historical candidates are not assumed to be current nominees.', *call['explanation']]
+                if call_audit:
+                    item['paragraphs'].extend([call_audit['conclusion'], call_audit['state_note']])
                 if output['margin_pp'] is not None:
                     margin, low, high = output['margin_pp'], output['range_low_pp'], output['range_high_pp']
                     left, right = min(-30, math.floor(low/10)*10), max(30, math.ceil(high/10)*10)
                     def px(value):
                         return 80+(value-left)/(right-left)*730
-                    primitives = [_text(80, 30, output['label']+' · conditional party margin', NAVY, 22),
+                    primitives = [_text(80, 30, output['label']+' · '+point_role, NAVY, 22),
                         _text(80, 55, f'Unvalidated sensitivity range: {low:+.1f} to {high:+.1f} pp', MUTED, 13),
                         _line(80, 115, 810, 115, '#c9d6e0', 5), _line(px(low), 115, px(high), 115, '#b9c7d3', 12),
                         _line(px(0), 85, px(0), 150, NAVY, 1),
                         {'type': 'circle', 'x': px(margin), 'y': 115, 'r': 9, 'color': '#c41439' if margin > 0 else '#1559be' if margin < 0 else TEAL},
                         _text(80, 175, f'Democratic advantage ({left:g})', '#1559be', 12), _text(810, 175, f'Republican advantage (+{right:g})', '#c41439', 12, 'end'),
                         _text(px(0), 175, '0 = tied', MUTED, 11, 'middle')]
-                    item['figures'] = [_figure('EV-led Senate research projection', 'The point is a conditional research call. The gray band is an unvalidated sensitivity range and has no claimed 80%/95% coverage. Current early-ballot candidate choices remain unobserved.', primitives, 205, unit='R minus D percentage points')]
+                    item['figures'] = [_figure(point_role+' · Senate research', point_role+'. '+call_audit.get('conclusion', 'The point is a conditional research call.')+' The gray band is an unvalidated sensitivity range, with no claimed probability coverage. Current early-ballot candidate choices remain unobserved.', primitives, 205, unit='R minus D percentage points')]
                 early = call['evidence']['early_vote']
                 tilt = call['evidence']['geographic_tilt']
                 reference = call['evidence']['historical_reference']
@@ -479,6 +483,10 @@ def _document(database, request: ReportRequest):
                     _table(['County', 'Early count', 'Early share %', 'Reference share %', 'Historical R-D pp', 'Raw tilt contribution pp'], [[r['name'], r['early_votes'], r['early_share_pct'], r['reference_share_pct'], r['reference_margin_pp'], r['contribution_pp']] for r in tilt['rows']], 'Geographic-mix contributions'),
                     _table(['Held-out origin', 'Cases', 'Historical-only MAE pp', 'Historical-only RMSE pp', '80% interval coverage', '95% interval coverage'], [[r['year'], r['cases'], r['margin_mae_pp'], r['margin_rmse_pp'], r['interval_80_coverage'], r['interval_95_coverage']] for r in projection['validation']['origins']], 'Historical-reference diagnostics, not EV-model validation')]
                 item['tables'].append(_table(['Explicit modeling assumption'], [[text] for text in call['assumptions']], 'Research assumptions'))
+                if call_audit:
+                    item['tables'].append(_table(['Check', 'Supported', 'Explanation'],
+                        [[row['label'], 'Yes' if row['passed'] else 'Not established', row['detail']] for row in call_audit['checks']],
+                        'Comparable-evidence audit'))
                 audit = projection.get('backtesting', {})
                 if audit:
                     rows = []

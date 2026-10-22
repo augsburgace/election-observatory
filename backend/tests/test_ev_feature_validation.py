@@ -174,12 +174,12 @@ def test_repeated_checkpoints_do_not_create_training_eligibility():
 
 
 def test_rolling_origin_does_not_train_on_same_or_future_outcomes():
-    training = [experiment_case(year, state) for year in (2014, 2016, 2018) for state in ('NC', 'OH', 'IA')]
+    training = [experiment_case(year, state) for year in (2008, 2012, 2016) for state in ('NC', 'OH', 'IA')]
     later = experiment_case(2020, 'TX', outcome=-99)
     result = experiment(evaluate_feature_cases(training + [later]))
     origin = next(row for row in result['origins'] if row['year'] == 2020)
     assert origin['eligible']
-    assert origin['augmented_fit']['training_years'] == [2014, 2016, 2018]
+    assert origin['augmented_fit']['training_years'] == [2008, 2012, 2016]
     assert origin['augmented_fit']['training_case_ids'] == origin['geography_fit']['training_case_ids']
     before = copy.deepcopy(origin['augmented_fit'])
     later['actual_margin_pp'] = 99
@@ -190,7 +190,7 @@ def test_rolling_origin_does_not_train_on_same_or_future_outcomes():
 
 
 def test_extra_feature_complete_case_policy_pairs_comparator_training_and_holdout():
-    training = [experiment_case(year, state) for year in (2014, 2016, 2018) for state in ('NC', 'OH', 'IA')]
+    training = [experiment_case(year, state) for year in (2008, 2012, 2016) for state in ('NC', 'OH', 'IA')]
     training[0]['features']['stage_volume_log_change'] = {'available': False, 'value': None, 'reason': 'Missing source.'}
     result = experiment(evaluate_feature_cases(training + [experiment_case(2020, 'TX')]))
     origin = next(row for row in result['origins'] if row['year'] == 2020)
@@ -201,7 +201,7 @@ def test_extra_feature_complete_case_policy_pairs_comparator_training_and_holdou
 
 def test_training_scales_are_earlier_only_and_duplicate_cluster_weights_stay_constant():
     training = [experiment_case(year, state, feature=float(index + 1), outcome=8)
-                for index, (year, state) in enumerate((year, state) for year in (2014, 2016, 2018) for state in ('NC', 'OH', 'IA'))]
+                for index, (year, state) in enumerate((year, state) for year in (2008, 2012, 2016) for state in ('NC', 'OH', 'IA'))]
     fit = _fit(training, ['geography_tilt_pp', 'stage_volume_log_change'], 2020, 8)
     duplicate = {**training[0], 'case_id': 'duplicate'}
     repeated = _fit(training + [duplicate], ['geography_tilt_pp', 'stage_volume_log_change'], 2020, 8)
@@ -211,7 +211,7 @@ def test_training_scales_are_earlier_only_and_duplicate_cluster_weights_stay_con
 
 
 def test_later_runoff_label_is_excluded_from_earlier_training():
-    rows = [experiment_case(year, state) for year in (2014, 2016, 2018) for state in ('NC', 'OH', 'IA')]
+    rows = [experiment_case(year, state) for year in (2008, 2012, 2016) for state in ('NC', 'OH', 'IA')]
     rows[0]['actual_outcome_year'] = 2021
     result = experiment(evaluate_feature_cases(rows + [experiment_case(2020, 'TX')]))
     origin = next(row for row in result['origins'] if row['year'] == 2020)
@@ -267,7 +267,7 @@ def test_statewide_features_are_not_blocked_by_missing_county_geography():
 
 
 def test_statewide_holdout_compares_same_cases_to_history_without_fabricated_geography():
-    rows = [experiment_case(year, state) for year in (2014, 2016, 2018) for state in ('NC', 'OH', 'IA')]
+    rows = [experiment_case(year, state) for year in (2008, 2012, 2016) for state in ('NC', 'OH', 'IA')]
     rows += [experiment_case(2020, 'TX', outcome=7)]
     for row in rows:
         row['reference_kind'] = 'statewide_ev_only'

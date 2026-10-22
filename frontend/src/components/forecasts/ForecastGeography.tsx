@@ -28,16 +28,38 @@ export const NationalForecastMap = memo(function NationalForecastMap({
     "forecast_national_map",
     "geographic",
   );
+  const [scope, setScope] = useViewOption<string>(
+    "forecast_national_scope",
+    "ev_supported",
+  );
   const rows = useMemo(
-    () => nationalCallRows(calls, selected?.race_id),
-    [calls, selected?.race_id],
+    () =>
+      nationalCallRows(calls, selected?.race_id).map((row) =>
+        scope === "ev_supported" && row.coverage_status !== "ev_informed"
+          ? { ...row, value: null }
+          : row,
+      ),
+    [calls, selected?.race_id, scope],
   );
   return (
     <Panel
       title="The Senate map, with the evidence attached"
-      subtitle="Conditional Republican − Democratic margins. Each colored state shows the model’s directional research call under its displayed assumptions and evidence limits."
+      subtitle={
+        scope === "ev_supported"
+          ? "Only points with an eligible same-stage EV adjustment are colored. Unavailable EV evidence is never replaced by a historical party-colored call."
+          : "Historical and conditional Republican − Democratic reference points. These colors are research context, not validated winner predictions."
+      }
     >
       <div className="forecast-map-toolbar">
+        <Segmented
+          label="Senate map evidence scope"
+          value={scope}
+          onChange={setScope}
+          items={[
+            { id: "ev_supported", label: "Eligible EV comparisons" },
+            { id: "all_context", label: "Include historical references" },
+          ]}
+        />
         <Segmented
           label="Senate call map view"
           value={view}
@@ -57,7 +79,11 @@ export const NationalForecastMap = memo(function NationalForecastMap({
           selected={selected?.state || ""}
           onSelect={onSelect}
           layer="margin"
-          marginContext="Conditional research margin · R−D percentage points"
+          marginContext={
+            scope === "ev_supported"
+              ? "Eligible same-stage EV research point · R−D percentage points"
+              : "Historical / conditional research margin · R−D percentage points"
+          }
           missingLabel="No published conditional margin; open available research"
           tile={view === "tiles"}
         />
@@ -85,7 +111,8 @@ export const NationalForecastMap = memo(function NationalForecastMap({
         </span>
         <span>
           <i className="missing" />
-          No published point / no contest / multiple races
+          No published point / no contest / multiple races / EV unsupported in
+          this view
         </span>
       </div>
       <ResearchGuide
@@ -160,7 +187,9 @@ export const ForecastGeography = memo(function ForecastGeography({
                   <StateMap
                     state={call.state}
                     rows={rows}
-                    selected={(ctx.selectedGeographyIds ?? ctx.query.geography_ids)}
+                    selected={
+                      ctx.selectedGeographyIds ?? ctx.query.geography_ids
+                    }
                     onSelect={(id) => ctx.setQuery({ geography_ids: [id] })}
                     layer={layer === "contribution" ? "swing" : layer}
                     metricLabel={label}

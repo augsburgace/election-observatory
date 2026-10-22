@@ -34,6 +34,23 @@ def test_historical_bytes_recovered_later_are_never_strict_contemporary():
     assert retrospective['chronology'] == 'retrospective_report'
 
 
+def test_county_definition_mismatch_cannot_reconcile_by_numeric_coincidence():
+    rows = [row('state:NC', 1000, grain='state'), row('county:37001', 600), row('county:37003', 400)]
+    rows[1]['metadata'] = {'status_classification': 'issued_instead_of_cast'}
+    snapshot = stage_snapshot(rows, 2020, '2020-10-20', 'strict_contemporary')
+    assert not snapshot['reconciles']
+    assert snapshot['county_sum'] == 400
+
+
+def test_reviewed_nc_native_wording_alias_does_not_equate_other_states_or_statuses():
+    from observatory.participation_definitions import metric_definition
+    a = {'native_definition': 'Counts of absentee ballots cast, including in-person early voting'}
+    b = {'native_definition': 'Total absentee and in-person early ballots cast (NCSBE daily report)'}
+    assert metric_definition(a, 'ballots_cast', 'NC') == metric_definition(b, 'ballots_cast', 'NC')
+    assert metric_definition(a, 'ballots_returned', 'NC') != metric_definition(b, 'ballots_returned', 'NC')
+    assert metric_definition(a, 'ballots_cast', 'OH') != metric_definition(b, 'ballots_cast', 'OH')
+
+
 def test_reconstructed_event_dates_are_not_dated_report_snapshots():
     rows = [row('state:NC', 1000, grain='state', basis='reconstructed')]
     assert stage_snapshot(rows, 2020, '2020-10-20', 'retrospective_report') is None
@@ -65,20 +82,22 @@ def test_dependent_checkpoints_do_not_inflate_independent_elections_or_fit_eligi
     metrics = summarize(evaluate_cases(repeated))
     assert metrics['cases'] == 100
     assert metrics['independent_contests'] == metrics['independent_cycles'] == 1
-    fit = fit_conversion(repeated, 2022)
+    fit = fit_conversion(repeated, 2024)
     assert not fit['eligible'] and fit['training_contests'] == 1
     assert fit['coefficient'] is None
 
 
 def test_rolling_fit_ignores_current_future_labels_and_later_runoff_outcomes():
-    training = [fixture_case(year, state=state, actual=5, feature=2) for year in (2014, 2016, 2018)
+    training = [fixture_case(year, state=state, actual=5, feature=2) for year in (2008, 2012, 2016)
                 for state in ('NC', 'OH', 'IA')]
     fitted = fit_conversion(training, 2020)
-    assert fitted['eligible'] and fitted['training_cycles'] == [2014, 2016, 2018]
+    assert fitted['eligible'] and fitted['training_cycles'] == [2008, 2012, 2016]
     assert fitted['training_contests'] == 9
     poison = [fixture_case(2020, state='TX', actual=-99, feature=-99),
               {**fixture_case(2018, state='GA'), 'actual_outcome_year': 2021}]
     assert fit_conversion(training+poison, 2020) == fitted
+    different_environment = [fixture_case(2014, state='TX', actual=-99), fixture_case(2018, state='KS', actual=-99)]
+    assert fit_conversion(training+different_environment, 2020) == fitted
     # Repeating one contest's four checkpoints leaves that contest's total
     # training influence unchanged, rather than quadrupling the evidence.
     repeated = [*training, *[{**training[0], 'case_id': 'copy-'+str(n), 'stage': n} for n in range(3)]]

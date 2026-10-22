@@ -197,7 +197,7 @@ def stage_history(database, *, state="NC", cycle=2026, revision=None, as_of=None
             record = session.get(Revision, revision)
             as_of = record.created_at if record else utc_now()
     cycles = tuple(sorted({int(c) for c in baseline_cycles if 1976 <= int(c) < cycle}))
-    key = ("ev_stage_history_v1", revision, state, cycle, as_of, metric, mode, alignment, history_basis, cycles)
+    key = ("ev_stage_history_v2", revision, state, cycle, as_of, metric, mode, alignment, history_basis, cycles)
     return _cached(database, key, lambda: _build(database, state, cycle, revision, as_of,
         metric, mode, alignment, history_basis, cycles))
 
@@ -245,6 +245,7 @@ def _build(database, state, cycle, revision, cutoff, metric, mode, alignment, ba
         comparison = _comparison(current_grain, selected, alignment) if current_grain and selected else None
         compatible = bool(comparison and comparison["status"] == "available" and not comparison["asynchronous"])
         final_cohort = any(r.get("metadata", {}).get("final_status_cohort") for r in selected)
+        same_type = (year % 4 == 0) == (cycle % 4 == 0) and year % 2 == cycle % 2
         if final_cohort:
             compatible = False
         if not aligned:
@@ -257,8 +258,13 @@ def _build(database, state, cycle, revision, cutoff, metric, mode, alignment, ba
             reason = "Final-status cohort reconstructed by recorded return date; later acceptance classifications cannot establish participation known at that stage."
         elif not compatible:
             reason = "The reports do not establish compatible matched geography, definitions, method classification and dates."
+        elif not same_type:
+            reason = "Different election environment. The aligned report is context, excluded from like-for-like pace and forecast inputs."
         else:
             reason = "Actual reports at the aligned stage; matched geographic coverage and definitions retained."
+        if comparison and not same_type:
+            comparison = {**comparison, 'ratio': None, 'context_only': True,
+                          'reason': 'Different election environment; not a like-for-like pace measure.'}
         refs = _references(database, selected, revision)
         classifications = sorted({r.get("metadata", {}).get("reconstruction_basis", "dated report") for r in selected})
         known_dates = [available_at(r) for r in selected if available_at(r)]
@@ -271,8 +277,9 @@ def _build(database, state, cycle, revision, cutoff, metric, mode, alignment, ba
             "target_date": target.isoformat() if target else None, "observed_date": observed_date,
             "age_days": (target - day(observed_date)).days if target and observed_date else None,
             "value": last.get("value"), "available": bool(selected), "alignment_available": aligned,
-            "same_stage": exact and compatible, "reason": reason,
-            "pace_ratio": comparison["ratio"] if exact and compatible else None,
+            "same_election_type": same_type, "aligned_report": exact and compatible,
+            "same_stage": exact and compatible and same_type, "reason": reason,
+            "pace_ratio": comparison["ratio"] if exact and compatible and same_type else None,
             "matched": comparison, "grain": historical_grain, "trajectory": historical_series,
             "geographies": _geographies(selected), "calendar": calendar, "chronology": chronology,
             "mode_values": _mode_values(database, rows, state, year, metric,

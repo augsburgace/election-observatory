@@ -19,9 +19,11 @@ from scipy.optimize import minimize_scalar
 
 from .analytics.common import available_at, instant, source_refs
 from .connectors.calendars import calendar_reference
+from .election_context import election_type
+from .participation_definitions import metric_definition
 from .registry import ELECTION_DATES, WATCHLIST
 
-BACKTEST_VERSION = 'senate-ev-stage-audit-1.0'
+BACKTEST_VERSION = 'senate-ev-stage-audit-1.1'
 STAGES = (30, 14, 7, 1)
 OPENING_STAGES = (1, 5, 10, 15)
 MIN_TRAINING_CYCLES = 3
@@ -80,13 +82,15 @@ def fit_conversion(rows, origin_year, *, reference_kind=None, chronology=None):
     the held-out outcome. A sparse history returns an explicit unavailable fit.
     """
     training = [row for row in rows if row['year'] < origin_year
+                and election_type(row['year']) == election_type(origin_year)
                 and row.get('actual_outcome_year', row['year']) < origin_year
                 and (not reference_kind or row['reference_kind'] == reference_kind)
                 and (not chronology or row['chronology'] == chronology)]
     contests = {_contest_key(row) for row in training}
     cycles = sorted({row['year'] for row in training})
     manifest = {'training_cycles': cycles, 'training_contests': len(contests), 'training_snapshots': len(training),
-                'coefficient': None, 'eligible': False, 'training_state_cycles': len({(row['state'], row['year']) for row in training}),
+                'coefficient': None, 'eligible': False, 'election_type': election_type(origin_year),
+                'training_state_cycles': len({(row['state'], row['year']) for row in training}),
                 'minimum_cycles': MIN_TRAINING_CYCLES, 'minimum_contests': MIN_TRAINING_CONTESTS,
                 'method': 'State-election-balanced Huber loss (delta 10 pp), ridge penalty 8, coefficient bounded -2 to +2; no intercept.',
                 'training_case_ids': sorted(row['case_id'] for row in training)}
@@ -168,9 +172,15 @@ def stage_snapshot(rows, year, cutoff, chronology, *, mode=None, metric=None):
             continue
         states.sort(key=lambda row: (row.get('time_basis') != 'reported', -row.get('revision', 0)))
         state = states[0]
+        metadata = state.get('metadata', {})
+        definition = metric_definition(metadata, current_metric, state.get('state'))
         counties = {}
         for row in sorted(members, key=lambda r: (r.get('time_basis') == 'reported', r.get('revision', 0))):
             if row.get('geography_type') == 'county' and str(row.get('canonical_id', '')).startswith('county:'):
+                native = row.get('metadata', {})
+                if (metric_definition(native, current_metric, row.get('state')) != definition
+                        or any(native.get(field) != metadata.get(field) for field in ('mode_classification', 'status_classification'))):
+                    continue
                 counties[row['canonical_id']] = row
         county_sum = sum(row['value'] for row in counties.values())
         total = state['value']
@@ -182,13 +192,20 @@ def stage_snapshot(rows, year, cutoff, chronology, *, mode=None, metric=None):
             'coverage_pct': 100*county_sum/total if total else None, 'reconciles': reconciliation,
             'age_days': (date.fromisoformat(cutoff)-date.fromisoformat(report_date)).days,
             'chronology': chronology, 'source_id': source_id, 'source_refs': source_refs([state, *counties.values()]),
-            'definition': state.get('metadata', {}).get('metric_definition', current_metric),
+            'definition': definition,
+            'mode_classification': state.get('metadata', {}).get('mode_classification'),
+            'status_classification': state.get('metadata', {}).get('status_classification'),
             '_priority': priority})
     # Prefer a genuine all-method county report, then in-person/mail. A newer
     # incomplete statewide-only report remains a visible comparison alternative.
     candidates.sort(key=lambda row: (not row['reconciles'], {'all': 0, 'early_in_person': 1, 'mail': 2}.get(row['mode'], 3),
         row['_priority'], -date.fromisoformat(row['report_date']).toordinal()))
     return candidates[0] if candidates else None
+
+
+def compatible_snapshots(current, prior):
+    return all(current.get(field) == prior.get(field) for field in (
+        'metric', 'mode', 'definition', 'mode_classification', 'status_classification'))
 
 
 def _snapshot_feature(snapshot, context, same_stage=None):
@@ -221,7 +238,7 @@ def _previous_stage(rows, state, year, snapshot, alignment, stage, chronology):
         else:
             target = (date.fromisoformat(ELECTION_DATES[previous_year])-timedelta(days=stage)).isoformat()
         prior = stage_snapshot(rows, previous_year, target, chronology, mode=snapshot['mode'], metric=snapshot['metric'])
-        if not prior or not prior['reconciles'] or prior['definition'] != snapshot['definition']:
+        if not prior or not prior['reconciles'] or not compatible_snapshots(snapshot, prior):
             continue
         # Same stage means actual report coordinates match; old observations can
         # support an as-of study but never an exact-day pace claim.
@@ -291,10 +308,10 @@ def collect_feature_cases(database, revision, cutoff, histories):
 def build_backtesting(database, revision, cutoff, histories):
     features, exclusions = collect_feature_cases(database, revision, cutoff, histories)
     cases = evaluate_cases(features)
-    # No pooling strict and reconstructed copies as additional elections. Default
-    # headline stratum is retrospective, final-geographic feature at fixed DTE.
+    # The headline evaluates the same-stage feature eligible for live calls.
+    # Final-electorate mix experiments remain separately labeled research.
     headline = [row for row in cases if row['chronology'] == 'retrospective_report'
-                and row['reference_kind'] == 'final_candidate_vote_distribution' and row['alignment'] == 'days_to_election']
+                and row['reference_kind'] == 'same_stage_early_vote' and row['alignment'] == 'days_to_election']
     grouped = []
     for chronology in CHRONOLOGIES:
         for kind in sorted({row['reference_kind'] for row in cases}):
@@ -310,6 +327,7 @@ def build_backtesting(database, revision, cutoff, histories):
     result = {'turnout': turnout, 'model_version': BACKTEST_VERSION, 'status': 'limited_empirical_ev_audit' if cases else 'no_eligible_ev_cases',
         'method': 'Frozen EV-assumption audit plus strictly expanding-origin, state-election-balanced robust/ridge conversion when enough independent history exists. No target-cycle labels enter features, training or calibration.',
         'metrics': {'historical_reference': summarize(headline, 'baseline_margin_pp'), 'fixed_ev_assumption': summarize(headline), 'fitted_ev': summarize(headline, 'fitted_margin_pp')},
+        'headline_scope': 'Same-stage EV geographic feature, retrospective dated reports, fixed days-to-election checkpoints. Final-electorate context is excluded from the live adjustment and these headline errors.',
         'cases': cases, 'exclusions': exclusions, 'grouped_metrics': grouped,
         'independent_cycles': sorted({row['year'] for row in cases}),
         'independent_contests': len({_contest_key(row) for row in cases}),
@@ -373,12 +391,15 @@ def same_stage_research(database, state, revision, cutoff, cycle, metric, mode, 
         if not report:
             comparisons.append({'cycle': previous, 'target_date': prior_date, 'status': 'unavailable', 'reason': 'No compatible dated report within three days before the stage.', 'source_refs': []})
             continue
-        exact = current is not None and report['age_days'] == current['age_days'] and report['definition'] == current['definition'] and report['total'] > 0
+        same_type = election_type(previous) == election_type(cycle)
+        exact = current is not None and report['age_days'] == current['age_days'] and compatible_snapshots(current, report) and report['total'] > 0 and same_type
         comparisons.append({'cycle': previous, 'target_date': prior_date, 'report_date': report['report_date'], 'total': report['total'],
             'current_total': current['total'] if current else None, 'metric': report['metric'], 'mode': report['mode'],
             'ratio': current['total']/report['total'] if exact else None, 'coverage_pct': report['coverage_pct'],
             'report_age_days': report['age_days'], 'status': 'available' if exact else 'context_only',
-            'reason': 'Actual reports at equal election-relative coordinates.' if exact else 'Report age or definition differs, or the current comparable report is absent; pace ratio withheld.',
+            'election_type': election_type(previous), 'same_election_type': same_type,
+            'reason': ('Different election environment; counts are context only and no comparable pace ratio is published.' if not same_type else
+                       'Actual reports at equal election-relative coordinates.' if exact else 'Report age, method/status definition differs, or the current comparable report is absent; pace ratio withheld.'),
             'chronology': report['chronology'], 'source_ids': [report['source_id']], 'source_refs': report['source_refs']})
     return {'alignment': alignment, 'target_date': target_date, 'stage': stage, 'comparisons': comparisons,
             'current_report_date': current['report_date'] if current else None,
@@ -442,7 +463,7 @@ def _turnout_inputs(rows, labels, state, year, snapshot, alignment, stage, chron
         else:
             prior_date = (date.fromisoformat(ELECTION_DATES[prior_year])-timedelta(days=stage)).isoformat()
         previous = stage_snapshot(rows, prior_year, prior_date, chronology, mode=snapshot['mode'], metric=snapshot['metric'])
-        if not previous or previous['definition'] != snapshot['definition'] or previous['age_days'] != snapshot['age_days']:
+        if not previous or not compatible_snapshots(snapshot, previous) or previous['age_days'] != snapshot['age_days']:
             continue
         if previous['total'] <= 0 or previous['total'] > label['value']:
             continue
@@ -525,6 +546,11 @@ def current_turnout_projection(database, state, revision, cutoff, cycle, metric,
     priors = _turnout_inputs(rows, final_turnout_labels(database, revision), state, cycle, snapshot,
                             'days_to_election', stage, 'retrospective_report')
     result = turnout_projection(snapshot['total'], priors)
+    if mode != 'all':
+        # Unmeasured early in-person voters are not still waiting to vote just
+        # because this series contains mail only (and vice versa).
+        result = {**result, 'remaining_participation': None,
+                  'remaining_explanation': 'This is one voting method. Other participants may already have voted; final participation minus this measure is not a count of people still to vote.'}
     return {**result, 'current_total': snapshot['total'], 'report_date': snapshot['report_date'],
             'metric': metric, 'mode': mode, 'alignment': 'days_to_election', 'stage': stage,
             'chronology': 'Current contemporary observations with explicitly retrospective historical analogues.',
@@ -532,7 +558,7 @@ def current_turnout_projection(database, state, revision, cutoff, cycle, metric,
 
 
 def current_same_stage_distribution(database, state, revision, cutoff, cycle, *, metric, mode,
-                                    current_date, metric_definition=None, mode_classification=None):
+                                    current_date, metric_definition=None, mode_classification=None, status_classification=None):
     """Previously collected dated reports can inform today's call retrospectively.
 
     Their past publication did not have to be known at the historical cutoff to
@@ -555,6 +581,9 @@ def current_same_stage_distribution(database, state, revision, cutoff, cycle, *,
         if prior['definition'] != (metric_definition or metric):
             continue
         if any(row.get('metadata', {}).get('mode_classification') != mode_classification for row in prior['counties'].values()):
+            continue
+        if prior.get('status_classification') != status_classification or any(
+                row.get('metadata', {}).get('status_classification') != status_classification for row in prior['counties'].values()):
             continue
         return {'distribution': {identifier: row['value'] for identifier, row in prior['counties'].items()},
                 'cycle': year, 'date': prior['report_date'], 'target_date': target, 'chronology': 'retrospective_report_known_by_current_cutoff',

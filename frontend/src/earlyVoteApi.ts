@@ -1,6 +1,7 @@
 import { publicFetch } from "./publicData";
 import { params } from "./atlasApi";
 export interface EVCall {
+  audit?: ForecastAudit;
   race_id: string;
   state: string;
   state_name: string;
@@ -31,6 +32,13 @@ export interface EVCall {
       native_date_caveats?: string[];
     };
     historical_reference: {
+      election_type?: string;
+      excluded_context?: {
+        year: number;
+        margin_pp: number;
+        election_type: string;
+        reason: string;
+      }[];
       margin_pp: number | null;
       cycles: {
         year: number;
@@ -45,6 +53,7 @@ export interface EVCall {
       source_refs: Record<string, unknown>[];
     };
     geographic_tilt: {
+      adjustment_eligible?: boolean;
       available: boolean;
       tilt_pp: number | null;
       reference_kind: string;
@@ -91,6 +100,46 @@ export interface EVCall {
   warnings: string[];
   sources: Record<string, unknown>[];
   manifest: Record<string, unknown>;
+}
+export interface ForecastAudit {
+  point_role: string;
+  election_type: string;
+  conclusion: string;
+  components: { label: string; margin_pp: number | null; role: string }[];
+  checks: { label: string; passed: boolean; detail: string }[];
+  validation: {
+    historical_reference: BacktestMetrics;
+    ev_assumption: BacktestMetrics;
+    mae_improvement_pp: number | null;
+    independent_cycles: number[];
+    scope: string;
+    promoted: boolean;
+  };
+  state_note: string;
+  interpretation: string[];
+  references: { title: string; url: string; lesson: string }[];
+  state_reference?: { title: string; url: string } | null;
+}
+export interface ComparisonReview {
+  status: string;
+  interpretation: string;
+  review_steps: string[];
+  studies: {
+    producer: string;
+    poll_margin_pp: number;
+    research_margin_pp: number;
+    gap_pp: number;
+    large_gap: boolean;
+    opposite_direction: boolean;
+    field_end?: string;
+  }[];
+  markets: {
+    label: string;
+    party: string;
+    price_pct: number;
+    quote_at?: string;
+    challenges_direction: boolean;
+  }[];
 }
 export interface EarlyVoteCalls {
   revision: number;
@@ -256,6 +305,8 @@ export interface EVStagePoint {
   sources?: Record<string, unknown>[];
 }
 export interface EVStageCycle {
+  same_election_type?: boolean;
+  aligned_report?: boolean;
   cycle: number;
   election_type: string;
   target_date: string | null;
@@ -367,9 +418,12 @@ export async function earlyVoteHistory(
   query: Record<string, unknown>,
   signal?: AbortSignal,
 ): Promise<EVStageHistory> {
-  const response = await publicFetch("/api/v2/early-vote/history?" + params(query), {
-    signal,
-  });
+  const response = await publicFetch(
+    "/api/v2/early-vote/history?" + params(query),
+    {
+      signal,
+    },
+  );
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
     throw new Error(
@@ -500,6 +554,7 @@ export interface ReasoningSignal {
   source_refs?: EvidenceReference[];
 }
 export interface EVReasoning {
+  comparison_review?: ComparisonReview;
   revision: number;
   as_of: string;
   state: string;

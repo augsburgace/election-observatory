@@ -21,6 +21,7 @@ import { useViewOption } from "../../viewState";
 import { Badge, Notice } from "../ui";
 import { EvidenceLinks } from "./ForecastEvidenceLinks";
 import { ContextSignal } from "./ForecastContextSignals";
+import { ForecastModelAudit } from "./ForecastModelAudit";
 
 function partyName(margin: number | null) {
   return margin == null
@@ -35,7 +36,10 @@ export function localBriefing(call: EVCall) {
   const early = call.evidence.early_vote,
     geography = call.evidence.geographic_tilt;
   return {
-    headline: `${call.state_name}: ${partyName(call.call.margin_pp).toLowerCase()}${call.call.margin_pp == null || call.call.margin_pp === 0 ? "" : ` by ${fmt(Math.abs(call.call.margin_pp), 1)} points`}`,
+    headline:
+      call.call.status === "reference_only"
+        ? `${call.state_name}: historical reference only; EV direction not established`
+        : `${call.state_name}: ${partyName(call.call.margin_pp).toLowerCase()}${call.call.margin_pp == null || call.call.margin_pp === 0 ? "" : ` by ${fmt(Math.abs(call.call.margin_pp), 1)} points`}`,
     summary:
       call.call.status === "ev_informed"
         ? `The early-vote call starts with prior Senate results and adjusts for where reported early participation is coming from. ${geography.same_stage ? "The geographic comparison uses a compatible stage of a prior early-voting cycle." : "The geographic comparison uses final historical results; a same-stage early-vote reference is unavailable."}`
@@ -242,6 +246,10 @@ export function ForecastBriefing({
           {reasoning.error.message}
         </Notice>
       )}
+      <ForecastModelAudit
+        call={call}
+        review={expanded ? data?.comparison_review : undefined}
+      />
       <div className="briefing-paragraphs">
         {paragraphs.map((paragraph, index) => (
           <article key={`${paragraph.title}-${index}`}>

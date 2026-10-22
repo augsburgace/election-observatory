@@ -34,10 +34,11 @@ from .ev_backtesting import (
     final_turnout_labels,
     summarize,
 )
+from .participation_definitions import metric_definition
 from .provenance import snapshot_references
 from .registry import ELECTION_DATES
 
-VERSION = 'senate-ev-extra-features-1.0'
+VERSION = 'senate-ev-extra-features-1.1'
 MAX_CACHE_BYTES = 32 * 1024 * 1024
 MIN_TRAINING_CYCLES = 3
 MIN_TRAINING_CLUSTERS = 8
@@ -139,7 +140,7 @@ def _correct(row: dict, cutoff: str, chronology: str) -> dict:
 
 def _definition(row: dict) -> tuple:
     meta = row.get('metadata') or {}
-    return (meta.get('metric_definition', meta.get('native_definition', row['metric'])), meta.get('mode_classification'), meta.get('status_classification'))
+    return (metric_definition(meta, row['metric'], row.get('state')), meta.get('mode_classification'), meta.get('status_classification'))
 
 
 def _snapshot(rows: list[dict], year: int, cutoff: str, chronology: str, *, metric: str, mode: str,
@@ -501,7 +502,8 @@ def evaluate_feature_cases(feature_cases: list[dict]) -> list[dict]:
             origins, evaluated = [], []
             for year in sorted({row['year'] for row in eligible}):
                 heldout = [row for row in eligible if row['year'] == year]
-                training = [row for row in eligible if row['year'] < year and row.get('actual_outcome_year', row['year']) < year]
+                training = [row for row in eligible if row['year'] < year and row.get('actual_outcome_year', row['year']) < year
+                            and _class(row['year']) == _class(year)]
                 minimum_clusters = max(MIN_TRAINING_CLUSTERS, 4 * len(keys))
                 geography_fit = (_fit(training, ['geography_tilt_pp'], year, minimum_clusters) if not statewide_only else
                                  {'eligible': False, 'reason': 'Geographic comparator does not apply to this statewide-only experiment.'})

@@ -39,10 +39,30 @@ def test_final_reference_is_never_labeled_same_point_and_incomplete_history_is_w
     result = geographic_tilt([early('a', 700), early('b', 300)], [county('a', 20, 500), county('b', -20, 500)], statewide_total=1000)
     assert result['available'] and not result['same_stage']
     assert result['reference_kind'] == 'final_candidate_vote_distribution'
+    assert result['adjustment_pp'] == 0 and not result['adjustment_eligible']
     assert 'NOT a same-stage' in result['description']
     partial = geographic_tilt([early('a', 700), early('b', 300)], [county('a', 20)], statewide_total=1000)
     assert partial['available'] is False
     assert partial['adjustment_pp'] == 0
+
+
+def test_missing_large_historical_region_cannot_pass_on_current_coverage_alone():
+    result = geographic_tilt([early('a', 700), early('b', 300)], [county('a', 20), county('b', -20)],
+        same_stage={'a': 100, 'b': 100, 'missing-large-area': 9800}, statewide_total=1000)
+    assert not result['available'] and result['adjustment_pp'] == 0
+    assert result['historical_stage_coverage_pct'] == 2
+
+
+def test_midterm_reference_excludes_presidential_outliers_and_uses_runoff_cycle():
+    history = [historic(2014, 3), historic(2018, 5), historic(2022, 7), historic(2020, -90), historic(2024, -99),
+               {**historic(2021, -95), 'election_cycle': 2020}]
+    result = weighted_reference(history, 2026)
+    assert result['election_type'] == 'midterm'
+    assert {r['year'] for r in result['cycles']} == {2014, 2018, 2022}
+    assert 3 < result['margin_pp'] < 7
+    assert weighted_reference([historic(2020, -90)], 2026)['margin_pp'] is None
+    presidential = weighted_reference(history, 2024)
+    assert {r['year'] for r in presidential['cycles']} == {2020, 2021}
 
 
 def test_asynchronous_reports_missing_options_and_insufficient_state_coverage_do_not_adjust():
@@ -66,7 +86,8 @@ def test_independent_leader_and_unknown_rcv_round_are_never_recast_as_dr_votes()
 def test_reference_never_uses_future_years_or_overweights_two_contests_in_one_year():
     history = [historic(2018, 10), historic(2020, 4), historic(2020, 8, contest_id='other'), historic(2022, -2), historic(2024, -90)]
     result = weighted_reference(history, 2024)
-    assert {r['year'] for r in result['cycles']} == {2018, 2020, 2022}
+    assert {r['year'] for r in result['cycles']} == {2020}
+    assert {r['year'] for r in result['excluded_context']} == {2018, 2022}
     assert sum(r['weight'] for r in result['cycles']) == pytest.approx(1)
     assert len([r for r in result['cycles'] if r['year'] == 2020]) == 2
     assert result['margin_pp'] > -2
@@ -133,7 +154,7 @@ def test_final_runoffs_replace_earlier_rounds_and_keep_regular_special_seats_dis
     assert {r['contest_id'] for r in result} == {'regular-runoff', 'special-runoff', '2022-runoff'}
     assert len(rejected) == 3
     reference = weighted_reference(result, 2026, special=False)
-    assert {r['contest_id'] for r in reference['cycles']} == {'regular-runoff', '2022-runoff'}
+    assert {r['contest_id'] for r in reference['cycles']} == {'2022-runoff'}
     # The 2020 holdout uses 2021's actual final outcome, but no 2021 value enters
     # the prediction inputs available before the 2020 election.
     diagnostics = historical_validation({'GA': [historic(2016, 10), *result]})
@@ -169,7 +190,7 @@ def test_unverified_underlying_report_date_preserves_evidence_but_withholds_adju
     monkeypatch.setattr(ev_forecast, '_early_view', lambda database, state, *args: view if state == 'NC' else None)
     monkeypatch.setattr(ev_forecast, '_county_reference', lambda *args: {'year': 2024, 'office': 'PRESIDENT', 'warnings': [], 'sources': [],
         'rows': [county('county:37001', 50), county('county:37003', -50)]})
-    monkeypatch.setattr(ev_forecast, '_senate_history', lambda *args: ({'NC': [historic(2020, 4)]}, {}))
+    monkeypatch.setattr(ev_forecast, '_senate_history', lambda *args: ({'NC': [historic(2022, 4)]}, {}))
     ev_forecast._run.cache_clear()
     result = ev_forecast.early_vote_forecasts(harness.database, 'NC', revision, '2026-10-20')['selected']
     assert result['evidence']['early_vote']['available']

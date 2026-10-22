@@ -1,0 +1,529 @@
+{
+  "race_id": "2026-OH-SEN-SPECIAL",
+  "state": "OH",
+  "state_name": "Ohio",
+  "watchlist": true,
+  "office": "US SENATE",
+  "special": true,
+  "election_system": "plurality",
+  "call": {
+    "margin_pp": 1.1032947228825023,
+    "range_low_pp": -21.478629695074666,
+    "range_high_pp": 23.68521914083967,
+    "direction": "Republican",
+    "label": "R+1.1",
+    "status": "reference_only",
+    "range_label": "Unvalidated sensitivity range",
+    "eventual_winner_probability": null,
+    "candidate_verification": "Official ballot candidate import not yet verified"
+  },
+  "evidence": {
+    "early_vote": {
+      "total": 763784.0,
+      "date": "2026-10-21",
+      "metric": "ballots_cast",
+      "metric_label": "Reported early voting",
+      "mode": "all",
+      "source_refs": [],
+      "coverage": {
+        "status": "available",
+        "available_metrics": [
+          "ballots_cast",
+          "ballots_requested",
+          "ballots_returned"
+        ],
+        "available_modes": [
+          "all",
+          "early_in_person"
+        ],
+        "available_dimensions": [],
+        "available_cycles": [
+          2026,
+          2024,
+          2022,
+          2020,
+          2018,
+          2016
+        ],
+        "geographic_count": 88,
+        "geography_join": {
+          "matched": 88,
+          "unmatched": [],
+          "native": 0
+        },
+        "recommended_selection": {
+          "metric": "ballots_cast",
+          "mode": "all",
+          "time_basis": "reported",
+          "reason": "Available reported participation measure; definitions remain explicit."
+        },
+        "as_reported_available": true,
+        "reconstructed_available": true
+      },
+      "available": true,
+      "query": {
+        "state": "OH",
+        "cycle": 2026,
+        "baseline": 2022,
+        "as_of": "2026-10-21",
+        "time_basis": "reported",
+        "revision": 592,
+        "metric": "ballots_cast",
+        "mode": "all",
+        "geography_ids": [],
+        "date_window": null,
+        "category_dimension": null,
+        "category": null,
+        "alignment": "days_to_election"
+      },
+      "unit": "ballots",
+      "composition_is_marginal": true,
+      "report_date_verified": true,
+      "native_date_caveats": []
+    },
+    "historical_reference": {
+      "margin_pp": 1.1032947228825023,
+      "cycles": [
+        {
+          "year": 2022,
+          "margin_pp": 6.111882346053146,
+          "total_votes": 4133342.0,
+          "contest_id": "contest:e69bd33f113bc05aac360710",
+          "contest_name": "Us Senate \u00b7 statewide",
+          "special": false,
+          "stage": "GEN",
+          "election_cycle": 2022,
+          "source_refs": [],
+          "weight": 0.6135117904356906
+        },
+        {
+          "year": 2018,
+          "margin_pp": -6.84734253901348,
+          "total_votes": 4409886.0,
+          "contest_id": "contest:0538d764bbe91ae0716e392f",
+          "contest_name": "Us Senate \u00b7 statewide",
+          "special": false,
+          "stage": "GEN",
+          "election_cycle": 2018,
+          "source_refs": [],
+          "weight": 0.38648820956430935
+        }
+      ],
+      "seat_context_status": "regular_context_for_special_contest",
+      "election_type": "midterm",
+      "excluded_context": [
+        {
+          "year": 2016,
+          "margin_pp": 20.871751730025736,
+          "contest_id": "contest:3df5fd0293e67ae4b79f3da5",
+          "election_type": "presidential",
+          "reason": "Different election environment; retained as context, excluded from the point."
+        },
+        {
+          "year": 2024,
+          "margin_pp": 3.6187160582124664,
+          "contest_id": "contest:dd9b848faaad4336c30a8c96",
+          "election_type": "presidential",
+          "reason": "Different election environment; retained as context, excluded from the point."
+        }
+      ],
+      "description": "Recency-weighted same-election-type historical Senate R-minus-D margin. Different seats and candidates can still make this a weak current-race reference.",
+      "source_refs": []
+    },
+    "geographic_tilt": {
+      "available": true,
+      "tilt_pp": 1.6871449849435323,
+      "coefficient": 0.35,
+      "adjustment_pp": 0.0,
+      "adjustment_eligible": false,
+      "matched_areas": 88,
+      "coverage_pct": 100.0,
+      "statewide_coverage_pct": 100.0,
+      "reference_kind": "final_candidate_vote_distribution",
+      "same_stage": false,
+      "rows": [],
+      "exploratory_final_mix_adjustment_pp": 0.5905007447302363,
+      "description": "Current county shares versus historical final candidate-vote shares; this is NOT a same-stage early-voting comparison. Final-result context does not adjust the live point. Each share difference is weighted by that county\u2019s historical R-minus-D margin. It does not reveal how current early voters voted.",
+      "reference_office": "US SENATE",
+      "reference_year": 2024,
+      "boundary_assumption": "Canonical current reporting-county IDs are associated with their historical context; no votes are allocated across boundaries. Current-vintage continuity is a modeling assumption, not a verified precinct crosswalk."
+    },
+    "composition": [],
+    "polls": {
+      "count": 15,
+      "role": "Secondary research link only; excluded from this model."
+    },
+    "same_stage": {
+      "alignment": "days_to_election",
+      "target_date": "2026-10-21",
+      "stage": 13,
+      "comparisons": [
+        {
+          "cycle": 2016,
+          "target_date": "2016-10-26",
+          "status": "unavailable",
+          "reason": "No compatible dated report within three days before the stage.",
+          "source_refs": []
+        },
+        {
+          "cycle": 2018,
+          "target_date": "2018-10-24",
+          "status": "unavailable",
+          "reason": "No compatible dated report within three days before the stage.",
+          "source_refs": []
+        },
+        {
+          "cycle": 2020,
+          "target_date": "2020-10-21",
+          "status": "unavailable",
+          "reason": "No compatible dated report within three days before the stage.",
+          "source_refs": []
+        },
+        {
+          "cycle": 2022,
+          "target_date": "2022-10-26",
+          "status": "unavailable",
+          "reason": "No compatible dated report within three days before the stage.",
+          "source_refs": []
+        },
+        {
+          "cycle": 2024,
+          "target_date": "2024-10-23",
+          "status": "unavailable",
+          "reason": "No compatible dated report within three days before the stage.",
+          "source_refs": []
+        }
+      ],
+      "current_report_date": "2026-10-21",
+      "explanation": "Stage is days until Election Day."
+    },
+    "turnout_projection": {
+      "available": false,
+      "projection": null,
+      "remaining_participation": null,
+      "validated_forecast": false,
+      "range_includes_model_error": false,
+      "prior_cycles": [],
+      "inputs": [],
+      "range_low": null,
+      "range_high": null,
+      "range_kind": "Historical-analogue sensitivity span; no probability coverage.",
+      "method": "Current same-stage EV divided by the median prior same-election-type stage-EV/final-participation fraction. No candidate vote, target final total or target final registration enters the predictor.",
+      "reason": "At least 2 compatible earlier election cycles and a positive current EV total are required.",
+      "current_total": 763784.0,
+      "report_date": "2026-10-21",
+      "metric": "ballots_cast",
+      "mode": "all",
+      "alignment": "days_to_election",
+      "stage": 13,
+      "chronology": "Current contemporary observations with explicitly retrospective historical analogues.",
+      "source_refs": [],
+      "current_final_total_used": false,
+      "candidate_votes_used": false
+    }
+  },
+  "explanation": [
+    "The historical Senate reference is +1.1 percentage points Republican minus Democratic, built from 2022, 2018.",
+    "The point call uses historical Senate returns only. It is explicitly not an EV-informed call: Current county shares versus historical final candidate-vote shares; this is NOT a same-stage early-voting comparison. Final-result context does not adjust the live point. Each share difference is weighted by that county\u2019s historical R-minus-D margin. It does not reveal how current early voters voted."
+  ],
+  "assumptions": [
+    "This is a party-margin research projection, not observed candidate votes, a certified result, or a validated winner probability.",
+    "The reference pools different Senate seats, candidates and classes. It is not nominee-adjusted; current ballot identities and incumbency are unverified and no historical candidate is assumed to be running.",
+    "Historical reference: up to three earlier Senate-election years of the same election type within 12 years, with a six-year recency half-life. Presidential, midterm and off-year environments are not pooled. Contests in the same state/year receive equal weight.",
+    "An EV adjustment requires compatible same-stage early-vote geography from the same election type, method and status definition. Final-election geography remains descriptive context and cannot adjust the live point.",
+    "Eligible EV adjustment = 0.35 \u00d7 the change in county-weighted historical party margin, capped at \u00b15 percentage points. Both the coefficient and cap remain unvalidated research assumptions.",
+    "Current early voters and later Election Day voters can differ sharply. Individual early-voter choice is unobserved; county correlations do not identify it.",
+    "The reported range is a deliberately wide, unvalidated sensitivity range, not an 80% or 95% confidence/credible interval.",
+    "Polling, party registration and demographic marginals do not enter this initial projection. No unreported age-by-party, religion, propensity or demographic intersections are manufactured."
+  ],
+  "warnings": [
+    "Candidate configurations and survey populations are never pooled together.",
+    "Historical reconstruction exists; switch evidence mode to inspect its documented basis. It cannot establish what was reported then.",
+    "Survey response shares are preserved; undecideds are not reallocated.",
+    "Historical published candidate returns are election context, not early votes or contemporaneous reporting snapshots.",
+    "Margin is winner lead in percentage points; Democratic margin is D minus R; swing is change in D minus R.",
+    "Matching geographic identifiers do not establish identical boundaries across vintages.",
+    "The reference is a final candidate-vote distribution, not an equivalent day or voting opportunity in a prior early-voting cycle.",
+    "No recent comparable special-contest history is available; regular Senate contests provide the explicitly labeled reference for this special election. Seat-class and candidate correspondence is unverified.",
+    "Historical state Senate returns pool different seats, candidates and classes. Current nominees and incumbency are unverified; the projection is not candidate-adjusted."
+  ],
+  "sources": [],
+  "manifest": {
+    "model_version": "ev-geography-research-1.3",
+    "dataset_revision": 592,
+    "as_of": "2026-10-21",
+    "cycle": 2026,
+    "race_id": "2026-OH-SEN-SPECIAL",
+    "state": "OH",
+    "deterministic": true,
+    "simulation_seed": null,
+    "margin_definition": "Republican minus Democratic percentage points; party-level conditional projection, not a named candidate result",
+    "formula": "same_election_type_senate_reference + eligible_same_stage_ev_adjustment",
+    "same_election_type_required": true,
+    "same_stage_ev_required_for_adjustment": true,
+    "coefficient_status": "explicit_unvalidated_assumption",
+    "probabilities_published": false,
+    "candidate_verification": "Official ballot candidate import not yet verified",
+    "historical_context_policy": "Retrospectively collected final returns from years before the cutoff calendar year, not contemporary reporting snapshots.",
+    "source_snapshots": [],
+    "input_sha256": "9f7d99ef0461a9701bbabbcd1107c790314a36c669ad429a69ca7a2f03cf1b66",
+    "code_sha256": "116015c71ef2db1f585a325c00fc8d845fe2135a8c7a268d5227f456a7c16667"
+  },
+  "confidence": {
+    "grade": "limited",
+    "label": "Low forecasting confidence",
+    "reason": "The direction is an explicit conditional research call. Current EV can describe participation, but limited independent historical validation and unknown candidate-specific behavior prevent a high-confidence electoral forecast.",
+    "validated_probability": false,
+    "independent_validation_cycles": 1,
+    "historical_error_summary": {
+      "historical_reference": {
+        "cases": 1,
+        "independent_contests": 1,
+        "distinct_contests": 1,
+        "independent_state_cycles": 1,
+        "effective_weighting_unit": "state/election cycle; same-day regular/special contests share one cluster weight",
+        "independent_cycles": 1,
+        "margin_mae_pp": 6.057575875432221,
+        "margin_rmse_pp": 6.057575875432221,
+        "margin_bias_pp": -6.057575875432221,
+        "direction_accuracy": 1.0,
+        "brier_score": null,
+        "log_loss": null,
+        "interval_80_coverage": null,
+        "interval_95_coverage": null
+      },
+      "fixed_ev_assumption": {
+        "cases": 1,
+        "independent_contests": 1,
+        "distinct_contests": 1,
+        "independent_state_cycles": 1,
+        "effective_weighting_unit": "state/election cycle; same-day regular/special contests share one cluster weight",
+        "independent_cycles": 1,
+        "margin_mae_pp": 5.110792564885223,
+        "margin_rmse_pp": 5.110792564885223,
+        "margin_bias_pp": -5.110792564885223,
+        "direction_accuracy": 1.0,
+        "brier_score": null,
+        "log_loss": null,
+        "interval_80_coverage": null,
+        "interval_95_coverage": null
+      },
+      "scope": "Same-state, same-election-type, same-method/status same-stage EV feature at fixed days-to-election checkpoints. Recovered reports are retrospective. This is not a calibrated reliability estimate."
+    },
+    "evidence_strength": "Geographic participation supported",
+    "checks": [
+      {
+        "label": "Current EV",
+        "status": "supported",
+        "detail": "Current county shares versus historical final candidate-vote shares; this is NOT a same-stage early-voting comparison. Final-result context does not adjust the live point. Each share difference is weighted by that county\u2019s historical R-minus-D margin. It does not reveal how current early voters voted."
+      },
+      {
+        "label": "Equivalent historical stage",
+        "status": "limited",
+        "detail": "Final-result geography or no geographic comparison; same-stage EV behavior is not established."
+      },
+      {
+        "label": "Independent state validation",
+        "status": "limited",
+        "detail": "1 historical election cycles for this state; repeated checkpoints do not add independent elections."
+      },
+      {
+        "label": "Learned conversion",
+        "status": "limited",
+        "detail": "0.35 remains an explicit assumption. No empirical conversion is promoted from sparse or non-improving held-out evidence."
+      },
+      {
+        "label": "Candidate/electoral identity",
+        "status": "limited",
+        "detail": "Official ballot candidate import not yet verified"
+      }
+    ]
+  },
+  "sensitivity": {
+    "parameters": [
+      {
+        "id": "ev_coefficient",
+        "label": "Assumed EV-to-margin conversion",
+        "default": 0.35,
+        "min": -1,
+        "max": 1,
+        "unit": "margin pp per geographic tilt pp",
+        "description": "An unvalidated sensitivity assumption, capped at \u00b15 margin points. Negative values test reversal; zero removes the EV adjustment."
+      }
+    ],
+    "points": [
+      {
+        "coefficient": -1.0,
+        "adjustment_pp": -0.0,
+        "margin_pp": 1.1032947228825023
+      },
+      {
+        "coefficient": -0.5,
+        "adjustment_pp": -0.0,
+        "margin_pp": 1.1032947228825023
+      },
+      {
+        "coefficient": 0.0,
+        "adjustment_pp": 0.0,
+        "margin_pp": 1.1032947228825023
+      },
+      {
+        "coefficient": 0.175,
+        "adjustment_pp": 0.0,
+        "margin_pp": 1.1032947228825023
+      },
+      {
+        "coefficient": 0.35,
+        "adjustment_pp": 0.0,
+        "margin_pp": 1.1032947228825023
+      },
+      {
+        "coefficient": 0.7,
+        "adjustment_pp": 0.0,
+        "margin_pp": 1.1032947228825023
+      },
+      {
+        "coefficient": 1.0,
+        "adjustment_pp": 0.0,
+        "margin_pp": 1.1032947228825023
+      }
+    ],
+    "stress_tests": [
+      {
+        "label": "Historical reference only",
+        "margin_pp": 1.1032947228825023,
+        "delta_pp": 0.0,
+        "explanation": "Set the assumed EV-to-margin conversion to zero."
+      },
+      {
+        "label": "Omit 2018 historical outcome",
+        "margin_pp": 6.111882346053146,
+        "delta_pp": 5.008587623170643,
+        "explanation": "Recompute the recency-weighted reference without this election year. No candidate vote is inferred."
+      },
+      {
+        "label": "Omit 2022 historical outcome",
+        "margin_pp": -6.84734253901348,
+        "delta_pp": -7.950637261895983,
+        "explanation": "Recompute the recency-weighted reference without this election year. No candidate vote is inferred."
+      }
+    ],
+    "range_kind": "Unvalidated sensitivity range; no claimed 80%/95% coverage.",
+    "source_sensitivity": "Only one source-selected statewide/county series enters a call. A producer-exclusion forecast cannot be estimated where no independent compatible producer exists.",
+    "turnout_policy": "Current early counts cannot imply final turnout or candidate support without a supported same-stage participation model. A prior final total is context, never a current turnout denominator."
+  },
+  "audit": {
+    "version": "ev-call-audit-1",
+    "election_type": "midterm",
+    "point_role": "Historical context only",
+    "conclusion": "Incoming early-vote evidence does not support a like-for-like margin adjustment here. The displayed historical point must not be read as an early-vote prediction.",
+    "components": [
+      {
+        "label": "Same-type Senate history",
+        "margin_pp": 1.1032947228825023,
+        "role": "historical"
+      },
+      {
+        "label": "Eligible EV adjustment",
+        "margin_pp": 0,
+        "role": "assumed"
+      },
+      {
+        "label": "Displayed research point",
+        "margin_pp": 1.1032947228825023,
+        "role": "historical"
+      }
+    ],
+    "checks": [
+      {
+        "label": "Same election environment",
+        "passed": true,
+        "detail": "Midterm reference: 2018, 2022. Other election types cannot move the point."
+      },
+      {
+        "label": "Same stage and voting measure",
+        "passed": false,
+        "detail": "Current county shares versus historical final candidate-vote shares; this is NOT a same-stage early-voting comparison. Final-result context does not adjust the live point. Each share difference is weighted by that county\u2019s historical R-minus-D margin. It does not reveal how current early voters voted."
+      },
+      {
+        "label": "Statewide geographic reconciliation",
+        "passed": true,
+        "detail": "88 matched reporting areas. 100.0% of the reported statewide measure is matched."
+      },
+      {
+        "label": "Added predictive value established",
+        "passed": false,
+        "detail": "1 state/election outcomes in the matching historical stratum. No production EV conversion or win probability has passed validation."
+      }
+    ],
+    "validation": {
+      "historical_reference": {
+        "cases": 1,
+        "independent_contests": 1,
+        "distinct_contests": 1,
+        "independent_state_cycles": 1,
+        "effective_weighting_unit": "state/election cycle; same-day regular/special contests share one cluster weight",
+        "independent_cycles": 1,
+        "margin_mae_pp": 6.057575875432221,
+        "margin_rmse_pp": 6.057575875432221,
+        "margin_bias_pp": -6.057575875432221,
+        "direction_accuracy": 1.0,
+        "brier_score": null,
+        "log_loss": null,
+        "interval_80_coverage": null,
+        "interval_95_coverage": null
+      },
+      "ev_assumption": {
+        "cases": 1,
+        "independent_contests": 1,
+        "distinct_contests": 1,
+        "independent_state_cycles": 1,
+        "effective_weighting_unit": "state/election cycle; same-day regular/special contests share one cluster weight",
+        "independent_cycles": 1,
+        "margin_mae_pp": 5.110792564885223,
+        "margin_rmse_pp": 5.110792564885223,
+        "margin_bias_pp": -5.110792564885223,
+        "direction_accuracy": 1.0,
+        "brier_score": null,
+        "log_loss": null,
+        "interval_80_coverage": null,
+        "interval_95_coverage": null
+      },
+      "mae_improvement_pp": 0.9467833105469978,
+      "scope": "Same state, election type, voting measure/method, days-to-election alignment and same-stage geographic feature. Historical reports were recovered retrospectively; repeated checkpoints share a state/election weight.",
+      "independent_cycles": [
+        2022
+      ],
+      "promoted": false
+    },
+    "state_note": "Ohio affiliation reflects partisan-primary participation, not a declared party at registration or a general-election vote. Mail and early in-person must keep their own dated histories.",
+    "interpretation": [
+      "More ballots now can mean votes moved earlier, rather than more people voting overall.",
+      "Mail returns, early in-person ballots, requests and accepted ballots are different quantities.",
+      "County partisanship, registration and primary history do not identify candidate votes. Race, religion and propensity cannot be inferred from a place\u2019s population.",
+      "2020 is a pandemic-era comparison. Even within presidential cycles, rule and method changes must be checked.",
+      "A narrow spread between historical turnout analogues excludes model error and is not a confidence interval."
+    ],
+    "references": [
+      {
+        "title": "Census: turnout and early voting in the 2022 midterms",
+        "url": "https://www.census.gov/newsroom/press-releases/2024/congressional-election-voting-report.html",
+        "lesson": "Even midterms differ: both turnout and the share voting before Election Day changed between 2018 and 2022. Match election type, then inspect method and calendar changes."
+      },
+      {
+        "title": "EAC: 2024 election administration findings",
+        "url": "https://www.eac.gov/sites/default/files/2025-06/EAVS_2024_One_Sheet_06_30_25_508.pdf",
+        "lesson": "Early in-person and Election Day are separate voting methods. A rise in one can reflect a timing shift instead of higher final turnout."
+      },
+      {
+        "title": "Pew: validated-voter voting-method research",
+        "url": "https://www.pewresearch.org/politics/2025/08/22/majority-of-americans-continue-to-back-expanded-early-voting-voting-by-mail-voter-id/",
+        "lesson": "Party-method relationships change. Do not hard-code Republicans as Election Day voters or Democrats as mail voters. This methodological reference supplies no votes or polling adjustment to the model."
+      }
+    ],
+    "state_reference": {
+      "title": "EAC: Ohio affiliation definition",
+      "url": "https://www.eac.gov/ohio-voter-info"
+    }
+  }
+}

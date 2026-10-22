@@ -67,7 +67,7 @@ test("the real Forecasts component renders actual v1.1 response shapes with the 
       { ...response, selected },
     );
     globalThis.location = new URL(
-      `http://localhost/?state=${state}&page=forecasts`,
+      `http://localhost/?state=${state}&page=forecasts&ui_forecast_history_cycles=2016,2018,2020,2022,2024`,
     );
     const noop = () => {};
     const markup = renderToString(
@@ -167,7 +167,7 @@ test("expanded forecasts render genuine held-out audit cases, low confidence, so
     if (previousLocation === undefined) delete globalThis.location;
     else globalThis.location = previousLocation;
   });
-  globalThis.location = new URL("http://localhost/?state=NC&page=forecasts");
+  globalThis.location = new URL("http://localhost/?state=NC&page=forecasts&ui_forecast_history_cycles=2016,2018,2020,2022,2024");
   const noop = () => {};
   const markup = renderToString(
     React.createElement(
@@ -292,7 +292,7 @@ test("real stage workbench renders supported NC comparisons and honest OH gaps w
       response,
     );
     globalThis.location = new URL(
-      `http://localhost/?state=${state}&page=forecasts`,
+      `http://localhost/?state=${state}&page=forecasts&ui_forecast_history_cycles=2016,2018,2020,2022,2024`,
     );
     const noop = () => {};
     const markup = renderToString(
@@ -507,7 +507,7 @@ test("opening-day chart defaults to nonnegative actual observations while preser
   });
   const ctx = { query: { state: "NC", cycle: 2026 }, setPage: () => {} };
   globalThis.location = new URL(
-    "http://localhost/?ui_forecast_history_alignment=days_since_opening&ui_forecast_history_mode=early_in_person",
+    "http://localhost/?ui_forecast_history_alignment=days_since_opening&ui_forecast_history_mode=early_in_person&ui_forecast_history_cycles=2016,2018,2020,2022,2024",
   );
   const render = () =>
     renderToString(
@@ -622,7 +622,7 @@ test("final r261 audit renders actual turnout-analogue limits and held-out parti
     if (previousLocation === undefined) delete globalThis.location;
     else globalThis.location = previousLocation;
   });
-  globalThis.location = new URL("http://localhost/?state=NC&page=forecasts");
+  globalThis.location = new URL("http://localhost/?state=NC&page=forecasts&ui_forecast_history_cycles=2016,2018,2020,2022,2024");
   const noop = () => {};
   const bootstrap = JSON.parse(
     await readFile(

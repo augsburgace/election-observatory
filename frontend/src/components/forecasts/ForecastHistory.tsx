@@ -92,7 +92,7 @@ export const ForecastHistory = memo(function ForecastHistory({
   );
   const [cycleSet, setCycleSet] = useViewOption<string>(
     "forecast_history_cycles",
-    "2016,2018,2020,2022,2024",
+    "2018,2022",
   );
   const [preOpening, setPreOpening] = useViewOption<string>(
     "forecast_history_preopening",

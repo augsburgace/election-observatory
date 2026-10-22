@@ -8,6 +8,8 @@ A local 50-state election research atlas, retaining the 2026 Senate watchlist an
 
 The first complete cloud publication passed on October 21, 2026 at evidence revision **592**, including 75 actual hosted-reader checks and browser verification of the nationwide atlas, EV reasoning controls and report export. See the [cloud release record](docs/CLOUD_WEB_RELEASE.md).
 
+**Forecast interpretation:** the [EV analysis audit](docs/EV_FORECAST_AUDIT.md) documents same-election-type baselines, strict same-stage adjustment requirements, graphical call checks and outside-source disagreement reviews. Historical references are distinct from EV-supported conditional points. The EV model remains experimental; no calibrated winner probabilities are claimed.
+
 **Full local application:** [http://127.0.0.1:8776](http://127.0.0.1:8776), while the server is running. The local edition retains arbitrary evidence queries, source collection, original archives and private research. The web edition serves explicitly published investigations, browser-local notes, maps, polling research and editable reports. It never substitutes a different cutoff or filter for an unavailable query. [Public edition capabilities](docs/FREE_WEB_HOSTING.md#what-the-web-edition-contains) describe the static research interface; [cloud operations](docs/CLOUD_UPDATES.md) describe the active publisher.
 
 ## Install and run

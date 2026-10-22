@@ -27,12 +27,14 @@ from .atlas.models import BallotOption, Contest, ElectionResult, ensure_schema
 from .atlas.store import _geographies, _rows
 from .db import ObservationRecord, Snapshot, record_dict
 from .domain import ResearchQuery
+from .election_context import election_type
+from .participation_definitions import metric_definition
 from .provenance import snapshot_references
 from .registry import races, state_info
 from .service import capabilities, workspace
 from .settings import PROJECT_ROOT, local_today
 
-MODEL_VERSION = 'ev-geography-research-1.2'
+MODEL_VERSION = 'ev-geography-research-1.3'
 EV_COEFFICIENT = 0.35
 MAX_ADJUSTMENT_PP = 5.0
 MIN_SENSITIVITY_HALF_WIDTH_PP = 15.0
@@ -42,8 +44,9 @@ ELIGIBLE_METRICS = ('ballots_cast', 'ballots_accepted', 'ballots_returned')
 ASSUMPTIONS = [
     'This is a party-margin research projection, not observed candidate votes, a certified result, or a validated winner probability.',
     'The reference pools different Senate seats, candidates and classes. It is not nominee-adjusted; current ballot identities and incumbency are unverified and no historical candidate is assumed to be running.',
-    'Historical reference: up to three most recent Senate-election years within 12 years, with a six-year recency half-life. Contests in the same state/year receive equal weight; unrelated candidate votes are never added.',
-    'EV adjustment = 0.35 × the change in county-weighted historical party margin, capped at ±5 percentage points. Both the coefficient and cap are unvalidated research assumptions.',
+    'Historical reference: up to three earlier Senate-election years of the same election type within 12 years, with a six-year recency half-life. Presidential, midterm and off-year environments are not pooled. Contests in the same state/year receive equal weight.',
+    'An EV adjustment requires compatible same-stage early-vote geography from the same election type, method and status definition. Final-election geography remains descriptive context and cannot adjust the live point.',
+    'Eligible EV adjustment = 0.35 × the change in county-weighted historical party margin, capped at ±5 percentage points. Both the coefficient and cap remain unvalidated research assumptions.',
     'Current early voters and later Election Day voters can differ sharply. Individual early-voter choice is unobserved; county correlations do not identify it.',
     'The reported range is a deliberately wide, unvalidated sensitivity range, not an 80% or 95% confidence/credible interval.',
     'Polling, party registration and demographic marginals do not enter this initial projection. No unreported age-by-party, religion, propensity or demographic intersections are manufactured.',
@@ -75,7 +78,13 @@ def _valid_party_margin(row):
 
 def weighted_reference(history, target_year, special=False):
     """Use only earlier outcomes, keeping a multi-contest year from overweighting."""
-    eligible = [r for r in history if target_year-12 <= r['year'] < target_year]
+    earlier = [r for r in history if target_year-12 <= r['year'] < target_year]
+    kind = election_type(target_year)
+    eligible = [r for r in earlier if election_type(r.get('election_cycle', r['year'])) == kind]
+    excluded = [{'year': r['year'], 'margin_pp': r['margin_pp'], 'contest_id': r['contest_id'],
+                 'election_type': election_type(r.get('election_cycle', r['year'])),
+                 'reason': 'Different election environment; retained as context, excluded from the point.'}
+                for r in earlier if election_type(r.get('election_cycle', r['year'])) != kind]
     preferred = [r for r in eligible if bool(r.get('special', False)) == special]
     context_status = 'same_regular_special_category'
     if preferred:
@@ -91,7 +100,8 @@ def weighted_reference(history, target_year, special=False):
         by_year[row['year']].append(row)
     denominator = sum(2**(-(target_year-year)/6) for year in by_year)
     if not denominator:
-        return {'margin_pp': None, 'cycles': [], 'description': 'No compatible prior Senate party-margin reference.'}
+        return {'margin_pp': None, 'cycles': [], 'election_type': kind, 'excluded_context': excluded,
+                'description': 'No compatible prior same-election-type Senate party-margin reference.'}
     cycles, margin = [], 0
     for year in sorted(by_year, reverse=True):
         year_weight = 2**(-(target_year-year)/6)/denominator
@@ -100,7 +110,8 @@ def weighted_reference(history, target_year, special=False):
             margin += row['margin_pp']*weight
             cycles.append({**row, 'weight': weight})
     return {'margin_pp': margin, 'cycles': cycles, 'seat_context_status': context_status,
-            'description': 'Recency-weighted historical Senate R-minus-D margin; different seats/candidates and election environments can make this a weak current-race reference.'}
+            'election_type': kind, 'excluded_context': excluded,
+            'description': 'Recency-weighted same-election-type historical Senate R-minus-D margin. Different seats and candidates can still make this a weak current-race reference.'}
 
 
 @lru_cache(maxsize=12)
@@ -154,7 +165,7 @@ def historical_validation(histories):
     residuals = []
     calibration = []
     for origin in range(1990, 2025, 2):
-        known = [abs(r['error_pp']) for r in residuals if r['year'] < origin]
+        known = [abs(r['error_pp']) for r in residuals if r['year'] < origin and election_type(r['year']) == election_type(origin)]
         widths = {level: float(np.quantile(known, level)) if len(known) >= 20 else None for level in (.8, .95)}
         for state, history in histories.items():
             for actual in (r for r in history if r.get('election_cycle', r['year']) == origin):
@@ -194,7 +205,7 @@ def historical_validation(histories):
 
 def geographic_tilt(current_rows, historical_rows, *, same_stage=None, statewide_total=None):
     """A geographic-mix covariate, not an estimate of individual ballot choices."""
-    current = {r['id']: r for r in current_rows if r.get('value') is not None and r['value'] >= 0}
+    current = {r['id']: r for r in current_rows if r.get('value') is not None and math.isfinite(r['value']) and r['value'] >= 0}
     historical = {r['id']: r for r in historical_rows if _valid_party_margin(r)}
     common = [identifier for identifier in current if identifier in historical]
     county_total = sum(r['value'] for r in current.values())
@@ -202,6 +213,7 @@ def geographic_tilt(current_rows, historical_rows, *, same_stage=None, statewide
     coverage = matched_total/county_total if county_total else 0
     statewide_coverage = matched_total/statewide_total if statewide_total is not None and math.isfinite(statewide_total) and statewide_total > 0 else None
     base = {'available': False, 'tilt_pp': None, 'coefficient': EV_COEFFICIENT, 'adjustment_pp': 0.0,
+            'adjustment_eligible': False,
             'matched_areas': len(common), 'coverage_pct': coverage*100,
             'statewide_coverage_pct': statewide_coverage*100 if statewide_coverage is not None else None,
             'reference_kind': 'unavailable', 'same_stage': False, 'rows': []}
@@ -220,6 +232,11 @@ def geographic_tilt(current_rows, historical_rows, *, same_stage=None, statewide
     if same_stage and all(same_stage.get(i) is not None and same_stage[i] >= 0 for i in common) and sum(same_stage[i] for i in common) > 0:
         references = {i: same_stage[i] for i in common}
         reference_kind, comparable = 'same_stage_early_vote', True
+        historical_total = sum(same_stage.values())
+        prior_coverage = sum(references.values())/historical_total if historical_total > 0 else 0
+        if prior_coverage < MIN_STATEWIDE_COVERAGE:
+            return {**base, 'historical_stage_coverage_pct': prior_coverage*100,
+                    'description': 'Matched areas omit too much of the historical same-stage electorate. A well-covered current report cannot repair missing historical geography; the adjustment is withheld.'}
     else:
         references = {i: historical[i]['total_votes'] for i in common}
         reference_kind, comparable = 'final_candidate_vote_distribution', False
@@ -239,9 +256,12 @@ def geographic_tilt(current_rows, historical_rows, *, same_stage=None, statewide
     tilt = sum(r['contribution_pp'] for r in rows)
     adjustment = max(-MAX_ADJUSTMENT_PP, min(MAX_ADJUSTMENT_PP, EV_COEFFICIENT*tilt))
     rows.sort(key=lambda r: -abs(r['contribution_pp']))
-    return {**base, 'available': True, 'tilt_pp': tilt, 'adjustment_pp': adjustment,
+    return {**base, 'available': True, 'tilt_pp': tilt,
+        'adjustment_eligible': comparable, 'adjustment_pp': adjustment if comparable else 0.0,
+        'exploratory_final_mix_adjustment_pp': adjustment if not comparable else None,
         'reference_kind': reference_kind, 'same_stage': comparable, 'rows': rows,
         'description': ('Current county shares versus compatible same-stage historical early-vote shares.' if comparable else 'Current county shares versus historical final candidate-vote shares; this is NOT a same-stage early-voting comparison.')+
+            (' Final-result context does not adjust the live point.' if not comparable else '')+
             ' Each share difference is weighted by that county’s historical R-minus-D margin. It does not reveal how current early voters voted.'}
 
 
@@ -321,12 +341,14 @@ def _call(database, race, revision, cutoff, cycle, histories, rejected, validati
         historic = _county_reference(database, state, revision, min(cycle, int(cutoff[:4]))) if county else None
         if historic:
             from .ev_backtesting import current_same_stage_distribution
-            definitions = {r.get('metric_definition', ev['query']['metric']) for r in native_metadata}
+            definitions = {metric_definition(r, ev['query']['metric'], state) for r in native_metadata}
             classifications = {r.get('mode_classification') for r in native_metadata}
+            statuses = {r.get('status_classification') for r in native_metadata}
             prior_stage = current_same_stage_distribution(database, state, revision, cutoff, cycle,
                 metric=ev['query']['metric'], mode=ev['query']['mode'], current_date=early['date'],
                 metric_definition=next(iter(definitions)) if len(definitions) == 1 else '__incompatible_current_definitions__',
-                mode_classification=next(iter(classifications)) if len(classifications) == 1 else '__incompatible_mode_classifications__')
+                mode_classification=next(iter(classifications)) if len(classifications) == 1 else '__incompatible_mode_classifications__',
+                status_classification=next(iter(statuses)) if len(statuses) == 1 else '__incompatible_status_classifications__')
             same_stage = prior_stage['distribution'] if prior_stage else None
             tilt = geographic_tilt(county, historic['rows'], same_stage=same_stage, statewide_total=early['total'])
             tilt.update({'reference_office': historic['office'], 'reference_year': historic['year'],
@@ -350,15 +372,16 @@ def _call(database, race, revision, cutoff, cycle, histories, rejected, validati
             tilt.update({'available': False, 'adjustment_pp': 0.0, 'description': 'Latest compatible early voting is more than seven days old; a stale geographic mix does not adjust the point call.'})
             warnings.append('Stale EV reporting: latest compatible evidence is more than seven days before the cutoff.')
     margin = reference['margin_pp']
-    status = 'ev_informed' if margin is not None and tilt['available'] else ('reference_only' if margin is not None else 'unavailable')
+    status = 'ev_informed' if margin is not None and tilt.get('adjustment_eligible') and tilt['available'] else ('reference_only' if margin is not None else 'unavailable')
     if margin is not None:
         margin = max(-99, min(99, margin+tilt['adjustment_pp']))
     if race['election_system'] == 'ranked_choice':
         status, margin = 'unavailable', None
+        tilt = {**tilt, 'adjustment_pp': 0.0, 'adjustment_eligible': False}
         warnings.append('An eventual-winner call is withheld: this election uses ranked-choice voting, current official ballot options are unverified, and the historical compilation does not establish comparable first/final rounds. Major-party subtraction is not a substitute for independent or transfer outcomes.')
     elif reference['cycles']:
         explanation.append(f'The historical Senate reference is {reference["margin_pp"]:+.1f} percentage points Republican minus Democratic, built from '+', '.join(str(y) for y in sorted({r['year'] for r in reference['cycles']}, reverse=True))+'.')
-        if tilt['available']:
+        if status == 'ev_informed':
             explanation.append(f'County EV geography shifts the research point by {tilt["adjustment_pp"]:+.1f} pp (raw geographic tilt {tilt["tilt_pp"]:+.1f} pp × {EV_COEFFICIENT}, capped at ±{MAX_ADJUSTMENT_PP:g} pp).')
         else:
             explanation.append('The point call uses historical Senate returns only. It is explicitly not an EV-informed call: '+tilt['description'])
@@ -370,6 +393,7 @@ def _call(database, race, revision, cutoff, cycle, histories, rejected, validati
         warnings.append('No recent comparable special-contest history is available; regular Senate contests provide the explicitly labeled reference for this special election. Seat-class and candidate correspondence is unverified.')
     warnings.append('Historical state Senate returns pool different seats, candidates and classes. Current nominees and incumbency are unverified; the projection is not candidate-adjusted.')
     if not reference['cycles']:
+        tilt = {**tilt, 'adjustment_pp': 0.0, 'adjustment_eligible': False}
         explanation.append('No defensible historical Senate party-margin reference is available. The model does not invent a baseline from an incumbent roster.')
     half_width = max(MIN_SENSITIVITY_HALF_WIDTH_PP, validation.get('historical_error_95_pp') or 0)
     if len({r['year'] for r in reference['cycles']}) < 2:
@@ -390,7 +414,8 @@ def _call(database, race, revision, cutoff, cycle, histories, rejected, validati
     manifest = {'model_version': MODEL_VERSION, 'dataset_revision': revision, 'as_of': cutoff, 'cycle': cycle,
         'race_id': race['id'], 'state': state, 'deterministic': True, 'simulation_seed': None,
         'margin_definition': 'Republican minus Democratic percentage points; party-level conditional projection, not a named candidate result',
-        'formula': 'historical_senate_reference + clip(0.35 * county_geographic_tilt, -5, 5)',
+        'formula': 'same_election_type_senate_reference + eligible_same_stage_ev_adjustment',
+        'same_election_type_required': True, 'same_stage_ev_required_for_adjustment': True,
         'coefficient_status': 'explicit_unvalidated_assumption', 'probabilities_published': False,
         'candidate_verification': race['candidate_verification'], 'historical_context_policy': 'Retrospectively collected final returns from years before the cutoff calendar year, not contemporary reporting snapshots.', 'source_snapshots': [{'id': r['id'], 'source_id': r['source_id'], 'sha256': r['sha256'], 'url': r['url']} for r in snapshots],
         'input_sha256': _hash({'reference': reference, 'early_vote': early, 'geographic_tilt': tilt}),
@@ -412,15 +437,18 @@ def _research_diagnostics(item, backtesting):
     tilt = item['evidence']['geographic_tilt']
     reference = item['evidence']['historical_reference']
     margin = item['call']['margin_pp']
-    raw_tilt = tilt.get('tilt_pp') if tilt.get('available') else 0
-    independent = {_case['year'] for _case in backtesting['cases'] if _case['state'] == item['state']}
+    raw_tilt = tilt.get('tilt_pp') if tilt.get('available') and tilt.get('adjustment_eligible') else 0
     from .ev_backtesting import summarize
     comparable_cases = [row for row in backtesting['cases'] if row['state'] == item['state']
                         and row['chronology'] == 'retrospective_report' and row['alignment'] == 'days_to_election'
-                        and row['reference_kind'] == 'final_candidate_vote_distribution']
+                        and row['reference_kind'] == 'same_stage_early_vote'
+                        and election_type(row['year']) == election_type(item['manifest']['cycle'])
+                        and row.get('metric') == item['evidence']['early_vote'].get('metric')
+                        and row.get('mode') == item['evidence']['early_vote'].get('mode')]
+    independent = {row['year'] for row in comparable_cases}
     state_errors = {'historical_reference': summarize(comparable_cases, 'baseline_margin_pp'),
                     'fixed_ev_assumption': summarize(comparable_cases),
-                    'scope': 'Retrospective same-stage report study, fixed days-to-election checkpoints, final-result geographic context. This is not a calibrated reliability estimate.'}
+                    'scope': 'Same-state, same-election-type, same-method/status same-stage EV feature at fixed days-to-election checkpoints. Recovered reports are retrospective. This is not a calibrated reliability estimate.'}
     county_dates = {row.get('current_source_date') for row in tilt.get('rows', [])}
     checks = [
         {'label': 'Current EV', 'status': 'supported' if tilt.get('available') else 'limited',
@@ -454,7 +482,7 @@ def _research_diagnostics(item, backtesting):
         stress.append({'label': f'Omit {year} historical outcome', 'margin_pp': projected,
                       'delta_pp': projected-margin if projected is not None and margin is not None else None,
                       'explanation': 'Recompute the recency-weighted reference without this election year. No candidate vote is inferred.'})
-    for row in tilt.get('rows', [])[:3]:
+    for row in (tilt.get('rows', [])[:3] if tilt.get('adjustment_eligible') and tilt.get('available') else []):
         alternative_tilt = raw_tilt-row['contribution_pp']
         projected = point+max(-MAX_ADJUSTMENT_PP, min(MAX_ADJUSTMENT_PP, EV_COEFFICIENT*alternative_tilt)) if point is not None else None
         stress.append({'label': f'Zero {row["name"]} contribution', 'margin_pp': projected,
@@ -565,8 +593,11 @@ def _run(database, revision, cutoff, cycle):
         validation = {**validation, 'ev_backtest_cases': len(backtesting['cases']),
             'ev_validation': 'A separate chronology-stratified empirical audit now evaluates the frozen EV assumption against actual historical Senate returns. The historical-reference metrics in this object remain distinct; see backtesting for paired EV errors and sparse-history limits.'}
         calls = [_selected_evidence(database, _research_diagnostics(_call(database, race, revision, cutoff, cycle, histories, rejected, validation), backtesting), revision, cutoff, cycle) for race in races()]
+        from .forecast_audit import audit_call, validate_call_arithmetic
+        calls = [{**call, 'audit': audit_call(call, backtesting, cycle)} for call in calls]
+        integrity = validate_call_arithmetic(calls, cycle)
         result = {'revision': revision, 'as_of': cutoff, 'cycle': cycle, 'model_version': MODEL_VERSION, 'calls': calls,
-            'validation': validation, 'backtesting': backtesting, 'warnings': ['Experimental conditional party-margin research calls; not validated EV forecasts or winner probabilities.',
+            'validation': validation, 'backtesting': backtesting, 'integrity': integrity, 'warnings': ['Experimental conditional party-margin research calls; not validated EV forecasts or winner probabilities.',
                 'Actual EV-assumption backtests are separate from historical-reference validation. Sparse independent evidence has not established a transferable learned conversion or calibrated probabilities.',
                 'The official 2026 ballot/candidate roster is not yet verified in this local dataset. Party labels do not certify candidate identities.'],
             'manifest': {'model_version': MODEL_VERSION, 'dataset_revision': revision, 'as_of': cutoff,

@@ -307,6 +307,7 @@ export default function Forecasts(ctx: AppContext & { embedded?: boolean }) {
             <a href="#forecast-call">The call</a>
             <a href="#forecast-reasoning">Why this direction</a>
             <a href="#forecast-confidence">Confidence</a>
+            <a href="#forecast-model-audit">Call audit</a>
             <a href="#forecast-history">Same-stage & turnout</a>
             <a href="#forecast-geography">Geographic signal</a>
             <a href="#forecast-sensitivity">Sensitivity</a>

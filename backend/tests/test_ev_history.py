@@ -51,6 +51,15 @@ def test_actual_same_stage_and_stale_reports_are_distinct(db):
     assert old["value"] == 100 and len(old["trajectory"]) == 1
 
 
+def test_presidential_snapshot_is_context_even_at_an_exact_midterm_stage(db):
+    revision = seed(db, [obs(2026, "2026-10-21", 300), obs(2024, "2024-10-23", 900, basis="reconstructed")])
+    prior = stage_history(db, revision=revision, as_of="2026-10-21", baseline_cycles=(2024,))["cycles"][0]
+    assert prior["value"] == 900 and prior["aligned_report"]
+    assert not prior["same_election_type"] and not prior["same_stage"]
+    assert prior["pace_ratio"] is None and prior["matched"]["ratio"] is None
+    assert "Different election environment" in prior["reason"]
+
+
 def test_strict_cutoff_selects_earlier_available_version_and_retrospective_is_labeled(db):
     seed(db, [obs(2026, "2026-10-21", 300), obs(2022, "2022-10-26", 100)], observed="2022-10-26T14:00:00Z")
     revision = seed(db, [obs(2022, "2022-10-26", 999, published="2022-10-28T12:00:00Z")])
