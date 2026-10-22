@@ -52,7 +52,7 @@ gh run list --repo augsburgace/election-observatory --workflow public-cloud.yml 
 .venv/bin/python scripts/install_schedule.py --defer-first-run
 ```
 
-Public `publication-state.json` records the actual verified release, cloud run and matching recovery checkpoint. The cloud worker validates the static reader across all 50 states, enforces free-resource limits and verifies the deployed revision and hosted research workflows. Failed builds retain the previous release; failed post-deployment verification restores an existing exact prior website and verifies it again. The historical Mac/Cloudflare publishing scripts remain available for recovery but are not the active update path. Browser notes belong to their website origin: download them from the original edition if you want a portable backup.
+Public `publication-state.json` records the actual verified release, cloud run and matching recovery checkpoint. `source-check-state.json` separately records automatic source checks. Unchanged evidence, dates, source health and application inputs skip the expensive rebuild and deployment; genuine changes publish automatically. The cloud worker validates the static reader across all 50 states, enforces free-resource limits and verifies the deployed revision and hosted research workflows. Failed builds retain the previous release; failed post-deployment verification restores an existing exact prior website and verifies it again. The historical Mac/Cloudflare publishing scripts remain available for recovery but are not the active update path. Browser notes belong to their website origin: download them from the original edition if you want a portable backup.
 
 
 Install or expand historical evidence from the command line:

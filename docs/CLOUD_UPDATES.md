@@ -10,6 +10,14 @@ The workflow has no pull-request or untrusted-fork execution path. It runs only 
 
 The first complete cloud publication passed at revision 592 on October 21, 2026. It took approximately two hours, including collection, the full analytical rebuild, checkpoint preparation and hosted verification. Source checks occur at the beginning of a run; a newly published website is not evidence that every authority reported new figures at that publication time. Long runs serialize, and missed or delayed schedules can extend the interval. A subsequent exact-byte compression cache avoids recompressing identical geometry; its output equivalence is tested, but a complete future cloud runtime is not yet measured. Read the [release record](CLOUD_WEB_RELEASE.md) for the observed result.
 
+### Efficient unchanged checks
+
+After checking due sources, the worker compares the validated revision, New York research date, source availability/caveats, application address, and a fingerprint of the application, parsers, source configuration and locked dependencies with the actual hosted manifest. If all agree, it skips the full fifty-state analytical rebuild, checkpoint ZIP/VACUUM, artifact upload and deployment. A new day refreshes date-sensitive analyses even without new ballots. Code/configuration changes and changed source availability also force a build. The first run after installing this gate performs a full build to establish its baseline. Manual **force** always rebuilds; disabling **collect** also explicitly rebuilds the restored evidence.
+
+Successful unchanged runs write a small public [source-check receipt](https://github.com/augsburgace/election-observatory/blob/main/source-check-state.json). It records check time, source identifiers, document hashes and status, without original records or raw errors. Only successful check clocks matching the exact checkpoint and document hash are restored on the next worker. This retains each source's configured cadence without exporting the large database on an unchanged check. Receipts cannot alter evidence, revisions, warnings or source status; failed checks are not deferred by a receipt.
+
+The receipt and the existing `publication-state.json` deliberately describe different events: checking an unchanged source does not invent a new observation or publication. Each completed check creates genuine repository activity even when voting is unchanged, helping avoid GitHub's inactivity-based schedule suspension. Failed runs remain visible in Actions; extended outages, policy changes or an account suspension still require intervention.
+
 1. Restore a checksum-verified public collector checkpoint from a completed release.
 2. Retain the exact prior website by its complete publication-manifest hash.
 3. Check due public sources and calculate the analysis, preserving source-specific errors and the last valid observations.
@@ -38,7 +46,7 @@ Individual source authorities can block cloud-hosted requests. Failures remain v
 - The worker needs at least 25 GB free before restoring evidence because SQLite backup and vacuum can temporarily require several database-sized files. Only unused SDK directories on the disposable hosted runner are reclaimed. Insufficient disk stops the run before publication.
 - Pages has a soft bandwidth limit. Hosting limits, source availability and GitHub's schedule policies still apply. No automatic paid upgrade is configured.
 
-Successful publication status commits provide a real operations trail as the evidence is refreshed. GitHub can disable schedules in inactive public repositories; inspect the Actions page periodically rather than treating the schedule as permanent infrastructure.
+Successful publication and source-check commits provide an operations trail. GitHub's scheduling remains best effort; the retained validated website continues to work during a delayed or failed check.
 
 ## Operate and inspect
 
@@ -48,6 +56,7 @@ From the public repository, use **Actions → Public cloud updates → Run workf
 gh workflow run public-cloud.yml --repo augsburgace/election-observatory -f collect=true
 gh run list --repo augsburgace/election-observatory --workflow public-cloud.yml --limit 5
 gh api repos/augsburgace/election-observatory/contents/publication-state.json --jq .content
+gh api repos/augsburgace/election-observatory/contents/source-check-state.json --jq .content
 ```
 
 The last command returns base64 content from the public status file. The repository's normal file viewer shows decoded JSON. The website's publication banner and each source's reporting date describe different clocks; read both before interpreting change.

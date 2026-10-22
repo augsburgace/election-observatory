@@ -17,6 +17,7 @@ from observatory.registry import all_states
 from observatory.settings import Settings
 
 from scripts import update_cloud
+from scripts.cloud_changes import publication_key
 
 STATES = [state["code"] for state in all_states()]
 PRIVATE_DIAGNOSTIC = "PRIVATE_RAW_VOTER_RECORD_MARKER_NEVER_PUBLIC"
@@ -195,6 +196,38 @@ def test_same_revision_can_refresh_application_without_inventing_evidence(cloud_
     assert result["checkpoint"]["revision"] == 588
     assert not any("collect" in command for command, _ in cloud_build.commands)
     assert cloud_build.state.boundary_calls == 0
+
+
+def test_unchanged_sources_skip_all_analytics_compression_checkpoint_and_deployment(cloud_build, monkeypatch):
+    cloud_build.state.collection = False
+    monkeypatch.setattr(update_cloud, "local_today", lambda: "2026-10-21")
+    key = publication_key(cloud_build.settings.database_path, cloud_build.settings.project_root,
+        revision=588, as_of="2026-10-21", base="/battleground-senate-observatory/")
+    result = cloud_build.build(previous_manifest={"publication_inputs": key})
+    assert result["status"] == "unchanged" and result["deployment_performed"] is False
+    assert any("collect" in command for command, _ in cloud_build.commands)
+    assert not any(command[0] in {"node", "pnpm"} for command, _ in cloud_build.commands)
+    assert cloud_build.state.prepared == cloud_build.state.checkpoints == 0
+    assert not (cloud_build.output / "ready.json").exists()
+    assert (cloud_build.output / "unchanged.json").is_file()
+    assert not json.loads((cloud_build.output / "check.json").read_text())["publication_required"]
+
+
+@pytest.mark.parametrize("change", ["revision", "day", "application", "force"])
+def test_changed_inputs_rebuild_even_when_other_sources_are_unchanged(cloud_build, monkeypatch, change):
+    cloud_build.state.collection = change == "revision"
+    monkeypatch.setattr(update_cloud, "local_today", lambda: "2026-10-21")
+    key = publication_key(cloud_build.settings.database_path, cloud_build.settings.project_root,
+        revision=588, as_of="2026-10-21", base="/battleground-senate-observatory/")
+    if change == "day":
+        key["as_of"] = "2026-10-20"
+    elif change == "application":
+        key["application_sha256"] = "previous application"
+    result = cloud_build.build(previous_manifest={"publication_inputs": key}, force=change == "force")
+    assert result["status"] == "verified"
+    assert cloud_build.state.checkpoints == cloud_build.state.prepared == 1
+    manifest = json.loads((cloud_build.output / "site/public-data/manifest.json").read_text())
+    assert manifest["publication_inputs"]["as_of"] == manifest["data_as_of"] == "2026-10-21"
 
 
 def test_archived_boundary_review_precedes_frozen_publication_and_checkpoint(cloud_build):

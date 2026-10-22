@@ -23,6 +23,7 @@ from observatory.domain import utc_now  # noqa: E402
 from observatory.settings import Settings  # noqa: E402
 
 from scripts import cloud_checkpoint  # noqa: E402
+from scripts.cloud_changes import restore_check_clocks  # noqa: E402
 from scripts.public_seed import restore_seed  # noqa: E402
 from scripts.update_cloud import build_cloud_publication  # noqa: E402
 
@@ -30,6 +31,7 @@ REPOSITORY = "augsburgace/election-observatory"
 PUBLIC_URL = "https://augsburgace.github.io/election-observatory/"
 BASE = "/election-observatory/"
 STATE_PATH = "publication-state.json"
+CHECK_PATH = "source-check-state.json"
 MIN_FREE_BYTES = 25_000_000_000
 MAX_TEMP_ARTIFACT_BYTES = 400_000_000
 
@@ -141,6 +143,10 @@ def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
     source = directory / "checkpoint" / downloaded["seed"]
     restored = restore_seed(source, directory / "data")
     source.unlink()  # Verified release asset remains recoverable on GitHub.
+    receipts = Path(__file__).resolve().parents[1] / CHECK_PATH
+    if receipts.is_file():
+        restore_check_clocks(directory / "data/observatory.sqlite3", load(receipts),
+            checkpoint_sha256=metadata["seed"]["sha256"], revision=restored["revision"])
     prepared = {"schema": "observatory-cloud-workflow-v1", "restored_revision": restored["revision"],
         "previous": previous or rollback_identity, "previous_site_existed": previous is not None,
         "checkpoint_sha256": metadata["seed"]["sha256"], "prepared_at": utc_now()}
@@ -148,12 +154,19 @@ def prepare(directory: Path, *, bootstrap: bool = False) -> dict:
     return prepared
 
 
-def build(directory: Path, *, skip_collect: bool = False) -> dict:
+def build(directory: Path, *, skip_collect: bool = False, force: bool = False) -> dict:
     directory = validate_directory(directory)
     prepared = load(directory / "prepared.json")
-    return build_cloud_publication(Settings(directory / "data"), directory / "publication", base=BASE,
+    result = build_cloud_publication(Settings(directory / "data"), directory / "publication", base=BASE,
         previous_revision=prepared["previous"]["revision"], skip_collect=skip_collect,
-        parent_checkpoint_sha256=prepared["checkpoint_sha256"])
+        parent_checkpoint_sha256=prepared["checkpoint_sha256"], force=force,
+        previous_manifest=load(directory / "rollback/site/public-data/manifest.json")
+            if prepared["previous_site_existed"] else None)
+    output = os.environ.get("GITHUB_OUTPUT")
+    if output:
+        with Path(output).open("a") as stream:
+            stream.write("changed=" + ("true" if result["status"] == "verified" else "false") + "\n")
+    return result
 
 
 def persist(directory: Path) -> dict:
@@ -231,18 +244,12 @@ def verify(directory: Path, *, rollback: bool = False) -> dict:
     return result
 
 
-def record(directory: Path) -> dict:
-    directory = validate_directory(directory)
-    verified = load(directory / "hosted-verified.json")
-    persisted = load(directory / "persisted.json")
-    state = {"schema": "observatory-publication-status-v1", "status": "published", **verified,
-        "checkpoint": persisted["release_tag"], "workflow_run": os.environ.get("GITHUB_RUN_ID"),
-        "source_commit": os.environ.get("GITHUB_SHA"), "interval_hours": 2, "execution": "github-actions"}
-    # Actual publication status is committed for a durable, public operations trail.
-    # Runtime code changes and private local history are never pushed by this job.
-    path = f"repos/{REPOSITORY}/contents/{STATE_PATH}"
+def write_status(filename: str, state: dict, message: str) -> None:
+    if filename not in {STATE_PATH, CHECK_PATH}:
+        raise ValueError("Only fixed public operational status files may be written")
+    path = f"repos/{REPOSITORY}/contents/{filename}"
     current = subprocess.run(["gh", "api", path], capture_output=True, text=True)
-    payload = {"message": f"Record verified publication r{verified['revision']}", "branch": "main",
+    payload = {"message": message, "branch": "main",
         "content": base64.b64encode((json.dumps(state, indent=2) + "\n").encode()).decode()}
     if current.returncode == 0:
         payload["sha"] = json.loads(current.stdout)["sha"]
@@ -252,28 +259,77 @@ def record(directory: Path) -> dict:
         input=json.dumps(payload), capture_output=True, text=True)
     if result.returncode:
         raise ValueError("Could not record the verified public publication status")
+
+
+def record(directory: Path) -> dict:
+    directory = validate_directory(directory)
+    verified = load(directory / "hosted-verified.json")
+    persisted = load(directory / "persisted.json")
+    state = {"schema": "observatory-publication-status-v1", "status": "published", **verified,
+        "checkpoint": persisted["release_tag"], "workflow_run": os.environ.get("GITHUB_RUN_ID"),
+        "source_commit": os.environ.get("GITHUB_SHA"), "interval_hours": 2, "execution": "github-actions"}
+    write_status(STATE_PATH, state, f"Record verified publication r{verified['revision']}")
     return state
+
+
+def record_check(directory: Path) -> dict:
+    directory = validate_directory(directory)
+    check = load(directory / "publication/check.json")
+    prepared = load(directory / "prepared.json")
+    if check["publication_required"]:
+        verified = load(directory / "hosted-verified.json")
+        persisted = load(directory / "persisted.json")
+        if check["revision"] != verified["revision"]:
+            raise ValueError("Source-check revision does not match the verified website")
+        expected = {key: verified[key] for key in ("revision", "manifest_sha256")}
+        checkpoint = persisted["metadata"]["seed"]["sha256"]
+    else:
+        if not (directory / "publication/unchanged.json").is_file():
+            raise ValueError("Unchanged source check requires a completed gate")
+        expected = prepared["previous"]
+        checkpoint = prepared["checkpoint_sha256"]
+        if check["revision"] != expected["revision"]:
+            raise ValueError("An unchanged source check cannot conceal newer evidence")
+    if live_identity() != expected:
+        raise ValueError("The live website changed; refusing to record a stale check receipt")
+    state = {**check, "checkpoint_sha256": checkpoint, "workflow_run": os.environ.get("GITHUB_RUN_ID"),
+        "execution": "github-actions", "interval_hours": 2,
+        "status": "published" if check["publication_required"] else "unchanged"}
+    write_status(CHECK_PATH, state, f"Record automatic source check r{check['revision']}")
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with Path(summary).open("a") as stream:
+            stream.write(f"## Automatic source check\n\nChecked {check['checked_sources']} due sources; "
+                f"{len(check['failed_sources'])} sources currently unavailable. "
+                f"Evidence revision: {check['revision']}.\n\n"
+                + ("Validated changes published and checked on the live site.\n" if check["publication_required"] else
+                   "No publication inputs changed. Full atlas calculation, checkpoint export and deployment were skipped.\n")
+                + "\n[Open the atlas](" + PUBLIC_URL + ")\n")
+    return {key: value for key, value in state.items() if key != "source_checks"}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("prepare", "build", "persist", "verify", "record"))
+    parser.add_argument("command", choices=("prepare", "build", "persist", "verify", "record", "record-check"))
     parser.add_argument("--directory", type=Path, required=True)
     parser.add_argument("--bootstrap", action="store_true")
     parser.add_argument("--skip-collect", action="store_true")
+    parser.add_argument("--force", action="store_true")
     parser.add_argument("--rollback", action="store_true")
     args = parser.parse_args()
     if args.command == "prepare":
         result = prepare(args.directory, bootstrap=args.bootstrap)
         write_prepare_outputs(result)
     elif args.command == "build":
-        result = build(args.directory, skip_collect=args.skip_collect)
+        result = build(args.directory, skip_collect=args.skip_collect, force=args.force)
     elif args.command == "persist":
         result = persist(args.directory)
     elif args.command == "verify":
         result = verify(args.directory, rollback=args.rollback)
-    else:
+    elif args.command == "record":
         result = record(args.directory)
+    else:
+        result = record_check(args.directory)
     print(json.dumps(result), flush=True)
 
 

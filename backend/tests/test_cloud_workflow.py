@@ -164,3 +164,34 @@ def test_workflow_rollback_upload_requires_actual_previous_site():
     text = workflow.read_text()
     rollback = text.split("id: rollback_upload", 1)[1].split("uses:", 1)[0]
     assert "steps.prepare.outputs.has_previous_site == 'true'" in rollback
+
+
+def test_unchanged_check_records_cadence_without_claiming_new_publication(tmp_path, monkeypatch):
+    publication = tmp_path / "publication"
+    publication.mkdir()
+    previous = cloud_workflow.manifest_identity(manifest())
+    cloud_workflow.save(tmp_path / "prepared.json", {"previous": previous, "checkpoint_sha256": "a" * 64})
+    cloud_workflow.save(publication / "check.json", {"schema": "observatory-source-check-v1",
+        "revision": 588, "publication_required": False, "checked_sources": 2, "failed_sources": [],
+        "source_checks": [{"source_id": "ohio", "status": "unchanged", "document_hash": "b" * 64}]})
+    cloud_workflow.save(publication / "unchanged.json", {"status": "unchanged"})
+    monkeypatch.setattr(cloud_workflow, "live_identity", lambda: previous)
+    writes = []
+    monkeypatch.setattr(cloud_workflow, "write_status", lambda *args: writes.append(args))
+    result = cloud_workflow.record_check(tmp_path)
+    assert result["status"] == "unchanged" and result["revision"] == 588
+    assert len(writes) == 1 and writes[0][0] == cloud_workflow.CHECK_PATH
+    assert "source_checks" in writes[0][1] and "source_checks" not in result
+    monkeypatch.setattr(cloud_workflow, "live_identity", lambda: {**previous, "revision": 589})
+    with pytest.raises(ValueError, match="live website changed"):
+        cloud_workflow.record_check(tmp_path)
+    assert len(writes) == 1
+    check = cloud_workflow.load(publication / "check.json")
+    cloud_workflow.save(publication / "check.json", {**check, "revision": 589})
+    with pytest.raises(ValueError, match="conceal newer evidence"):
+        cloud_workflow.record_check(tmp_path)
+
+
+def test_cloud_status_writer_cannot_commit_runtime_files():
+    with pytest.raises(ValueError, match="fixed public"):
+        cloud_workflow.write_status("config/sources.json", {}, "Unexpected change")

@@ -31,8 +31,9 @@ from observatory.domain import utc_now  # noqa: E402
 from observatory.historical_comparisons import archive_boundary_review  # noqa: E402
 from observatory.public_publish import publish_public_data, readonly_database  # noqa: E402
 from observatory.registry import all_states  # noqa: E402
-from observatory.settings import Settings  # noqa: E402
+from observatory.settings import Settings, local_today  # noqa: E402
 
+from scripts.cloud_changes import publication_key, publication_reasons, source_receipts  # noqa: E402
 from scripts.prepare_web_site import prepare_site  # noqa: E402
 from scripts.public_seed import create_seed  # noqa: E402
 from scripts.publication_runtime import PublicationRuntime  # noqa: E402
@@ -108,7 +109,8 @@ the sanitized checkpoint backup. Each view therefore reads the same revision.
 
 def build_cloud_publication(settings: Settings, output: Path, *, base: str,
                             previous_revision: int, skip_collect: bool = False,
-                            parent_checkpoint_sha256: str | None = None) -> dict:
+                            parent_checkpoint_sha256: str | None = None,
+                            previous_manifest: dict | None = None, force: bool = False) -> dict:
     """Verify site and matching sanitized checkpoint; never contact a deploy API."""
     base = validate_base(base)
     if parent_checkpoint_sha256 is not None and not re.fullmatch(r"[0-9a-f]{64}", parent_checkpoint_sha256):
@@ -119,6 +121,7 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
     environment = {**os.environ, "OBSERVATORY_DATA_DIR": str(settings.data_dir.resolve()),
         "OBSERVATORY_PROJECT_ROOT": str(settings.project_root), "OBSERVATORY_PUBLIC_MODE": "false"}
     started_at = utc_now()
+    before_checks = {row["source_id"]: row["checked_at"] for row in source_receipts(settings.database_path)}
     with (settings.data_dir / "cloud-publication.lock").open("a") as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -161,11 +164,32 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
                     "diagnostics": "Original parser diagnostics are withheld from public logs and artifacts"})
             database = readonly_database(settings)
             try:
+                # Freeze the research day as well as evidence: a long build
+                # crossing midnight must not mix two calendar cutoffs.
+                as_of = local_today()
+                inputs = publication_key(settings.database_path, settings.project_root,
+                    revision=revision, as_of=as_of, base=base)
+                reasons = publication_reasons(previous_manifest or {}, inputs, force=force or skip_collect)
+                receipts = source_receipts(settings.database_path)
+                check = {"schema": "observatory-source-check-v1", "checked_at": utc_now(),
+                    "revision": revision, "publication_required": bool(reasons), "reasons": reasons,
+                    "checked_sources": sum(row["checked_at"] != before_checks.get(row["source_id"]) for row in receipts),
+                    "failed_sources": [row["source_id"] for row in receipts if row["status"] == "failed"],
+                    "source_checks": receipts}
+                _atomic_json(output / "check.json", check)
+                _event({key: value for key, value in check.items() if key != "source_checks"})
+                if not reasons:
+                    # Keep the exact hosted site and seed, avoiding all fifty
+                    # state recalculations, ZIP/VACUUM and deployment transfers.
+                    result = {"status": "unchanged", "dataset_revision": revision,
+                        "checked_at": check["checked_at"], "deployment_performed": False}
+                    _atomic_json(output / "unchanged.json", result)
+                    return result
                 with tempfile.TemporaryDirectory(prefix=".cloud-build-", dir=output) as temporary:
                     stage = Path(temporary)
                     bundle = stage / "public-data"
                     with PublicationRuntime(_event) as runtime:
-                        manifest = publish_public_data(database, bundle, revision=revision,
+                        manifest = publish_public_data(database, bundle, revision=revision, as_of=as_of,
                             max_files=100_000, progress=runtime.progress)
                     _event({"publication_runtime": runtime.summary()})
                     expected_states = {state["code"] for state in all_states()}
@@ -174,6 +198,7 @@ def build_cloud_publication(settings: Settings, output: Path, *, base: str,
                             or set(manifest.get("states", [])) != expected_states):
                         raise ValueError("The release does not contain the exact evidence revision and all 50 states")
                     manifest["published_at"] = utc_now()
+                    manifest["publication_inputs"] = inputs
                     manifest["schedule"] = {"interval_hours": 2, "execution": "github-actions",
                         "description": "Public cloud collection and publication are scheduled every two hours. Free hosted jobs may be delayed or missed; the last validated release remains available."}
                     (bundle / "manifest.json").write_text(json.dumps(manifest, separators=(",", ":")))
