@@ -1,18 +1,12 @@
 {
   "schema": "observatory-source-check-v1",
-  "checked_at": "2026-10-22T01:50:57.284492+00:00",
+  "checked_at": "2026-10-22T03:57:21.390089+00:00",
   "revision": 659,
   "publication_required": true,
   "reasons": [
-    "Manual rebuild requested",
-    "Publication gate initialized",
-    "Validated evidence changed",
-    "New research date",
-    "Application address changed",
-    "Application or source configuration changed",
-    "Source availability or caveats changed"
+    "frontend-only; analytical data unchanged"
   ],
-  "checked_sources": 77,
+  "checked_sources": 0,
   "failed_sources": [
     "ak-official-statistics",
     "ga-official-discovery",
@@ -1096,7 +1090,7 @@
     }
   ],
   "checkpoint_sha256": "06e1b35a2aed3a397922539fa213304f1ad643a7f680b02d46de4a13168b23eb",
-  "workflow_run": "39707424116",
+  "workflow_run": "39719197881",
   "execution": "github-actions",
   "interval_hours": 2,
   "status": "published"
