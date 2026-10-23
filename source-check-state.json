@@ -1,13 +1,14 @@
 {
   "schema": "observatory-source-check-v1",
-  "checked_at": "2026-10-22T23:30:36.011781+00:00",
-  "revision": 858,
+  "checked_at": "2026-10-23T17:17:55.632334+00:00",
+  "revision": 1059,
   "publication_required": true,
   "reasons": [
     "Validated evidence changed",
+    "New research date",
     "Source availability or caveats changed"
   ],
-  "checked_sources": 89,
+  "checked_sources": 77,
   "failed_sources": [
     "ak-official-statistics",
     "ga-official-discovery",
@@ -31,7 +32,7 @@
     {
       "source_id": "ak-official-statistics",
       "document_hash": "43b57d2bf30fe6fe7fe6d309bb53b5e03545050a27b1399305c66bf6f6304fa3",
-      "checked_at": "2026-10-22T23:29:34.690852+00:00",
+      "checked_at": "2026-10-23T17:17:12.169122+00:00",
       "status": "failed"
     },
     {
@@ -216,14 +217,14 @@
     },
     {
       "source_id": "fl-public-stats",
-      "document_hash": "bcfd6e57be95fa926e8d2e027b62843ea7ad4cea2906a26c8426cc6e53d0d1fe",
-      "checked_at": "2026-10-22T23:29:35.279184+00:00",
+      "document_hash": "d7dc0a346c53ece573060a0feb4450abaaf4fa8c84163819903dd44be50611a6",
+      "checked_at": "2026-10-23T17:17:14.088822+00:00",
       "status": "partial"
     },
     {
       "source_id": "ga-official-discovery",
       "document_hash": null,
-      "checked_at": "2026-10-22T23:29:38.078189+00:00",
+      "checked_at": "2026-10-23T17:17:13.868826+00:00",
       "status": "failed"
     },
     {
@@ -277,7 +278,7 @@
     {
       "source_id": "ia-county-2026",
       "document_hash": null,
-      "checked_at": "2026-10-22T23:29:35.048223+00:00",
+      "checked_at": "2026-10-23T17:17:13.258636+00:00",
       "status": "failed"
     },
     {
@@ -313,7 +314,7 @@
     {
       "source_id": "ks-official-discovery",
       "document_hash": "e5552016c2193e4621f09c5745f82225dd0cd5b8492bbbebe70f88d0e5425c81",
-      "checked_at": "2026-10-22T23:29:42.091840+00:00",
+      "checked_at": "2026-10-23T17:17:16.849451+00:00",
       "status": "unchanged"
     },
     {
@@ -355,8 +356,8 @@
     {
       "source_id": "me-absentee-records",
       "document_hash": "3e83a435abe6de5a549674b137ca5530fd247556704e7476d68e2bf1097f2fdc",
-      "checked_at": "2026-10-22T23:29:52.255318+00:00",
-      "status": "unchanged"
+      "checked_at": "2026-10-23T17:17:24.803019+00:00",
+      "status": "partial"
     },
     {
       "source_id": "me-official-discovery",
@@ -367,13 +368,13 @@
     {
       "source_id": "mi-official-discovery",
       "document_hash": "d1e03cad7da5991ee284a5c40d3184ce6b7a0abb32df6fca7a48931da4e8c697",
-      "checked_at": "2026-10-22T23:29:42.811585+00:00",
+      "checked_at": "2026-10-23T17:17:16.626515+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "mn-official-discovery",
-      "document_hash": "4b607bb450a16c700aa0ec6bc66d6b93e45e86e88dfe6a3a636b814f2ed66954",
-      "checked_at": "2026-10-22T23:29:41.821823+00:00",
+      "document_hash": "3da8d28fa795e964028735d66ef1fa89a16184cfcccfeef1424a4f7b6b57e67a",
+      "checked_at": "2026-10-23T17:17:16.965424+00:00",
       "status": "unavailable"
     },
     {
@@ -402,8 +403,8 @@
     },
     {
       "source_id": "nc-counts-2026",
-      "document_hash": "486e6c749f629c2102feafe346a1a61fedd76debb941f0386b9157ed4053314f",
-      "checked_at": "2026-10-22T23:29:41.814999+00:00",
+      "document_hash": "2bb9cce45ccea71f4048a55383d9f1bc3353a29b7002908edff98c84a40f3200",
+      "checked_at": "2026-10-23T17:17:16.619893+00:00",
       "status": "unchanged"
     },
     {
@@ -432,9 +433,9 @@
     },
     {
       "source_id": "nc-daily-reports-2026",
-      "document_hash": "c5becead1c348ebaa88f3f642e9ce37d565b2743571664904fd59feabd9e695f",
-      "checked_at": "2026-10-22T23:30:26.034281+00:00",
-      "status": "unchanged"
+      "document_hash": "8292aec13a4a070ce4798734aa7a595822b5f60697ae27d3f19b13f7a762b87a",
+      "checked_at": "2026-10-23T17:17:40.764295+00:00",
+      "status": "partial"
     },
     {
       "source_id": "nc-ip-calendar-2016",
@@ -487,19 +488,19 @@
     {
       "source_id": "ne-official-discovery",
       "document_hash": "2446a1fccc43f4ead8b31511cbb569e8afe57ff2ce5347c5686669af2437fa5b",
-      "checked_at": "2026-10-22T23:29:42.809626+00:00",
+      "checked_at": "2026-10-23T17:17:17.288117+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "nh-official-discovery",
-      "document_hash": "ca73623495cadc6e7cbb66ee9cff8fbee32daf968941816574ececec326051db",
-      "checked_at": "2026-10-22T23:29:42.945108+00:00",
+      "document_hash": "40a1bbf5b824c6930b05240f7b977ec2791b9caccb5fdefd933dcda1d7d5cc88",
+      "checked_at": "2026-10-23T17:17:17.256209+00:00",
       "status": "unavailable"
     },
     {
       "source_id": "oh-official-discovery",
       "document_hash": null,
-      "checked_at": "2026-10-22T23:29:41.812470+00:00",
+      "checked_at": "2026-10-23T17:17:16.617790+00:00",
       "status": "failed"
     },
     {
@@ -588,86 +589,86 @@
     },
     {
       "source_id": "polymarket-ak-senate-2026",
-      "document_hash": "87273b0b6689cf62334f63b5ca707085299d26e25ff211415597698a65873ff5",
-      "checked_at": "2026-10-22T23:30:02.550924+00:00",
+      "document_hash": "f1ebb58c55bb6229cc49f7eec069f592ba3580baca2355ed500cb20c2107051f",
+      "checked_at": "2026-10-23T17:17:29.108732+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-fl-senate-2026",
-      "document_hash": "062217884f53975ea8b78b6bb6bee02549c9f455447591248388555c7bff1975",
-      "checked_at": "2026-10-22T23:30:02.691555+00:00",
+      "document_hash": "c34b85fd31cb3a732381509ed93394f9444a0980123211b43ab9f61d7decfaad",
+      "checked_at": "2026-10-23T17:17:29.201960+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ga-senate-2026",
-      "document_hash": "cfe4d6590c5e25198d73810052e14b88645e6c4358deb5e1ab8e9e926cc9f333",
-      "checked_at": "2026-10-22T23:30:02.853429+00:00",
+      "document_hash": "e1b54ffa3d11245730d87ca68d54b2421ee6248c9156911c49a501533352b4bd",
+      "checked_at": "2026-10-23T17:17:29.233146+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ia-senate-2026",
-      "document_hash": "93083773e180126f306a75aaea61f67140c93708e1b8b79348b0c693a28e0143",
-      "checked_at": "2026-10-22T23:30:02.918975+00:00",
+      "document_hash": "0c8a80352f1f73b350a7425b0e39e87441f441c179dcc7f60034825a08c0971a",
+      "checked_at": "2026-10-23T17:17:29.268457+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ks-senate-2026",
-      "document_hash": "f07164ec81cdc37edea5e296db3ff579bfdaa8a56c0df31d87d2ae44fb652623",
-      "checked_at": "2026-10-22T23:30:02.984127+00:00",
+      "document_hash": "656e85932806e8094381d6d0b23cad88a1181025198818fcfc9728073de5ab13",
+      "checked_at": "2026-10-23T17:17:29.440983+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-me-senate-2026",
-      "document_hash": "88772fb54b5ee17b1fcca6a4e46afa5d85b61c54ea4b1073f5c2accc21b0c899",
-      "checked_at": "2026-10-22T23:30:03.148908+00:00",
+      "document_hash": "157fc9d54f1b0ec8af15de35b41617c6fac5269d8f40f1e25c63c1015b6a37b4",
+      "checked_at": "2026-10-23T17:17:29.476474+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-mi-senate-2026",
-      "document_hash": "e1051bcdcda179b8a9bd3576b81647018a19199695dde29d25f8e04b1179a5a0",
-      "checked_at": "2026-10-22T23:30:03.214888+00:00",
+      "document_hash": "f62681b9c52e466a4b0cb8e7b6ccdd6f1569c75d51157b592bdd34b33eaae23e",
+      "checked_at": "2026-10-23T17:17:29.515679+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-mn-senate-2026",
-      "document_hash": "18beec1d47a283c4dbcb8713579b7742d8581310ac4b2b248a75a085c5f6db47",
-      "checked_at": "2026-10-22T23:30:03.363875+00:00",
+      "document_hash": "1da1d106c5a2aa06cde347f3c62553f7de94a227bb33768766245907af821543",
+      "checked_at": "2026-10-23T17:17:29.569430+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-nc-senate-2026",
-      "document_hash": "7cc933fb9907c5f305b3f3e9acc61803dec0a899ea148733ce7ca11d700a1613",
-      "checked_at": "2026-10-22T23:30:04.562317+00:00",
+      "document_hash": "57cb8230eb72edd3e484a7af31cf538c055037d496c5fe72f5ce2ef57cb7aaec",
+      "checked_at": "2026-10-23T17:17:30.156985+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ne-senate-2026",
-      "document_hash": "19d020d5cad526641e639108df6a55870432ce3c21941004b636f5771f6c833e",
-      "checked_at": "2026-10-22T23:30:03.911070+00:00",
+      "document_hash": "772b1e33d8f3dd88090b3a381746aeb732d9510159128905514b62feda55841a",
+      "checked_at": "2026-10-23T17:17:29.663818+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-nh-senate-2026",
-      "document_hash": "302b1bb870339071d942777483efabfabe959a2c016ab9f5ab7ecc1c8b113015",
-      "checked_at": "2026-10-22T23:30:04.291980+00:00",
+      "document_hash": "70e33774db3558c7c2429848a0a8edda969018fcebbbd1d1c126aaf185ce4a61",
+      "checked_at": "2026-10-23T17:17:29.923941+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-oh-senate-2026",
-      "document_hash": "b7ad7abfdcc88f5cc723ccc6e6599f3842431b81a9333d5125e995cc0038de11",
-      "checked_at": "2026-10-22T23:30:04.633695+00:00",
+      "document_hash": "907fbc891c6ec30f4e561ba6144ef8bb0ca105390568fa64913ba4a30cf195c1",
+      "checked_at": "2026-10-23T17:17:30.203891+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-sc-senate-2026",
-      "document_hash": "fcdc1509d4d7e238991499eaeb77429b5b73f5b049df2bc4f4f2466a210ac9d2",
-      "checked_at": "2026-10-22T23:30:04.791228+00:00",
+      "document_hash": "ebcacc11d1798fab47390d4ec85873856568ef2febc924f8fcf43c8233af9f1d",
+      "checked_at": "2026-10-23T17:17:30.408339+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-tx-senate-2026",
-      "document_hash": "23a931878bf9618188de3b43b868c54437bf769a6f9fae287dc422bab7bc90ae",
-      "checked_at": "2026-10-22T23:30:04.855111+00:00",
+      "document_hash": "49b8df3fadbb7bca695a3cdebae404a1a77ac1350f5386a986452b783607cfc7",
+      "checked_at": "2026-10-23T17:17:30.455495+00:00",
       "status": "partial"
     },
     {
@@ -768,15 +769,15 @@
     },
     {
       "source_id": "sc-early-2026",
-      "document_hash": "1d111e0a8ddcc03e6a18dbb1e7a74af39e5f21e65e7b6c74034016e1f7debfd4",
-      "checked_at": "2026-10-22T23:29:38.079917+00:00",
-      "status": "unchanged"
+      "document_hash": "2a500ed9ccc1ff637ffce82b79ea5afc4e11681f88df93aa9cda499c9349f940",
+      "checked_at": "2026-10-23T17:17:13.928449+00:00",
+      "status": "partial"
     },
     {
       "source_id": "tx-official-discovery",
-      "document_hash": "7e86a68246f4d846494582c0ee276213566752ac8c116fe23186ce7a04683607",
-      "checked_at": "2026-10-22T23:29:42.209588+00:00",
-      "status": "unchanged"
+      "document_hash": "3cfcc944ef629329259dedf16d69cdaddc844b5ac79905ed923fdc1da283b7e1",
+      "checked_at": "2026-10-23T17:17:16.927424+00:00",
+      "status": "unavailable"
     },
     {
       "source_id": "uf-archived-tracker-2024-national",
@@ -786,8 +787,8 @@
     },
     {
       "source_id": "uf-fallback-ak",
-      "document_hash": "921bac6b8eb708bb494c3b71a1478dd58d3b563258c1a5897bf79b5903685a67",
-      "checked_at": "2026-10-22T23:30:08.170292+00:00",
+      "document_hash": "1039276c66b4d67e1e814b659d192df696124ee36dd5d4d74d452d88811bda2a",
+      "checked_at": "2026-10-23T17:17:34.510716+00:00",
       "status": "partial"
     },
     {
@@ -798,164 +799,164 @@
     },
     {
       "source_id": "uf-fallback-ar",
-      "document_hash": "e6d30ff8a838209ad6ee77ec38ac89b69fc755808ef0dec41d531ec3c8064a18",
-      "checked_at": "2026-10-22T23:30:12.907334+00:00",
+      "document_hash": "aab84fea226221837fd3e024d7a228ae07f400819109b295fa6d9fb47548e32a",
+      "checked_at": "2026-10-23T17:17:34.946673+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-az",
-      "document_hash": "36662fccf66ccda299567e819b4ebc5af53ccb34829043b28338d72bedb92270",
-      "checked_at": "2026-10-22T23:30:08.966589+00:00",
+      "document_hash": "ab7e5ac64df0c48c7a432d16f5057c3a588fead0a1b652d600ed956ffc5ce232",
+      "checked_at": "2026-10-23T17:17:34.785745+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ca",
-      "document_hash": "803b795636e54e8c25466ef52f1c979311cc939b4eb43d41309235eb669bc633",
-      "checked_at": "2026-10-22T23:30:17.690296+00:00",
+      "document_hash": "aacd9ab437dd1b4d8e7e08914e86082b9996e322cbdda6b1dabef66575041288",
+      "checked_at": "2026-10-23T17:17:35.649151+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-co",
-      "document_hash": "2737bedf89af466c7883ca5e95eb5f415937c7b61da263760862b52ac2a4decc",
-      "checked_at": "2026-10-22T23:30:18.043131+00:00",
+      "document_hash": "56b76c0808e8dd8c1223de72b7b7d22f291c14c868124901faac32b6aacbfcf4",
+      "checked_at": "2026-10-23T17:17:35.829719+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ct",
-      "document_hash": "0fb7bd7acc53f6325e8c38a3a32c5f1801b94e4d2b0f68ea8275b60206578bc0",
-      "checked_at": "2026-10-22T23:30:20.149774+00:00",
+      "document_hash": "45741f85c3e332a5da2dd527d912fc7ae8d28ed20258eb3434e2cf8bdb41b9e4",
+      "checked_at": "2026-10-23T17:17:36.507064+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-de",
-      "document_hash": "35f5fac44e9f028556c67ae50ceb743d0d3bcfb58fcfefcf7f70b469f779f2c9",
-      "checked_at": "2026-10-22T23:30:20.025147+00:00",
+      "document_hash": "d2de254d4beeae6956aa1f8215f4eaf7d32427040e89e3f0cc125f8ce4577cf4",
+      "checked_at": "2026-10-23T17:17:36.522894+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-fl",
-      "document_hash": "359660df52a89688ff8d434b54b5b3e1ebf116490320cacefb4e6fc087880206",
-      "checked_at": "2026-10-22T23:30:20.240553+00:00",
+      "document_hash": "db3172d576e722c067fa457eea0db988cb24bf89308850f2f6e7dc4e876e1efd",
+      "checked_at": "2026-10-23T17:17:36.874960+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ga",
-      "document_hash": "ef514d5310d403fbaeb048dd1750c28175ab20021cb53cdfd8304e40c7af6636",
-      "checked_at": "2026-10-22T23:29:52.755795+00:00",
+      "document_hash": "66efe088bdb8d01fb0f6578c9cc704c2158145e3609822fd53653a4a3504d1af",
+      "checked_at": "2026-10-23T17:17:17.984229+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-hi",
-      "document_hash": "f71c6035873f53569e6bfe70d83468abacb92c039e8cb364e0c3b30c85e533bc",
-      "checked_at": "2026-10-22T23:30:22.093156+00:00",
+      "document_hash": "b11222c7e4c0768e06e29a5a73075a3ed7ae663001a4b1bf6e8f97f889a675c2",
+      "checked_at": "2026-10-23T17:17:37.567490+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ia",
-      "document_hash": "0911ce2bfca0c39c9bed51e7eaed87a03cbc1ad6c71cbcf9723fe5a868f639cf",
-      "checked_at": "2026-10-22T23:29:55.865764+00:00",
+      "document_hash": "3e04ef00875666733e7d4f5383f551ff5d56269004c612138d4278da7779a6e8",
+      "checked_at": "2026-10-23T17:17:18.879120+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-id",
-      "document_hash": "8d9ebc180017bc05054eb6b29b9da941bcd3f81c3b8cca974ae0b8c41cc019a8",
-      "checked_at": "2026-10-22T23:30:22.212522+00:00",
+      "document_hash": "fed34aff4d368bac47c39e1ad2a6656aa592bd7ed3bb6618770492e8b132ce7b",
+      "checked_at": "2026-10-23T17:17:37.579304+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-il",
-      "document_hash": "6f352ff870d01e5cb8fc91698b0b6cdb9ad63b91a61f2758cedc3a19ef022baf",
-      "checked_at": "2026-10-22T23:30:23.353323+00:00",
+      "document_hash": "42b5b2db27734f2b89fbe2d62acbb0b2ea63dbf15d9613f5e0797d89196097ff",
+      "checked_at": "2026-10-23T17:17:38.565652+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-in",
-      "document_hash": "a123c07b6342837f7c73c0d69cd259b76d9da45fc82fcbc0ef6e0cecca183d11",
-      "checked_at": "2026-10-22T23:30:23.820538+00:00",
+      "document_hash": "cc36cd41690f1e1c32a6c30f8adc60506c26bff4d3901f2702b06a423aa72379",
+      "checked_at": "2026-10-23T17:17:38.706412+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ks",
-      "document_hash": "76a694017fb807709a472aa9a0f2250f3eb982793f48797f6afd694aaf52b7ee",
-      "checked_at": "2026-10-22T23:29:59.295874+00:00",
+      "document_hash": "2c41ffa0f3630f036508bd03e409a9c316c08e6ba27e2378fbee05a68f504291",
+      "checked_at": "2026-10-23T17:17:25.866242+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ky",
-      "document_hash": "654850d395cec3fd592bf5b5345c66014185c2ed900065c9fde7373d4e7a4267",
-      "checked_at": "2026-10-22T23:30:24.285658+00:00",
+      "document_hash": "92e482ed05303361ecc7d2c516f5c73c789116b91ed6e31c43805562d2e2789c",
+      "checked_at": "2026-10-23T17:17:39.058590+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-la",
-      "document_hash": "ef6eda1ba69cd7bc7cabf0823d0823b7c735135d1996d21b5dc50734d9c3c0df",
-      "checked_at": "2026-10-22T23:30:25.614317+00:00",
+      "document_hash": "3f9010eddf8f758fb511c69b7f86b1a796f6e5befa4031106b1b3525e25301d0",
+      "checked_at": "2026-10-23T17:17:40.375597+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ma",
-      "document_hash": "76bf9170ff2899366c581bb538f873f7f801071c6219ac9171265592d30750db",
-      "checked_at": "2026-10-22T23:30:26.080903+00:00",
+      "document_hash": "baeb5137b4a6a16c4aee87642e46a0d5a212accfc4a4b567a75158fbd435319d",
+      "checked_at": "2026-10-23T17:17:49.154291+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-md",
-      "document_hash": "9b1b58eed9b0482835df42c1d712e2623212d56a40a67448eec1ab39662d53d2",
-      "checked_at": "2026-10-22T23:30:25.923190+00:00",
+      "document_hash": "bcfe4957dffff4a88ab897591f2cbb0d26157303140f7d5ad29f125a1f3b28db",
+      "checked_at": "2026-10-23T17:17:40.664711+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-me",
-      "document_hash": "1cda75df2cc76949527a4840700010be2958fd573dbc37f569bba8816cd8b33c",
-      "checked_at": "2026-10-22T23:29:57.021226+00:00",
+      "document_hash": "1c5a9034d43e4613b8a84f7a23d770e4574dcf3d4212c195b60c567efaf639db",
+      "checked_at": "2026-10-23T17:17:23.752971+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-mi",
-      "document_hash": "807f8cd30e21d2c22505a6e47d77ad4b6fe575705111cf865be0b4aaf8838e93",
-      "checked_at": "2026-10-22T23:30:01.242679+00:00",
+      "document_hash": "54262cfe05d4e43d7463094c36a3c054fa2516013b37073a5717ed78c651808f",
+      "checked_at": "2026-10-23T17:17:28.039204+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-mn",
-      "document_hash": "9c36ac5e7d38c8539b9dfaf7d1cf1f82f0439723a11ffb3eb0f1d4d59804584f",
-      "checked_at": "2026-10-22T23:29:59.176562+00:00",
+      "document_hash": "56a19e29c4201e51bb33a825e7248c6e2f12ebd682efcf5d6a100728cdb44663",
+      "checked_at": "2026-10-23T17:17:24.665604+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-mo",
-      "document_hash": "0aaa0cf31cf60035085952a65d3413790e98395a6f923936c21771a6c9264073",
-      "checked_at": "2026-10-22T23:30:27.169689+00:00",
+      "document_hash": "34f3e6c5ebf54419dd1cc2ecd5d6d6b17bf60dbf71983e0838abd1df3d93e006",
+      "checked_at": "2026-10-23T17:17:49.382894+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ms",
-      "document_hash": "3cea707353fcf2c773ce9434ff3deb94ca29847d20492a421b4b22d58ba52a21",
-      "checked_at": "2026-10-22T23:30:27.078097+00:00",
+      "document_hash": "a77e2ccb24feae43a0c84db5d1a3d0690c95c6efba063307e09d3d7e9249f1eb",
+      "checked_at": "2026-10-23T17:17:49.339301+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-mt",
-      "document_hash": "24b63ea8a47bc0297624169ecbb33a4a5f9255fda4703ff6b973f231e7708779",
-      "checked_at": "2026-10-22T23:30:27.174923+00:00",
+      "document_hash": "642f9d10f9a3a8e162fe929d30c01775a009970cf396b18a1df3aa3bd2bbd9ef",
+      "checked_at": "2026-10-23T17:17:49.637362+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-nc",
-      "document_hash": "07c625dd3be05ed2d88f120215cc6133b13f49f2985398b1bee53dd0221c93fc",
-      "checked_at": "2026-10-22T23:30:28.750563+00:00",
+      "document_hash": "dfb9eda016dcda0a9239ed04864aa9e86daf199828a7e27d888b87b773af251b",
+      "checked_at": "2026-10-23T17:17:50.955569+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-nd",
-      "document_hash": "61f1669bfee749c2b094235ae4e5e7750d4fa2e2bcb83d5f82519284990e31d1",
-      "checked_at": "2026-10-22T23:30:31.008033+00:00",
+      "document_hash": "0918355d719779270d38eabecda8f2593b08d73d8ddf2ba0e4e58fc579b835ee",
+      "checked_at": "2026-10-23T17:17:51.893265+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ne",
-      "document_hash": "1dd55d23b3316ad43dfa3cc651b92465efc6011a334d35db7829256de904c417",
-      "checked_at": "2026-10-22T23:30:00.752049+00:00",
+      "document_hash": "cf23e62240d266b9427022eca0d8976c6d2c527672430e45c594c82d04c5efae",
+      "checked_at": "2026-10-23T17:17:27.459780+00:00",
       "status": "partial"
     },
     {
@@ -966,122 +967,122 @@
     },
     {
       "source_id": "uf-fallback-nj",
-      "document_hash": "7b2bf757d1a625f263bd7bd59882d56cee11b287142ad0515b74236272c9e34a",
-      "checked_at": "2026-10-22T23:30:27.872865+00:00",
+      "document_hash": "4b7cf63e75b53637ba96ac9da6901b73c4adc6d546868861800a6fe8ed55c188",
+      "checked_at": "2026-10-23T17:17:50.002880+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-nm",
-      "document_hash": "0fb33cceeedaf12f5a5d1f13544753e3291b607b2a27a94d4b6c395fc8ef82ae",
-      "checked_at": "2026-10-22T23:30:27.963706+00:00",
+      "document_hash": "54998193865332735179abadec2d4fc16b468eb3c1f2bbd490ee61352d730d4b",
+      "checked_at": "2026-10-23T17:17:50.096046+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-nv",
-      "document_hash": "6ee35f4657f9aef27a855f18b13d695896298aa8171f82d7bf0136810613fd23",
-      "checked_at": "2026-10-22T23:30:27.398794+00:00",
+      "document_hash": "f3fcb72ca2fdb8a04e6680fd27976b7bb350d2eae5f3e2c0ed1a9d6534b5b7e9",
+      "checked_at": "2026-10-23T17:17:49.782948+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ny",
-      "document_hash": "4e803a57de2c359c38d5bf4ee721445d9f4f9e26123660a6f381a82569f3dc52",
-      "checked_at": "2026-10-22T23:30:28.441501+00:00",
+      "document_hash": "2a31c8624833f35805fb896b9c6d3c0082c4ae9e14f5d147b7349025c1f44aa9",
+      "checked_at": "2026-10-23T17:17:50.668964+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-oh",
-      "document_hash": "bbf21f4ca1ed333f0ddfcaa079c2a22168f3bc7d02f0aca28bed81821c7f50da",
-      "checked_at": "2026-10-22T23:29:52.429875+00:00",
+      "document_hash": "bf98ebefa0860ead45fd24cf6a4d5cfa963a7ab886044d7dcf1dceaa8a78ddf9",
+      "checked_at": "2026-10-23T17:17:18.183227+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ok",
-      "document_hash": "215edf2ddcee7dac3ca8bed02dcdd6960a50656e66a8f194033ef5b0ea4d3c90",
-      "checked_at": "2026-10-22T23:30:31.075973+00:00",
+      "document_hash": "64f60172917b5bbeebf54993b978e0588cb004c57e996132553ef9040b100f42",
+      "checked_at": "2026-10-23T17:17:51.898766+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-or",
-      "document_hash": "cec19065376d34d91f693ecb9f7f923931c826eac821d6fed174e50d1227899f",
-      "checked_at": "2026-10-22T23:30:31.756539+00:00",
+      "document_hash": "e0b80028daafd5f7ba02143bcaa1d81f7201f4466a2aa5b6869ec4f9fdd83998",
+      "checked_at": "2026-10-23T17:17:52.583070+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-pa",
-      "document_hash": "9b1758136012e01da232f9fa160ddb7819d78f99f564a06acb7234bfa598a2e0",
-      "checked_at": "2026-10-22T23:30:32.074999+00:00",
+      "document_hash": "21d5d13738eaffad345b28084f7250224efd180944e8645236077a61a793626f",
+      "checked_at": "2026-10-23T17:17:52.843951+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ri",
-      "document_hash": "64f99f1cb65e62ab1bb0918a5f9e9f5e1b33ca6ab1790583ad1daa7698d1c7c9",
-      "checked_at": "2026-10-22T23:30:32.627279+00:00",
+      "document_hash": "1afd0ea5f8ce478c1b091aedb5028230f241bc4ddbf945f308f55bb74aef05fb",
+      "checked_at": "2026-10-23T17:17:52.651694+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-sc",
-      "document_hash": "a3a43a2ca5cf9c3adead645f08c30d8e0be30800f8626cf2a612d58dd5659aab",
-      "checked_at": "2026-10-22T23:30:33.061259+00:00",
+      "document_hash": "941fc1e2d3dab3b109f6ba5cb2ddfb0bc3316102e70983e1dc09339388c54620",
+      "checked_at": "2026-10-23T17:17:53.077786+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-sd",
-      "document_hash": "1f7c4bb900a933d8e08ab71f95ecf9250b12a7606cc6bbdce67658ad6d3ffc86",
-      "checked_at": "2026-10-22T23:30:33.098995+00:00",
+      "document_hash": "afbd8a01415f61c67e93890bc7586170fe92578d5406d621e44f765f20637fa3",
+      "checked_at": "2026-10-23T17:17:53.444505+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-tn",
-      "document_hash": "906b035efe7600d28a587eddeb4c092800bd8357b8d01c843b52c20102701f35",
-      "checked_at": "2026-10-22T23:30:33.372425+00:00",
+      "document_hash": "ace09e8f860fc7e8aeb8b6268457645f8a5b7140dc1322a3598433d6d0fc5680",
+      "checked_at": "2026-10-23T17:17:53.563436+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-tx",
-      "document_hash": "825bef13308ff41909a5ad80d15200f1e5f17ea4aa8210c12350dbdae2d94710",
-      "checked_at": "2026-10-22T23:30:01.235935+00:00",
+      "document_hash": "d9336e1a52ebd2ab867abd0f0d41670f8540230aaa84a37f05ad0f9a992db92f",
+      "checked_at": "2026-10-23T17:17:27.454692+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-ut",
-      "document_hash": "6738ebbaf3d33c80799692cb92d9b4eddcd1e9baef1997ccbc0e8b52672b3a0a",
-      "checked_at": "2026-10-22T23:30:33.414592+00:00",
+      "document_hash": "b16768f8412405b0492c52bc5c853758a5df0326e62d6fbd177466097b52692e",
+      "checked_at": "2026-10-23T17:17:53.593853+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-va",
-      "document_hash": "ac6902ee0510989a7fd339efa6f74d0675e643f2dafbddcc95c27c93e674d845",
-      "checked_at": "2026-10-22T23:30:34.794018+00:00",
+      "document_hash": "1bedd2d38bfc80f95f24db12756e7c30b2e1257f129968192a5d3d4ed2eaccb4",
+      "checked_at": "2026-10-23T17:17:54.948662+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-vt",
-      "document_hash": "f79285ecbed5854fa3e84677dacd6344e4b9bb5cdf98f9797fbd394e34bcf55d",
-      "checked_at": "2026-10-22T23:30:33.557028+00:00",
+      "document_hash": "824593170feffe2e86ea098aa590bc6de6f5ef171ef4934d9163f185ff73c5ef",
+      "checked_at": "2026-10-23T17:17:53.690360+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-wa",
-      "document_hash": "85fbeb11aea4dd7413473f8f00a7d23792af25c47313a0d1326f2f5e85ef630e",
-      "checked_at": "2026-10-22T23:30:34.978565+00:00",
+      "document_hash": "230e94a15e9b33998b70d5edd07720da2fc0f76614fa8dc56ec81edfdf64f3b7",
+      "checked_at": "2026-10-23T17:17:55.138188+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-wi",
-      "document_hash": "87e72ff5aec22fa006618910124fd8e41c2cda4406af8db11d850cb8cd9dfcc0",
-      "checked_at": "2026-10-22T23:30:35.616567+00:00",
+      "document_hash": "beae0a6c32c515b2856c2b8928e989336144050b9d43e5a17eed1fe4d6a55d8a",
+      "checked_at": "2026-10-23T17:17:55.278162+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-wv",
-      "document_hash": "2a15c1dbdd4fa371d6b6d4e518da9d307da5d5305295cd640da6de1e042130ed",
-      "checked_at": "2026-10-22T23:30:35.107424+00:00",
+      "document_hash": "a76e759a0b3fd602668d3777e2efd272ae6ebebf638ad04ff92e9a3d47387216",
+      "checked_at": "2026-10-23T17:17:55.185571+00:00",
       "status": "partial"
     },
     {
       "source_id": "uf-fallback-wy",
-      "document_hash": "765e4b6ed3970d74338854e96618beab9a7c32bc237a7323292f7eeb281dc142",
-      "checked_at": "2026-10-22T23:30:35.713070+00:00",
+      "document_hash": "62cb27e1709e7d22bb917234dbfae56d006352c48fd2e897824cf5b7c05a5492",
+      "checked_at": "2026-10-23T17:17:55.368238+00:00",
       "status": "partial"
     },
     {
@@ -1091,8 +1092,8 @@
       "status": "partial"
     }
   ],
-  "checkpoint_sha256": "a76b139b9a2c1508a7caad474aff2b3110aeb194581b6fa2b0dd669a2e82cac9",
-  "workflow_run": "39871754698",
+  "checkpoint_sha256": "05a070ce879cd0e487f4f4bdd090270c640b9b08570655bb950ffba7fa40a3f3",
+  "workflow_run": "39993235600",
   "execution": "github-actions",
   "interval_hours": 2,
   "status": "published"
