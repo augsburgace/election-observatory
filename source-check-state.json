@@ -1,13 +1,13 @@
 {
   "schema": "observatory-source-check-v1",
-  "checked_at": "2026-10-23T21:32:03.538072+00:00",
-  "revision": 1125,
+  "checked_at": "2026-10-24T00:50:21.403856+00:00",
+  "revision": 1142,
   "publication_required": true,
   "reasons": [
     "Validated evidence changed",
     "Source availability or caveats changed"
   ],
-  "checked_sources": 77,
+  "checked_sources": 41,
   "failed_sources": [
     "ak-official-statistics",
     "ga-official-discovery",
@@ -31,7 +31,7 @@
     {
       "source_id": "ak-official-statistics",
       "document_hash": "43b57d2bf30fe6fe7fe6d309bb53b5e03545050a27b1399305c66bf6f6304fa3",
-      "checked_at": "2026-10-23T21:31:24.521075+00:00",
+      "checked_at": "2026-10-24T00:49:44.902502+00:00",
       "status": "failed"
     },
     {
@@ -55,55 +55,55 @@
     {
       "source_id": "coefficient-ak-2026",
       "document_hash": "b9236f0588f259fc727b75663d737e660d285207807f11388e45193381462ab1",
-      "checked_at": "2026-10-22T23:30:06.240109+00:00",
+      "checked_at": "2026-10-24T00:50:03.341042+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-ia-2026",
       "document_hash": "4717d4f8cf532b6eaff7b38d0abb37bc6ce8b45e16f48df94afac382b378dcf3",
-      "checked_at": "2026-10-22T23:30:06.009283+00:00",
+      "checked_at": "2026-10-24T00:50:03.116104+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-ks-2026",
       "document_hash": "8b397224bd1255b685e50a3fbdca0b57d687f9cee2d9df37767d4408f414c371",
-      "checked_at": "2026-10-22T23:30:05.202585+00:00",
+      "checked_at": "2026-10-24T00:50:01.451498+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-me-2026",
       "document_hash": "29a73ee9af1d515185b8b1d7310e6ac8f9db15501e6c21d7487ff5994cc60d37",
-      "checked_at": "2026-10-22T23:30:06.806639+00:00",
+      "checked_at": "2026-10-24T00:50:03.940563+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-mi-2026",
       "document_hash": "ef451bc35d8def4aadb046f83d869b93c74d8ea79c6306b9f87fd1ee57943d9e",
-      "checked_at": "2026-10-22T23:30:06.532224+00:00",
+      "checked_at": "2026-10-24T00:50:03.680649+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-mn-2026",
       "document_hash": "b2d7cc47e38270b5b199152418ac4600e6676643af86fab3b2420f63f4c88208",
-      "checked_at": "2026-10-22T23:30:05.840196+00:00",
+      "checked_at": "2026-10-24T00:50:02.732994+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-ne-2026",
       "document_hash": "7537d665b8c3ff910498c12ecbb0329232c6a3d4806d3646afb96394d6f2a3d9",
-      "checked_at": "2026-10-22T23:30:07.148883+00:00",
+      "checked_at": "2026-10-24T00:50:04.540459+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-nh-2026",
       "document_hash": "1eec7673cd84fd3ed816c3dca82b5f59b8a5321e176cb511e59dad33e844d5d3",
-      "checked_at": "2026-10-22T23:30:05.539007+00:00",
+      "checked_at": "2026-10-24T00:50:02.165721+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "coefficient-oh-2026",
       "document_hash": "ac909d9384f9088f7a86e3722dc7b318c9786ceb031ed13efa8eb8f325c5d801",
-      "checked_at": "2026-10-22T23:30:07.726118+00:00",
+      "checked_at": "2026-10-24T00:50:04.544746+00:00",
       "status": "unchanged"
     },
     {
@@ -216,20 +216,20 @@
     },
     {
       "source_id": "fl-public-stats",
-      "document_hash": "f94b214c13aa0bf19c45b017848696d02ea1413d54fa5e5f00a59eb299335374",
-      "checked_at": "2026-10-23T21:31:26.143856+00:00",
+      "document_hash": "f1ad36ab1b34b3c9de8eb33eed7b8a8e20f348347e88674d4032c2c768e551f9",
+      "checked_at": "2026-10-24T00:49:46.752040+00:00",
       "status": "partial"
     },
     {
       "source_id": "ga-official-discovery",
       "document_hash": null,
-      "checked_at": "2026-10-23T21:31:26.101056+00:00",
+      "checked_at": "2026-10-24T00:49:46.534637+00:00",
       "status": "failed"
     },
     {
       "source_id": "hi-official-receipts-2026",
-      "document_hash": "929ab6e43545d80f82206f01347286554ba022db8a903205c743d811ccd31153",
-      "checked_at": "2026-10-22T23:30:02.343527+00:00",
+      "document_hash": "58bc99258a3aa6a459a1a3a99c35bda16d5de9666ad8748ef6a29ba07d0fe913",
+      "checked_at": "2026-10-24T00:49:52.250436+00:00",
       "status": "partial"
     },
     {
@@ -277,7 +277,7 @@
     {
       "source_id": "ia-county-2026",
       "document_hash": null,
-      "checked_at": "2026-10-23T21:31:25.604266+00:00",
+      "checked_at": "2026-10-24T00:49:46.115321+00:00",
       "status": "failed"
     },
     {
@@ -313,7 +313,7 @@
     {
       "source_id": "ks-official-discovery",
       "document_hash": "e5552016c2193e4621f09c5745f82225dd0cd5b8492bbbebe70f88d0e5425c81",
-      "checked_at": "2026-10-23T21:31:28.564961+00:00",
+      "checked_at": "2026-10-24T00:49:51.706774+00:00",
       "status": "unchanged"
     },
     {
@@ -337,7 +337,7 @@
     {
       "source_id": "marist-mi-2026-10-21",
       "document_hash": "80dbae6cea8ef5cdb4c29655390f5d46cc337bdd6e53df610396fb97a88c70c8",
-      "checked_at": "2026-10-22T23:30:18.040221+00:00",
+      "checked_at": "2026-10-24T00:50:14.162583+00:00",
       "status": "unchanged"
     },
     {
@@ -355,8 +355,8 @@
     {
       "source_id": "me-absentee-records",
       "document_hash": "660c9c029ad97c743004d8103c8a7a7e6f2eb4919f5906ea856f70927afcbfb8",
-      "checked_at": "2026-10-23T21:31:38.260127+00:00",
-      "status": "partial"
+      "checked_at": "2026-10-24T00:50:03.331650+00:00",
+      "status": "unchanged"
     },
     {
       "source_id": "me-official-discovery",
@@ -367,13 +367,13 @@
     {
       "source_id": "mi-official-discovery",
       "document_hash": "d1e03cad7da5991ee284a5c40d3184ce6b7a0abb32df6fca7a48931da4e8c697",
-      "checked_at": "2026-10-23T21:31:28.569761+00:00",
+      "checked_at": "2026-10-24T00:49:51.712349+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "mn-official-discovery",
-      "document_hash": "ef729ead0feaf870997d848a1f5968d0f3df88868130a762584ed8d408f318df",
-      "checked_at": "2026-10-23T21:31:28.566741+00:00",
+      "document_hash": "83247f01a84d2110e734abaee1cff1348e908f6b361f91112ce7ff961d6e0fd6",
+      "checked_at": "2026-10-24T00:49:51.708594+00:00",
       "status": "unavailable"
     },
     {
@@ -403,7 +403,7 @@
     {
       "source_id": "nc-counts-2026",
       "document_hash": "2bb9cce45ccea71f4048a55383d9f1bc3353a29b7002908edff98c84a40f3200",
-      "checked_at": "2026-10-23T21:31:28.548085+00:00",
+      "checked_at": "2026-10-24T00:49:51.697569+00:00",
       "status": "unchanged"
     },
     {
@@ -433,8 +433,8 @@
     {
       "source_id": "nc-daily-reports-2026",
       "document_hash": "bd866f2458936d3dc288f7b72f0c09f9a7291a53e26f6c3fc28eab7a88bceb07",
-      "checked_at": "2026-10-23T21:31:53.667917+00:00",
-      "status": "partial"
+      "checked_at": "2026-10-24T00:50:21.157320+00:00",
+      "status": "unchanged"
     },
     {
       "source_id": "nc-ip-calendar-2016",
@@ -487,19 +487,19 @@
     {
       "source_id": "ne-official-discovery",
       "document_hash": "2446a1fccc43f4ead8b31511cbb569e8afe57ff2ce5347c5686669af2437fa5b",
-      "checked_at": "2026-10-23T21:31:28.800145+00:00",
+      "checked_at": "2026-10-24T00:49:52.143158+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "nh-official-discovery",
       "document_hash": "40a1bbf5b824c6930b05240f7b977ec2791b9caccb5fdefd933dcda1d7d5cc88",
-      "checked_at": "2026-10-23T21:31:29.093991+00:00",
+      "checked_at": "2026-10-24T00:49:52.017145+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "oh-official-discovery",
       "document_hash": null,
-      "checked_at": "2026-10-23T21:31:26.412201+00:00",
+      "checked_at": "2026-10-24T00:49:47.664914+00:00",
       "status": "failed"
     },
     {
@@ -583,91 +583,91 @@
     {
       "source_id": "or-official-receipts-2026",
       "document_hash": "9d50b8e0b38a71598bc032954a2afbda9de1eb6ad2ed5dd1c1c1d3a9ff8798f6",
-      "checked_at": "2026-10-22T23:30:04.557443+00:00",
+      "checked_at": "2026-10-24T00:49:57.139280+00:00",
       "status": "failed"
     },
     {
       "source_id": "polymarket-ak-senate-2026",
-      "document_hash": "e741bc7c7009702071a0ea95949fe2cdaf843050f865e797b5103ba87498f3ee",
-      "checked_at": "2026-10-23T21:31:41.641887+00:00",
+      "document_hash": "47259d01bb833dde82ec41afabfb2c5a2690f2ba0c4b3b2e0f52c3bc765ca25a",
+      "checked_at": "2026-10-24T00:49:52.543628+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-fl-senate-2026",
-      "document_hash": "069d47ceef9ac1c6f506aeecc26a091d943b1b41c60406863ebc9c9e8fe96e91",
-      "checked_at": "2026-10-23T21:31:41.650945+00:00",
+      "document_hash": "958ff514c65a337ccd5bd923adefa1ac3fd876808b3346ef1206ecd0ea6aea84",
+      "checked_at": "2026-10-24T00:49:52.603795+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ga-senate-2026",
-      "document_hash": "a01ddba154ee6cef7cc300b76938f3ce6ae49904ec867888344743824944d1ef",
-      "checked_at": "2026-10-23T21:31:41.749816+00:00",
+      "document_hash": "c6e3ef6596dda0f6fb48c7e6872f7c875d45bbb5a15bc511518a87ac5b1bf37a",
+      "checked_at": "2026-10-24T00:49:52.791802+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ia-senate-2026",
-      "document_hash": "bebd3b3fbaadfd2972efb9866273a42f903c4b0b231ef3a8f0b102bd75d8f82c",
-      "checked_at": "2026-10-23T21:31:41.822893+00:00",
+      "document_hash": "a7664478450e7c587555179176214cc49c96555515faa32319ccd926d95e7cd1",
+      "checked_at": "2026-10-24T00:49:53.506259+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ks-senate-2026",
-      "document_hash": "ef25ad9fd4b365607de99726b7db64a6d4be53fefef18aa12f0e3f17383680e8",
-      "checked_at": "2026-10-23T21:31:41.788160+00:00",
+      "document_hash": "0dd35bb4ec851999c159f69376af3956e312d2ec61b3ffac68a71e929ec3de59",
+      "checked_at": "2026-10-24T00:49:54.493985+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-me-senate-2026",
-      "document_hash": "0ab9696b485842e3010d71a4b1e9825c59dc8751dfacd8d343353f99697ed86d",
-      "checked_at": "2026-10-23T21:31:41.867278+00:00",
+      "document_hash": "c90fe4cbbe7d3bf1ae852dba72129b9264fb1b4cfdd1af3875bd123b8e5e1e78",
+      "checked_at": "2026-10-24T00:49:55.481974+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-mi-senate-2026",
-      "document_hash": "c192ea5f3c37aa3a7bc49b2423b6ced62970b4340f34cf4cf76209007e52ebd6",
-      "checked_at": "2026-10-23T21:31:42.023551+00:00",
+      "document_hash": "13f4ff1dc919a4c421c78c06b244deb3d361bccbf60294e35d116e455fe998f3",
+      "checked_at": "2026-10-24T00:49:56.465892+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-mn-senate-2026",
-      "document_hash": "d5967bf1894b0ae84281d070683526c2464d1cd8fd6bd189cb271198cc292de8",
-      "checked_at": "2026-10-23T21:31:42.064508+00:00",
+      "document_hash": "15616e58343dabf63e69f329d149132e12683a5946066b5fc73b5147c067769b",
+      "checked_at": "2026-10-24T00:49:57.330306+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-nc-senate-2026",
-      "document_hash": "6c8464061ac4da0d1e883c718ce04f27a17938052a1ec3abec4a78e205a34828",
-      "checked_at": "2026-10-23T21:31:42.252982+00:00",
+      "document_hash": "c251d30083a426e4837a7c4d3a6275aae706a15cfc1ae1a4a30599ea69280c64",
+      "checked_at": "2026-10-24T00:49:58.693919+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-ne-senate-2026",
-      "document_hash": "fd370b489ecaf92dec957e0954f57f24df9b4dbb7244028d56be77044239c162",
-      "checked_at": "2026-10-23T21:31:42.113143+00:00",
+      "document_hash": "1b941b4406fb72ab07dbe84ac4a9368b8777e7f1302ca612937057f867c8e902",
+      "checked_at": "2026-10-24T00:49:57.761817+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-nh-senate-2026",
-      "document_hash": "f2bbc74d2c8bee76b18cc4af1d9281484e6fb8ee40194e1e4c191ae68c3baff5",
-      "checked_at": "2026-10-23T21:31:42.156961+00:00",
+      "document_hash": "e45aed2fc815ff141be7ccc96a3b258263f0ad38eb6995f8cd4ba38aaad46d97",
+      "checked_at": "2026-10-24T00:49:58.079066+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-oh-senate-2026",
-      "document_hash": "44506693155a55ef2d54da2604d6957f5a571b88c20549483bd0bee0691e7656",
-      "checked_at": "2026-10-23T21:31:42.309859+00:00",
+      "document_hash": "9ffe8f73aeef8426aa1d9a1783670fe3c448557a6c82a0118aea6bff0230e87d",
+      "checked_at": "2026-10-24T00:49:58.899956+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-sc-senate-2026",
-      "document_hash": "3f810f0557bb7b32b2dabc39af9872a83548d02be65b63975e5dd2e503b13477",
-      "checked_at": "2026-10-23T21:31:42.365203+00:00",
+      "document_hash": "65ed6cba864ddc7066c8d8485f939c832d03f939e9ef4751be6e6b98c66498d7",
+      "checked_at": "2026-10-24T00:49:59.594315+00:00",
       "status": "partial"
     },
     {
       "source_id": "polymarket-tx-senate-2026",
-      "document_hash": "ca29147161e1681116aea71830c22dee5413d4473b0444c32cf71a5c772e77c1",
-      "checked_at": "2026-10-23T21:31:42.491985+00:00",
+      "document_hash": "8ae08c9640a577a1129eef7c157a4036e1e897538b198d339a4b16c73b4c2e16",
+      "checked_at": "2026-10-24T00:49:59.741462+00:00",
       "status": "partial"
     },
     {
@@ -769,13 +769,13 @@
     {
       "source_id": "sc-early-2026",
       "document_hash": "2a500ed9ccc1ff637ffce82b79ea5afc4e11681f88df93aa9cda499c9349f940",
-      "checked_at": "2026-10-23T21:31:26.106528+00:00",
+      "checked_at": "2026-10-24T00:49:47.667728+00:00",
       "status": "unchanged"
     },
     {
       "source_id": "tx-official-discovery",
       "document_hash": "3cfcc944ef629329259dedf16d69cdaddc844b5ac79905ed923fdc1da283b7e1",
-      "checked_at": "2026-10-23T21:31:28.826759+00:00",
+      "checked_at": "2026-10-24T00:49:52.020554+00:00",
       "status": "unchanged"
     },
     {
@@ -1091,8 +1091,8 @@
       "status": "partial"
     }
   ],
-  "checkpoint_sha256": "2b08d9693d9714e4bbd08e47ad3cb82a93b9917b2027ee2c30d3a50c18b3cdf0",
-  "workflow_run": "40026949487",
+  "checkpoint_sha256": "523c29de167ddb40e211347937a4ad474a0b4986fa3d4bf2da04f242f4983eed",
+  "workflow_run": "40046565404",
   "execution": "github-actions",
   "interval_hours": 2,
   "status": "published"
